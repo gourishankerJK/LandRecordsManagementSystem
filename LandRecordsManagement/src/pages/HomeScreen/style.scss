@@ -1,0 +1,318 @@
+@import '../../App.scss';
+
+#home {
+    .main {
+
+        .container {
+            max-width: 90%;
+            margin: 0rem auto;
+            display: flex;
+
+            .left {
+                flex: 7;
+
+                .content {
+                    margin: 10rem 2rem;
+                    padding: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    .main-header {
+                        h1 {
+                            font-size: 45px;
+                            font-weight: 500;
+                            letter-spacing: 0.02em;
+                            color: $base_color;
+                        }
+
+                        p {
+                            font-size: 25px;
+                            line-height: 30px;
+                            color: rgb(94, 93, 93);
+                            padding: 1rem 0;
+                        }
+                    }
+
+                    .header-btn {
+                        display: flex;
+
+                        .start {
+                            padding: 0.7rem 1.5rem;
+                            background-color: $base_color;
+                            color: #fff;
+                            font-size: 25px;
+                            line-height: 30px;
+                            letter-spacing: 0.02em;
+                            cursor: pointer;
+                            border-radius: 25px;
+                            box-shadow: 0 4px 10px 0 rgba(154, 152, 152, 0.75);
+                        }
+
+                        .start:hover {
+                            transform: scale(1.1);
+                            transition: ease-in-out 0.1ms;
+                        }
+
+                        .explore {
+                            button {
+                                padding: 0.7rem 1.5rem;
+                                color: $base_color;
+                                font-size: 25px;
+                                line-height: 30px;
+                                letter-spacing: 0.02em;
+                                margin-left: 1rem;
+                            }
+
+                            button:hover {
+                                transform: scale(1.1);
+                                transition: ease-in-out 0.1ms;
+                                opacity: 0.8;
+
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            .right {
+                flex: 5;
+
+                .images {
+                    position: relative;
+                    top: 15;
+
+                    .main-bg {
+                        background-blend-mode: multiply;
+                        height: 55vh;
+                        object-fit: contain;
+                    }
+
+                    .top-bg {
+                        background-blend-mode: multiply;
+                        position: absolute;
+                        bottom: 10;
+                        left: 0;
+                        height: 13vh;
+                        object-fit: contain;
+                    }
+
+                    .right-bg {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        height: 15vh;
+                        background-blend-mode: multiply;
+                    }
+
+                    .reliable-bg {
+                        background-blend-mode: multiply;
+                        position: absolute;
+                        top: 10;
+                        right: 0;
+                        height: 15vh;
+                        object-fit: contain;
+                    }
+                }
+
+            }
+
+            @include responsive($med){
+                flex-direction: column;
+                .left{
+                   .content{
+                      .main-header{
+                          h1{
+                            font-size: 30px;
+                          }
+                          p{
+                            font-size: 20px;
+                          }
+                      }
+                      .header-btn{
+                        .start{
+                            padding: 0.7rem 1rem;
+                            font-size: 20px;
+                        }
+                      }
+                   }
+                }
+                .right{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    #features {
+        max-width: 80%;
+        margin: 0.5rem auto;
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @include responsive($xl){
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @include responsive($med){
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @include responsive($sm) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+// conatct Section 
+
+#contact {
+    max-width: 80%;
+    margin: 10px auto;
+    display: flex;
+    .left {
+      flex: 7;
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 10px auto;
+        width: 30vw;
+        padding: 1vh 1vw;
+        border: 1px solid $text_color;
+        border-radius: 5px;
+        .form-element {
+          display: flex;
+          flex-direction: column;
+          margin: 5px auto;
+          padding: 10px 0;
+          width: 25vw;
+          .required {
+            padding: 3px 0;
+            letter-spacing: 0.04em;
+            font-weight: 700;
+          }
+          /*  Pesudo Element (*) Added After Label */
+          .required::after {
+            content: "*";
+            color: red;
+          }
+          input {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid $text_color;
+            opacity: 0.5;
+            padding: 5px;
+            letter-spacing: 0.05em;
+          }
+        }
+        button {
+          border: none;
+          outline: none;
+          text-decoration: none;
+          color: #fff;
+          background-color: $base_color;
+          letter-spacing: 0.06em;
+          font-weight: 700;
+          padding: 5px 15px;
+          border-radius: 25px;
+          margin: 10px auto;
+          font-size: 18px;
+        }
+        button:hover {
+          cursor: pointer;
+          color: #fff;
+        }
+      }
+    }
+    .right {
+      flex: 5;
+      // margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    /** Media Quries for mobile Section **/
+    @include responsive($med) {
+      flex-direction: column;
+      .left {
+        .form-container {
+          width: 60vw;
+          .form-element {
+            width: 45vw;
+          }
+        }
+      }
+    }
+  }
+  
+
+  #footer {
+    background-color: #eee;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    margin-top: 3vh;
+    .left {
+      flex: 6;
+      margin: 1vh 4vw;
+      h3 {
+        color: $base_color;
+        letter-spacing: 0.03em;
+      }
+      p {
+        color: $base_color;
+        letter-spacing: 0.03em;
+        font-weight: 500;
+      }
+    }
+    .center {
+      flex: 3;
+      margin: 1vh 4vw;
+      .social-icons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        span {
+          align-items: center;
+          color: $base_color;
+          letter-spacing: 0.03em;
+          font-weight: 500;
+          i {
+            padding-right: 1vw;
+            color: $base_color;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+    .right {
+      flex: 3;
+      margin: 1vh 4vw;
+      .social-icons {
+        p {
+          color: $base_color;
+          font-weight: 500;
+          letter-spacing: 0.03em;
+        }
+      }
+    }
+  
+    /** Media Quries for mobile Section **/
+    @include responsive($med) {
+      flex-direction: column;
+    }
+  }

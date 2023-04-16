@@ -1,0 +1,36 @@
+@import '../../App.scss';
+
+#card{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     max-width: 22rem;
+     border: 1px solid $base_color;
+     border-radius: 25px;
+     padding: 1rem 0.5rem;
+     max-height: 41vh;
+     overflow-y: hidden;
+     .image{
+         img{
+             width: 10rem;
+             height: 10rem;
+             object-fit: contain;
+             background-blend-mode: multiply;
+             background-color: white;
+         }
+     }
+     .card-content{
+        h3{
+             color: black;
+             font-size: 25px;
+             font-weight: 500;
+             letter-spacing: 0.03em;
+             text-align: center;
+        }
+        p{
+            color: $text_color;
+            font-size: 15px;        }
+            letter-spacing: 0.01em;
+     }
+}

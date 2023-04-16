@@ -1,0 +1,58 @@
+@import '../../App.scss';
+
+#navbar {
+     display: flex;
+     justify-content: space-between;
+     padding: 0.5rem 1rem;
+
+
+     // border-bottom: 1px solid #eee;
+     .left {
+          display: flex;
+          align-items: center;
+          img {
+               width: 38px;
+               height: 37px;
+               line-height: 50px;
+               object-fit: cover;
+          }
+          span {
+               font-size: 25px;
+               font-weight: 500;
+               letter-spacing: 0.03em;
+               padding: 0 10px;
+               color:$base_color;
+               text-transform: capitalize;
+               letter-spacing: 0.02em;
+              
+          }
+     }
+     .right {
+          .nav-link {
+               list-style: none;
+               display: inline-block;
+               margin: 5px 10px;
+               cursor: pointer;
+               .ele{
+                    display: flex;
+                    align-items: center;
+                    img {
+                         width: 20px;
+                         height: 20px;
+                         line-height: 17;
+                         object-fit: cover;
+                       }
+                       span{
+                         text-transform: capitalize;
+                         font-size: 18px;
+                         letter-spacing: 0.03em;
+                         font-weight: 450;
+                         padding: 0 6px;
+                         color: $text_color;
+                       }
+               }
+              
+          }
+     }
+
+}
