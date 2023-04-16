@@ -49,23 +49,10 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
   };
 
 
-  const handleLogout = async () => {
-    if (window.ethereum) {
-      try {
-        await window.ethereum.send({
-          method: "wallet_requestPermissions",
-          params: [{ eth_accounts: {} }],
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
 
   return (
     <LoginContext.Provider
-      value={{ accounts, contract, error, setAccounts, setContract, setError, connectMetamask, updateMetaMask, isAuthenticated ,handleLogout }}
+      value={{ accounts, contract, error, setAccounts, setContract, setError, connectMetamask, updateMetaMask, isAuthenticated  }}
     >
       {props.children}
     </LoginContext.Provider>

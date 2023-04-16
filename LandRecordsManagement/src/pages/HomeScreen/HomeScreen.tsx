@@ -133,7 +133,7 @@ const HomeScreen = () => {
             </div>
           </div>
         </footer>
-        <p style={{ textAlign: "center", background: "#eee", padding: "1rem 0" }}> copy@2023 by Rahul Chaudhary</p>
+        <p style={{ textAlign: "center", background: "#eee", padding: "1rem 0" }}> copy@2023 by Gouri Shanker</p>
       </div>
     </>
   )

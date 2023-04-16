@@ -1,16 +1,10 @@
-import React ,{useContext} from 'react'
+import React, { useContext } from 'react'
 import './style.scss'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, Navigate } from 'react-router-dom'
 import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
-<<<<<<< HEAD
-import LoginContext from '../../contexts/LoginContext';
-
-=======
 import AddRecord from '../AddRecord/AddRecord'
 import UserDashboard from '../UserDashboard/UserDashboard'
->>>>>>> d05101a7836e03e68bbe4fcb76988232d6e0eea8
 const Dashboard = () => {
-  const {handleLogout} = useContext(LoginContext);
   return (
     <div id='dashboard'>
       {/* Sidebar  */}
@@ -22,17 +16,17 @@ const Dashboard = () => {
         <div className="side-menu">
           <div className="side-menu-top" >
             <ul>
-              <Link style={{textDecoration: "none"}} to='/dashboard/addrecord'>
-              <li className='side-nav-item add'>
-                <img src={Add} alt="" />
-                <span>Add Record</span>
-              </li>
+              <Link style={{ textDecoration: "none" }} to='/dashboard/addrecord'>
+                <li className='side-nav-item add'>
+                  <img src={Add} alt="" />
+                  <span>Add Record</span>
+                </li>
               </Link>
-              <Link style={{textDecoration: "none"}} to='/dashboard/user'>
-              <li className='side-nav-item'>
-                <img src={DashboradIcon} alt="" />
-                <span>Dashboard</span>
-              </li>
+              <Link style={{ textDecoration: "none" }} to='/dashboard/user'>
+                <li className='side-nav-item'>
+                  <img src={DashboradIcon} alt="" />
+                  <span>Dashboard</span>
+                </li>
               </Link>
               <li className='side-nav-item'>
                 <img src={Details} alt="" />
@@ -52,7 +46,7 @@ const Dashboard = () => {
               </li>
               <li className='side-nav-item'>
                 <img src={LogoutIcon} alt="" />
-                <span style={{ color: "#FF8533" }} onClick = {handleLogout}>Logout</span>
+                <span style={{ color: "#FF8533" }}>Logout</span>
               </li>
             </ul>
           </div>
@@ -62,6 +56,9 @@ const Dashboard = () => {
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
+          <Route path="admin" element={<UserDashboard />} />
+          <Route exact path="/"  element={null}/>
+          <Route path="*"  element={<Navigate to='404'/>}/>
         </Routes>
       </div>
       {/* Page Content  */}

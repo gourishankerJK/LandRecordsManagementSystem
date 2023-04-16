@@ -1,0 +1,44 @@
+@import '../../App.scss';
+
+$base_color: #FF8533;
+
+.user-dashboard {
+  h2 {
+    color: $base_color;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px 2px 10px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid $base_color;
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background-color: $base_color;
+    color: white;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tbody tr:hover {
+    background-color: #ddd;
+  }
+
+  p {
+    color: red;
+  }
+}

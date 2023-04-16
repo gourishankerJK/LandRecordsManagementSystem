@@ -10,7 +10,6 @@ interface LoginContextType {
     connectMetamask : () => void;
     updateMetaMask : ()=> void;
     isAuthenticated : ()=> boolean;
-    handleLogout : ()=>void;
   }
 const LoginContext = createContext<LoginContextType>({
     accounts: new Array<string>(),
@@ -22,7 +21,6 @@ const LoginContext = createContext<LoginContextType>({
     connectMetamask : ()=>{},
     updateMetaMask : ()=>{},
     isAuthenticated : ()=> false,
-    handleLogout : ()=> {}
 });
 
 export default LoginContext;

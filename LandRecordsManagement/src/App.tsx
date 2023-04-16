@@ -7,6 +7,7 @@ import React, { useEffect, useContext } from "react";
 import LoginContext from './contexts/LoginContext';
 import ProtectedRoute from './components/common/ProtectedRoutes';
 import AddRecord from './pages/AddRecord/AddRecord';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
 
@@ -20,12 +21,14 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<HomeScreen />} />
+      <Route exact={true} path='/dashboard/404'  element={<NotFound/>}/>
       <Route
         path="/dashboard/*" element={<ProtectedRoute redirectPath="/"
           isAuthenticated={isAuthenticated}
           children={<Dashboard />} />}>
           
       </Route>
+      <Route path= "*" element={<NotFound/>}/>
 
     </Routes>
   )
