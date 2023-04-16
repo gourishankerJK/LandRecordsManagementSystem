@@ -1,7 +1,10 @@
-import React from 'react'
+import React ,{useContext} from 'react'
 import './style.scss'
 import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
+import LoginContext from '../../contexts/LoginContext';
+
 const Dashboard = () => {
+  const {handleLogout} = useContext(LoginContext);
   return (
     <div id='dashboard'>
       {/* Sidebar  */}
@@ -39,7 +42,7 @@ const Dashboard = () => {
               </li>
               <li className='side-nav-item'>
                 <img src={LogoutIcon} alt="" />
-                <span style={{ color: "#FF8533" }}>Logout</span>
+                <span style={{ color: "#FF8533" }} onClick = {handleLogout}>Logout</span>
               </li>
             </ul>
           </div>
