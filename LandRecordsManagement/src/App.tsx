@@ -6,6 +6,7 @@ import { HomeScreen, Dashboard } from './pages'
 import React, { useEffect, useContext } from "react";
 import LoginContext from './contexts/LoginContext';
 import ProtectedRoute from './components/common/ProtectedRoutes';
+import AddRecord from './pages/AddRecord/AddRecord';
 
 function App() {
 
@@ -20,10 +21,12 @@ function App() {
     <Routes>
       <Route path='/' element={<HomeScreen />} />
       <Route
-        path="/dashboard" element={<ProtectedRoute redirectPath="/"
+        path="/dashboard/*" element={<ProtectedRoute redirectPath="/"
           isAuthenticated={isAuthenticated}
-          children={<Dashboard />} />}
-      />
+          children={<Dashboard />} />}>
+          
+      </Route>
+
     </Routes>
   )
 }
