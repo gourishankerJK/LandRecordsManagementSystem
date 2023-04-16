@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from 'react'
 import LoginContext from '../../contexts/LoginContext';
 import Input from '../../components/common/Input';
 import './style.scss'
+import Loader from '../../components/Loader/Loader';
 
 const AddRecord = () => {
   const { accounts, contract } = useContext(LoginContext);
@@ -76,6 +77,7 @@ const AddRecord = () => {
   };
   return (
     <div className="add-record">
+
       <div>
         <h2> Add a New Land Record</h2>
         <h3>Complete the form to add a new land record</h3>
@@ -196,7 +198,9 @@ const AddRecord = () => {
           {loading ? 'Adding Record...' : 'Add Record'}
         </button>
         {error && <p>{error.message}</p>}
+
       </form>
+
     </div>
   )
 }

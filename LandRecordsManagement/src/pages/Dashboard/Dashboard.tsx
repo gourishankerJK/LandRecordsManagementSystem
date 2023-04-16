@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import './style.scss'
 import { Routes, Route, Link, Navigate } from 'react-router-dom'
-import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
+import { Loader , Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
 import AddRecord from '../AddRecord/AddRecord'
 import UserDashboard from '../UserDashboard/UserDashboard'
 const Dashboard = () => {
