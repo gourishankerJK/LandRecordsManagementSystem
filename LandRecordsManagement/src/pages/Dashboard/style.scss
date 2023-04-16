@@ -1,0 +1,113 @@
+@import '../../App.scss';
+
+
+.add {
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 25px;
+    font-size: 25px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    color: #FF8533;
+}
+
+.active {
+    background-color: #FF8533;
+}
+
+#dashboard {
+    display: flex;
+
+    .sidebar {
+        flex: 2;
+        background: #F5F3F1;
+        padding: 1.5rem 1rem;
+        height: 93vh;
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 45px;
+                width: 45px;
+                line-height: 50px;
+                object-fit: cover;
+            }
+
+            span {
+                color: $base_color;
+                font-size: 30px;
+                letter-spacing: 0.03em;
+                padding-left: 5px;
+            }
+        }
+
+        .side-menu {
+            .side-menu-top {
+                ul {
+                    list-style-type: none;
+
+                    li {
+                        margin: 1rem 0;
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+
+                        img {
+                            height: 25px;
+                            width: 25px;
+                            line-height: 28px;
+                            object-fit: contain;
+                        }
+
+                        span {
+                            padding-left: 1.5rem;
+                            color: $text_color;
+                            letter-spacing: 0.02em;
+                            font-weight: 500;
+                            font-size: 18px;
+                        }
+                    }
+                }
+
+            }
+
+            .side-menu-bottom {
+                margin-top: 60vh;
+
+                ul {
+                    list-style-type: none;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+                        margin: 1rem 0;
+                        cursor: pointer;
+
+                        img {
+                            height: 18px;
+                            width: 18px;
+                            line-height: 20px;
+                            object-fit: contain;
+                        }
+
+                        span {
+                            color: $text_color;
+                            font-size: 20px;
+                            padding-left: 1rem;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    .main-page {
+        flex: 10;
+        max-height: 100vh;
+        overflow-y: scroll;
+
+    }
+
+}
