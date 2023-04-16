@@ -205,9 +205,9 @@ contract LandManagementSystem {
             "You can't transfer the ownership to yourself"
         );
 
-        emit OwnershipTransferred(landRecords[_id].owner, newOwner);
-
         landRecords[_id].owner = newOwner;
+
+        emit OwnershipTransferred(landRecords[_id].owner, newOwner);
     }
 
     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {
