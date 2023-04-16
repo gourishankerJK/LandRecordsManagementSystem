@@ -1,6 +1,9 @@
 import React from 'react'
 import './style.scss'
+import { Routes, Route, Link } from 'react-router-dom'
 import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
+import AddRecord from '../AddRecord/AddRecord'
+import UserDashboard from '../UserDashboard/UserDashboard'
 const Dashboard = () => {
   return (
     <div id='dashboard'>
@@ -13,14 +16,18 @@ const Dashboard = () => {
         <div className="side-menu">
           <div className="side-menu-top" >
             <ul>
+              <Link style={{textDecoration: "none"}} to='/dashboard/addrecord'>
               <li className='side-nav-item add'>
                 <img src={Add} alt="" />
                 <span>Add Record</span>
               </li>
+              </Link>
+              <Link style={{textDecoration: "none"}} to='/dashboard/user'>
               <li className='side-nav-item'>
                 <img src={DashboradIcon} alt="" />
                 <span>Dashboard</span>
               </li>
+              </Link>
               <li className='side-nav-item'>
                 <img src={Details} alt="" />
                 <span>Land Details</span>
@@ -46,7 +53,10 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="main-page">
-        Main
+        <Routes>
+          <Route path="addrecord" element={<AddRecord />} />
+          <Route path="user" element={<UserDashboard />} />
+        </Routes>
       </div>
       {/* Page Content  */}
     </div>
