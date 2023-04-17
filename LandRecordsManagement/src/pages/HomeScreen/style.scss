@@ -12,7 +12,7 @@
                 flex: 7;
 
                 .content {
-                    margin: 10rem 2rem;
+                    margin: 8rem 2rem;
                     padding: 2rem;
                     display: flex;
                     flex-direction: column;
@@ -81,39 +81,14 @@
 
                 .images {
                     position: relative;
-                    top: 15;
+
 
                     .main-bg {
                         background-blend-mode: multiply;
-                        height: 55vh;
+                        height: 60vh;
                         object-fit: contain;
                     }
 
-                    .top-bg {
-                        background-blend-mode: multiply;
-                        position: absolute;
-                        bottom: 10;
-                        left: 0;
-                        height: 13vh;
-                        object-fit: contain;
-                    }
-
-                    .right-bg {
-                        position: absolute;
-                        bottom: 0;
-                        right: 0;
-                        height: 15vh;
-                        background-blend-mode: multiply;
-                    }
-
-                    .reliable-bg {
-                        background-blend-mode: multiply;
-                        position: absolute;
-                        top: 10;
-                        right: 0;
-                        height: 15vh;
-                        object-fit: contain;
-                    }
                 }
 
             }

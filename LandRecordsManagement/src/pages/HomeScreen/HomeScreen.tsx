@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navbar, ServiceCard } from '../../components';
-import { Secure, bgSvg, Bg, Records, Realiable, Efficient, Touch } from '../../assets';
+import { Secure, bgSvg, Bg, Records, Realiable, Efficient, Touch, HomeSVG } from '../../assets';
 import './style.scss'
 
 const HomeScreen = () => {
@@ -41,14 +41,11 @@ const HomeScreen = () => {
             </div>
             <div className="right">
               <div className="images">
-                <img src={Bg} alt="" className='main-bg' />
-                <img src={Realiable} alt="" className='reliable-bg' />
-                <img src={Secure} alt="" className='top-bg' />
-                <img src={Records} alt="" className='right-bg' />
+                <img src={HomeSVG} alt="" className='main-bg' />
               </div>
             </div>
           </div>
-          <img src={bgSvg} alt="" />
+          <img src={bgSvg} alt="" style={{ width : "100%" , objectFit: "fill" }} />
         </div>
         <h1 className='section-heading'> Services & Features</h1>
         <section id='features'>
