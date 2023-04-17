@@ -9,8 +9,8 @@
      border: 1px solid $base_color;
      border-radius: 25px;
      padding: 1rem 0.5rem;
-     max-height: 41vh;
-     overflow-y: hidden;
+     height: 100%;
+     
      .image{
          img{
              width: 10rem;
@@ -30,7 +30,10 @@
         }
         p{
             color: $text_color;
-            font-size: 15px;        }
+            font-size: 15px;
             letter-spacing: 0.01em;
+           
+        }
+           
      }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navbar, ServiceCard } from '../../components';
-import { Secure, bgSvg, Bg, Records, Realiable, Efficient, Touch } from '../../assets';
+import { Secure, bgSvg, Bg, Realiable, Efficient, Touch, HomeSVG } from '../../assets';
 import './style.scss'
 
 const HomeScreen = () => {
@@ -41,14 +41,11 @@ const HomeScreen = () => {
             </div>
             <div className="right">
               <div className="images">
-                <img src={Bg} alt="" className='main-bg' />
-                <img src={Realiable} alt="" className='reliable-bg' />
-                <img src={Secure} alt="" className='top-bg' />
-                <img src={Records} alt="" className='right-bg' />
+                <img src={HomeSVG} alt="" className='main-bg' />
               </div>
             </div>
           </div>
-          <img src={bgSvg} alt="" />
+          <img src={bgSvg} alt="" style={{ width : "100%" , objectFit: "fill" }} />
         </div>
         <h1 className='section-heading'> Services & Features</h1>
         <section id='features'>
@@ -57,7 +54,7 @@ const HomeScreen = () => {
               <ServiceCard imgSource={Efficient} desc={"Our system eliminates the need for intermediaries such as lawyers or notaries, reducing the cost and time associated with the land registration process. With our platform, landowners can easily register their properties and record their ownership details on the blockchain, ensuring that the information is tamper-proof and cannot be altered or deleted by any party."} cardHeading={"Efficient and Transparent"} />
             </div>
             <div className="grid-item">
-              <ServiceCard imgSource={Secure} desc={"Our platform provides a transparent and secure way to store and share land records. All transactions are verified by the network of nodes on the Ethereum blockchain, which ensures that the data is accurate and trustworthy. With our platform, users can access all the relevant information about a particular property, including ownership details, property boundaries, and any liens or encumbrances, in a secure and transparent manner."} cardHeading={"Secure and Trustworthy"} />
+              <ServiceCard imgSource={Secure} desc={"Our platform provides a transparent and secure way to store and share land records. All transactions are verified by the network of nodes on the Ethereum blockchain, which ensures that the data is accurate and trustworthy."} cardHeading={"Secure and Trustworthy"} />
             </div>
             <div className="grid-item">
               <ServiceCard imgSource={Realiable} desc={"Our team of experienced developers and blockchain experts is dedicated to delivering a user-friendly and reliable platform for land record management. We are committed to ensuring the highest level of security and privacy for our users, and we are constantly working to improve our platform's functionality and user experience."} cardHeading={"User-Friendly and Reliable"} />

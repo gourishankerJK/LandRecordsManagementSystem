@@ -24,7 +24,20 @@ contract LandManagementSystem {
         bool isForSale;
         bool isVerified;
     }
+    struct UserData {
+        string name;
+        string dateOfBirth;
+        string aadharNumber;
+        string profilePhoto;
+        string officialDocument;
+        bool isVerified;
+        address my;
+    }
 
+    mapping(address => UserData) private userDataMap;
+    mapping(string => bool) private AadharNumber;
+    mapping(string => UserData) private aadToUser;
+    mapping(string => uint256[]) private landIdsMap;
     mapping(uint256 => LandRecord) private landRecords;
     mapping(address => bool) private governmentOfficials;
     mapping(uint256 => bool) private _mutationNumbers;
@@ -35,6 +48,101 @@ contract LandManagementSystem {
 
     constructor() {
         admin = msg.sender;
+    }
+
+    modifier onlyVerifiedUser() {
+        require(userDataMap[msg.sender].isVerified, "User not verified");
+        _;
+    }
+
+    function addUser(
+        string memory _name,
+        string memory _dateOfBirth,
+        string memory _aadharNumber,
+        string memory _profilePhoto,
+        string memory _officialDocument
+    ) public {
+        require(msg.sender != address(0), "Invalid user address");
+        require(AadharNumber[_aadharNumber] == false, "User already exists");
+        userDataMap[msg.sender] = UserData({
+            name: _name,
+            dateOfBirth: _dateOfBirth,
+            aadharNumber: _aadharNumber,
+            profilePhoto: _profilePhoto,
+            officialDocument: _officialDocument,
+            isVerified: false,
+            my: msg.sender
+        });
+        AadharNumber[_aadharNumber] = true;
+        aadToUser[_aadharNumber] = userDataMap[msg.sender];
+    }
+
+    function getOwnProfile()
+        public
+        view
+        returns (
+            string memory,
+            string memory,
+            string memory,
+            string memory,
+            bool,
+            address,
+            uint256[] memory
+        )
+    {
+        require(msg.sender == address(0), "Invalid user address");
+        UserData memory user = userDataMap[msg.sender];
+
+        return (
+            user.name,
+            user.dateOfBirth,
+            user.profilePhoto,
+            user.officialDocument,
+            user.isVerified,
+            user.my,
+            landIdsMap[user.aadharNumber]
+        );
+    }
+
+    function getUserProfile(
+        string memory _aadharNumber
+    )
+        public
+        view
+        returns (
+            string memory,
+            string memory,
+            string memory,
+            string memory,
+            bool,
+            address,
+            uint256[] memory
+        )
+    {
+        UserData memory user = aadToUser[_aadharNumber];
+
+        return (
+            user.name,
+            user.dateOfBirth,
+            user.profilePhoto,
+            user.officialDocument,
+            user.isVerified,
+            user.my,
+            landIdsMap[user.aadharNumber]
+        );
+    }
+
+    function removeLandFromUser(address user, uint256 landId) internal {
+        uint256[] storage userLandIds = landIdsMap[
+            userDataMap[user].aadharNumber
+        ];
+        for (uint i = 0; i < userLandIds.length; i++) {
+            if (userLandIds[i] == landId) {
+                userLandIds[i] = userLandIds[userLandIds.length - 1];
+                userLandIds.pop();
+                return;
+            }
+        }
     }
 
     event LandForSale(uint256 indexed id, address indexed owner, uint256 price);
@@ -87,7 +195,7 @@ contract LandManagementSystem {
         string memory _recordHash,
         uint256 _price,
         bool _isForSale
-    ) public {
+    ) public onlyVerifiedUser {
         require(bytes(_name).length > 0, "Name cannot be empty.");
         require(bytes(_location.state).length > 0, "State cannot be empty.");
         require(
@@ -131,6 +239,7 @@ contract LandManagementSystem {
         );
         totalLands++;
         _mutationNumbers[_mutationNumber] = true;
+        landIdsMap[userDataMap[msg.sender].aadharNumber].push(totalLands - 1);
     }
 
     function getLandRecord(
@@ -138,6 +247,7 @@ contract LandManagementSystem {
     )
         public
         view
+        onlyVerifiedUser
         returns (
             uint256,
             string memory,
@@ -161,6 +271,14 @@ contract LandManagementSystem {
         );
     }
 
+    function verifyUser(address _user) public onlyGovernmentOfficial {
+        require(
+            userDataMap[_user].isVerified == false,
+            "This land record is already verified."
+        );
+        userDataMap[_user].isVerified = true;
+    }
+
     function verifyLandRecord(uint256 _id) public onlyGovernmentOfficial {
         require(
             landRecords[_id].isVerified == false,
@@ -169,7 +287,7 @@ contract LandManagementSystem {
         landRecords[_id].isVerified = true;
     }
 
-    function buyLand(uint256 _id) public payable {
+    function buyLand(uint256 _id) public payable onlyVerifiedUser {
         require(
             landRecords[_id].isVerified,
             "Land is not verified by the officials"
@@ -177,17 +295,20 @@ contract LandManagementSystem {
         require(landRecords[_id].isForSale, "Land is not for sale");
         require(msg.value == landRecords[_id].price, "Incorrect amount sent");
 
-        landRecords[_id].owner = msg.sender;
-        landRecords[_id].isForSale = false;
+        transferOwnership(_id, msg.sender);
 
         emit LandSold(_id, msg.sender, landRecords[_id].price);
     }
 
-    function sellLand(uint256 _id, uint256 _price) public onlyOwner(_id) {
+    function sellLand(
+        uint256 _id,
+        uint256 _price
+    ) public onlyVerifiedUser onlyOwner(_id) {
         require(
             landRecords[_id].isVerified,
             "Land is not verified by the officials"
         );
+        require(_id >= 0 && _id < totalLands, "Invalid Land iD");
 
         landRecords[_id].isForSale = true;
         landRecords[_id].price = _price;
@@ -198,15 +319,15 @@ contract LandManagementSystem {
     function transferOwnership(
         uint256 _id,
         address newOwner
-    ) public onlyOwner(_id) {
+    ) public onlyOwner(_id) onlyVerifiedUser {
         require(newOwner != address(0), "Invalid address");
         require(
             landRecords[_id].owner != newOwner,
             "You can't transfer the ownership to yourself"
         );
-
+        removeLandFromUser(landRecords[_id].owner, _id);
         landRecords[_id].owner = newOwner;
-
+        landRecords[_id].isForSale = false;
         emit OwnershipTransferred(landRecords[_id].owner, newOwner);
     }
 
@@ -230,67 +351,29 @@ contract LandManagementSystem {
         return governmentOfficials[msg.sender];
     }
 
-    // Get the count of all land records
-    function getLandRecordCount() public view returns (uint256) {
-        return totalLands;
-    }
-
     // Get all verified land records
-    function getVerifiedLandRecords()
+    function getAllLandRecords()
         public
         view
+        onlyVerifiedUser
         returns (LandRecord[] memory)
     {
-        uint256 verifiedCount = 0;
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].isVerified) {
-                verifiedCount++;
-            }
-        }
-
-        LandRecord[] memory verifiedRecords = new LandRecord[](verifiedCount);
+        LandRecord[] memory rcs = new LandRecord[](totalLands);
         uint256 index = 0;
         for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].isVerified) {
-                verifiedRecords[index] = landRecords[i];
-                index++;
-            }
+            rcs[index] = landRecords[i];
+            index++;
         }
 
-        return verifiedRecords;
+        return rcs;
     }
 
     // Get all unverified land records
-    function getUnverifiedLandRecords()
-        public
-        view
-        returns (LandRecord[] memory)
-    {
-        uint256 unverifiedCount = 0;
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (!landRecords[i].isVerified) {
-                unverifiedCount++;
-            }
-        }
-
-        LandRecord[] memory unverifiedRecords = new LandRecord[](
-            unverifiedCount
-        );
-        uint256 index = 0;
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (!landRecords[i].isVerified) {
-                unverifiedRecords[index] = landRecords[i];
-                index++;
-            }
-        }
-
-        return unverifiedRecords;
-    }
 
     // Get all land records for the current user
     function getLandRecordsForCurrentUser(
         address _user
-    ) public view returns (LandRecord[] memory) {
+    ) public view onlyVerifiedUser returns (LandRecord[] memory) {
         uint256 userCount = 0;
         for (uint256 i = 0; i < totalLands; i++) {
             if (landRecords[i].owner == _user) {
@@ -312,16 +395,5 @@ contract LandManagementSystem {
 
     function whoIsAdmin() public view returns (address) {
         return admin;
-    }
-
-    function getLandIdByMutationNumber(
-        uint256 mutationNumber
-    ) public view returns (uint256) {
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].mutationNumber == mutationNumber) {
-                return landRecords[i].id;
-            }
-        }
-        revert("Land with this mutation number not found");
     }
 }

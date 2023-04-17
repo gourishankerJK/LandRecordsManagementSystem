@@ -1,5 +1,6 @@
 module.exports = {
-	contracts_build_directory: '../LandRecordsManagement/src/contract',
+	contracts_build_directory: "../LandRecordsManagement/src/contract",
+
 	networks: {
 		loc_development_development: {
 			network_id: "*",
@@ -10,7 +11,11 @@ module.exports = {
 	mocha: {},
 	compilers: {
 		solc: {
-			version: "0.8.17",
+			version: "0.8.18",
+			optimizer: {
+				enabled: true,
+				runs: 10,
+			},
 		},
 	},
 };
