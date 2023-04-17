@@ -27,7 +27,7 @@ const AddRecord = () => {
   const [error, setError] = useState(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event:any) => {
     const { name, value, type, checked } = event.target;
     if (type === 'checkbox') {
       setFormData(prevState => ({ ...prevState, [name]: checked }));
@@ -36,7 +36,7 @@ const AddRecord = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
     setLoading(true);
 
@@ -197,7 +197,7 @@ const AddRecord = () => {
         <button type="submit" disabled={loading}>
           {loading ? 'Adding Record...' : 'Add Record'}
         </button>
-        {error && <p>{error.message}</p>}
+        {error && <p>{error?.message}</p>}
 
       </form>
 

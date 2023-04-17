@@ -1,7 +1,7 @@
 $base_color: #FF8533;
 $text_color: rgb(94, 93, 93);
 $heading_color: black;
-
+$dashboard_shadow:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
 // Medial Quries
 $xl: 1200px; // 4k and hi-res desktop
 $lg: 992px; // 1080 and hi-res laptops
@@ -33,3 +33,4 @@ $sm: 576px; // mobile and low-res tablets
     text-decoration: underline;
     color: #FF8533;
 }
+

@@ -21,7 +21,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<HomeScreen />} />
-      <Route exact={true} path='/dashboard/404'  element={<NotFound/>}/>
+      <Route path='/dashboard/404'  element={<NotFound/>}/>
       <Route
         path="/dashboard/*" element={<ProtectedRoute redirectPath="/"
           isAuthenticated={isAuthenticated}

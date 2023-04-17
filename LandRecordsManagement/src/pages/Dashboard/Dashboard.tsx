@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import './style.scss'
 import { Routes, Route, Link, Navigate } from 'react-router-dom'
-import { Loader , Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
-import AddRecord from '../AddRecord/AddRecord'
-import UserDashboard from '../UserDashboard/UserDashboard'
+import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
+import { AddRecord, UserDashboard, Profile } from '../index'
+import LandDetails from '../LandDetails/LandDetails'
 const Dashboard = () => {
   return (
     <div id='dashboard'>
@@ -28,14 +28,18 @@ const Dashboard = () => {
                   <span>Dashboard</span>
                 </li>
               </Link>
-              <li className='side-nav-item'>
-                <img src={Details} alt="" />
-                <span>Land Details</span>
-              </li>
-              <li className='side-nav-item'>
-                <img src={SettingIcon} alt="" />
-                <span>Profile</span>
-              </li>
+              <Link style={{ textDecoration: "none" }} to='/dashboard/land-details'>
+                <li className='side-nav-item'>
+                  <img src={Details} alt="" />
+                  <span>Land Details</span>
+                </li>
+              </Link>
+              <Link style={{ textDecoration: "none" }} to='/dashboard/profile'>
+                <li className='side-nav-item'>
+                  <img src={SettingIcon} alt="" />
+                  <span>Profile</span>
+                </li>
+              </Link>
             </ul>
           </div>
           <div className="side-menu-bottom" >
@@ -56,9 +60,11 @@ const Dashboard = () => {
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="land-details" element={<LandDetails />} />
           <Route path="admin" element={<UserDashboard />} />
-          <Route exact path="/"  element={null}/>
-          <Route path="*"  element={<Navigate to='404'/>}/>
+          <Route path="/" element={null} />
+          <Route path="*" element={<Navigate to='404' />} />
         </Routes>
       </div>
       {/* Page Content  */}
