@@ -1,15 +1,18 @@
+
 const fs = require('fs');
 const path = require('path');
+const UserRecords = artifacts.require("UserRecords");
+const LandManagementSystem = artifacts.require("LandManagementSystem");
 
-const MyContract = artifacts.require('LandManagementSystem');
-
-module.exports = async function(deployer, network) {
-  await deployer.deploy(MyContract);
-  const myContractInstance = await MyContract.deployed();
-const addressFilePath = "../LandRecordsManagement/src/contract/" + 'MyContract_address.json';
+module.exports = async function (deployer) {
+  await deployer.deploy(UserRecords);
+  const userRecordsInstance = await UserRecords.deployed();
+  await deployer.deploy(LandManagementSystem, userRecordsInstance.address);
+  const landRecordsInstance = await LandManagementSystem.deployed();
+  const addressFilePath = "../LandRecordsManagement/src/contract/" + 'MyContract_address.json';
   const addressObject = {
-    address: myContractInstance.address,
-    network: network
+    Land_address: landRecordsInstance.address,
+    User_address : userRecordsInstance.address
   };
   fs.writeFileSync(addressFilePath, JSON.stringify(addressObject));
 };

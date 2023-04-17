@@ -1,28 +1,36 @@
-
 import React, { useState } from 'react';
 import LoginContext from './LoginContext';
 import Web3 from 'web3';
-import abiFile from '../contract/LandManagementSystem.json';
+import { AbiItem } from 'web3-utils';
+import landAbiFile from '../contract/LandManagementSystem.json';
+import userAbiFile from '../contract/UserRecords.json';
 import contractAdress from '../contract/MyContract_address.json';
+
+interface CustomWindow extends Window {
+  ethereum?: any;
+}
 
 interface LoginProviderProps {
   children: React.ReactNode;
 }
-
 function LoginProvider(props: LoginProviderProps): JSX.Element {
   const [accounts, setAccounts] = useState<string[]>();
-  const [contract, setContract] = useState<Web3.eth.Contract>();
+  const [landContract, setLandContract] = useState<Web3.eth.Contract>();
+  const [userContract, setUserContract] = useState<Web3.eth.Contract>();
   const [error, setError] = useState<string>('');
 
   const connectMetamask = async (): Promise<void> => {
-    if (window.ethereum) {
+    const customWindow = window as CustomWindow;
+    if (customWindow.ethereum) {
       try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const web3 = new Web3(window.ethereum);
+        await customWindow.ethereum.request({ method: 'eth_requestAccounts' });
+        const web3 = new Web3(customWindow.ethereum);
         const accounts = await web3.eth.getAccounts();
-        const contract = new web3.eth.Contract(abiFile.abi, contractAdress.address);
+        const lcontract = new web3.eth.Contract(landAbiFile.abi as AbiItem[], contractAdress.Land_address);
+        const ucontract = new web3.eth.Contract(userAbiFile.abi as AbiItem[], contractAdress.User_address);
         setAccounts(accounts);
-        setContract(contract);
+        setLandContract(lcontract);
+        setUserContract(ucontract);
       } catch (error) {
         console.error(error);
       }
@@ -32,12 +40,16 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
   };
 
   const updateMetaMask = async (): Promise<void> => {
-    if (window.ethereum && window.ethereum.selectedAddress) {
+    const customWindow = window as CustomWindow;
+    if (customWindow.ethereum && customWindow.ethereum.selectedAddress) {
       try {
-        const web3 = new Web3(window.ethereum);
-        const contract = new web3.eth.Contract(abiFile.abi, contractAdress.address);
-        setAccounts([window.ethereum.selectedAddress]);
-        setContract(contract);
+        const web3 = new Web3(customWindow.ethereum);
+        const lcontract = new web3.eth.Contract(landAbiFile.abi as AbiItem[], contractAdress.Land_address);
+        const ucontract = new web3.eth.Contract(userAbiFile.abi as AbiItem[], contractAdress.User_address);
+      
+        setAccounts([customWindow.ethereum.selectedAddress]);
+        setLandContract(lcontract);
+        setUserContract(ucontract);
       } catch (error) {
         console.error(error);
       }
@@ -45,14 +57,13 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
   };
 
   const isAuthenticated = (): boolean => {
-    return Boolean(window.ethereum && window.ethereum.selectedAddress);
+    const customWindow = window as CustomWindow;
+    return Boolean(customWindow.ethereum && customWindow.ethereum.selectedAddress);
   };
-
-
 
   return (
     <LoginContext.Provider
-      value={{ accounts, contract, error, setAccounts, setContract, setError, connectMetamask, updateMetaMask, isAuthenticated  }}
+      value={{ accounts, landContract, userContract, error, setAccounts, setLandContract, setUserContract, setError, connectMetamask, updateMetaMask, isAuthenticated }}
     >
       {props.children}
     </LoginContext.Provider>

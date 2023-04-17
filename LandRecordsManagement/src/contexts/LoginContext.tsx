@@ -2,10 +2,12 @@ import { createContext } from 'react';
 
 interface LoginContextType {
     accounts: any;
-    contract: any;
+    landContract: any;
+    userContract : any;
     error: string;
     setAccounts: (value : Array<string>) => void;
-    setContract: (value : any) => void;
+    setLandContract: (value : any) => void;
+    setUserContract: (value : any) => void;
     setError: (value : string) => void;
     connectMetamask : () => void;
     updateMetaMask : ()=> void;
@@ -13,10 +15,12 @@ interface LoginContextType {
   }
 const LoginContext = createContext<LoginContextType>({
     accounts: new Array<string>(),
-    contract : "",
+    landContract : "",
+    userContract : "",
     error : "",
     setAccounts: () => {}  ,
-    setContract : () =>{},
+    setLandContract : () =>{},
+    setUserContract : () =>{},
     setError : ()=>{} ,
     connectMetamask : ()=>{},
     updateMetaMask : ()=>{},
