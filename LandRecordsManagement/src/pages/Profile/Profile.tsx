@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './style.scss'
 import { Bg, Verified } from '../../assets'
 import Input from '../../components/common/Input'
+import profileValidationSchema from '../../Utils/Validations/ProfieValidations'
+import { Formik } from 'formik'
 
 interface ProfilePageProps {
   name: string
@@ -17,57 +19,137 @@ const Profile: React.FC<ProfilePageProps> = ({
   aadharNumber,
 }) => {
   const [profile, setProfile] = useState(false)
+  const [loading, setLoading] = useState(false)
   let img = 'sff'
-  const handleInputChange = () => {}
+  const submitHandler = (values: any) => {
+    console.log(values)
+  }
   return (
     <>
       {!profile ? (
-        <div className='profile-form'>
-          <h3 className='profile-heading'>Complete Your Profile</h3>
-          <div className='container'>
-            <div className='form-ele'>
-              <div className='profile-img'>
-                {!img ? (
-                  <span className='avatar'>
-                    <p className='initials'>AB</p>
-                  </span>
-                ) : (
-                  <img src={Bg} alt='Profile Img' height='150' />
-                )}
-              </div>
-              <Input
-                id='Images'
-                type='file'
-                onChange={handleInputChange}
-                accept='image/*'
-                label={'Images'}
-                value={''}
-              />
+        <Formik
+          validationSchema={profileValidationSchema}
+          initialValues={{
+            name: '',
+            dob: '',
+            officialdoc: '',
+            adhar: '',
+            profileimg: '',
+          }}
+          onSubmit={(values) => submitHandler(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            isValid,
+          }) => (
+            <div className='profile-form'>
+              <h3 className='profile-heading'>Complete Your Profile</h3>
+              <form onSubmit={handleSubmit}>
+                <div className='container'>
+                  <div className='form-ele'>
+                    <div className='profile-img'>
+                      {!img ? (
+                        <span className='avatar'>
+                          <p className='initials'>AB</p>
+                        </span>
+                      ) : (
+                        <img
+                          src={Bg}
+                          id='profileimg'
+                          alt='Profile Img'
+                          height='150'
+                        />
+                      )}
+                    </div>
+                    <Input
+                      id='Images'
+                      type='file'
+                      onChange={handleChange}
+                      accept='image/*'
+                      label={'Images'}
+                      name='profileimg'
+                      value={values.profileimg}
+                    />
+                    {errors.profileimg && (
+                      <p style={{ fontSize: 10, color: 'red' }}>
+                        {errors.profileimg}
+                      </p>
+                    )}
+                  </div>
+                  <div className='row'>
+                    <div className='col'>
+                      <Input
+                        id='name'
+                        label='Full Name'
+                        name='name'
+                        value={values.name}
+                        onChange={handleChange}
+                      />
+                      {errors.name && (
+                        <p style={{ fontSize: 10, color: 'red' }}>
+                          {errors.name}
+                        </p>
+                      )}
+                    </div>
+                    <div className='col'>
+                      <Input
+                        id='dob'
+                        label='Date Of Birth:'
+                        name='dob'
+                        type='date'
+                        value={values.dob}
+                        onChange={handleChange}
+                      />
+                      {errors.dob && (
+                        <p style={{ fontSize: 10, color: 'red' }}>
+                          {errors.dob}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col'>
+                      <Input
+                        id='adhar'
+                        label='Adhar Numbeer'
+                        name='adhar'
+                        value={values.adhar}
+                        onChange={handleChange}
+                      />
+                      {errors.adhar && (
+                        <p style={{ fontSize: 10, color: 'red' }}>
+                          {errors.adhar}
+                        </p>
+                      )}
+                    </div>
+                    <div className='col'>
+                      <Input
+                        id='officialDoc'
+                        type='file'
+                        onChange={handleChange}
+                        accept='image/*'
+                        label={'Official Document'}
+                        value={values.officialdoc}
+                      />
+                      {errors.officialdoc && (
+                        <p style={{ fontSize: 10, color: 'red' }}>
+                          {errors.officialdoc}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <button type='submit' disabled={loading}>
+                    {loading ? 'Updating Profile...' : 'Update Profile'}
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className='row'>
-              <div className='col'>
-                <Input
-                  id='name'
-                  label='Full Name'
-                  name='name'
-                  value={''}
-                  onChange={handleInputChange}
-                 
-                />
-              </div>
-              <div className='col'>
-                <Input
-                  id='dob'
-                  label='Date Of Birth:'
-                  name='dob'
-                  type='date'
-                  value={'formData.location.district'}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          )}
+        </Formik>
       ) : (
         <div className='profile-page'>
           <div className='profile-header'>

@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "ethers": "^6.3.0",
+    "formik": "^2.2.9",
     "ipfs-http-client": "^60.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.10.0",
-    "web3": "^1.9.0"
+    "web3": "^1.9.0",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

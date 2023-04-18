@@ -81,7 +81,7 @@
           width: 100px; /* specify your desired size */
           height: 100px; /* specify your desired size */
           border-radius: 50%; /* creates a circular shape */
-         background: #eee; /* specify your desired background color */
+          background: #eee; /* specify your desired background color */
           border: 0.5px solid #000; /* specify your desired border color and width */
           overflow: hidden; /* ensures text does not overflow */
           .initials {
@@ -100,10 +100,13 @@
         }
       }
     }
-    .row{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      @include responsive($lg) {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
   }
 }
