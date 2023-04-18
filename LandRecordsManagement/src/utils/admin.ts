@@ -7,3 +7,13 @@ export const  getAllUsers = async (contract :any, accounts :any)=>{
        console.log(data);
        
 }
+
+export const getProfile = async (contract , accounts)=>{
+       try{
+            const data = await contract.methods.getOwnProfile().call({from : accounts[0]});
+            return data;
+       }
+       catch(err){
+              return null;
+       }
+}

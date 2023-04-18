@@ -39,8 +39,9 @@ const Navbar: FC<navbarProps> = ({ modalIsOpen, openModal, afterOpenModal, subti
           {accounts && accounts.length > 0 ? <li className='nav-link'>
             <div className="ele">
               <img src={Login} alt="" />
-              <span><Link to='/dashboard'>
-                Dashboard</Link> </span>
+              <span>
+                <Link to='/dashboard/profile'>Dashboard</Link>
+              </span>
             </div>
           </li> : (<li className='nav-link'>
             <div className="ele">

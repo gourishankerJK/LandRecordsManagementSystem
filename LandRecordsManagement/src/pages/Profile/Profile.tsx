@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
 import { Bg, Verified } from '../../assets'
 import Input from '../../components/common/Input'
-import profileValidationSchema from '../../Utils/Validations/ProfieValidations'
+import profileValidationSchema from '../../utils/Validations/ProfieValidations'
 import { Formik } from 'formik'
+import { getProfile } from '../../utils/admin'
+import LoginContext from '../../contexts/LoginContext'
 
 interface ProfilePageProps {
   name: string
@@ -18,12 +20,21 @@ const Profile: React.FC<ProfilePageProps> = ({
   verified,
   aadharNumber,
 }) => {
-  const [profile, setProfile] = useState(false)
+
+  const { accounts, userContract } = useContext(LoginContext);
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
   let img = 'sff'
   const submitHandler = (values: any) => {
     console.log(values)
   }
+  useEffect(() => {
+    async function fetch() {
+      const data = await getProfile(userContract, accounts);
+      if (data) setProfile(data);
+    }
+    fetch();
+  }, [profile])
   return (
     <>
       {!profile ? (
