@@ -31,19 +31,38 @@ const AddRecord = () => {
     const { name, value, type, checked } = event.target;
     if (type === 'checkbox') {
       setFormData(prevState => ({ ...prevState, [name]: checked }));
+    } else if (name.startsWith('location.')) {
+      const field = name.substring(9); // remove "location." from name
+      setFormData(prevState => ({
+        ...prevState,
+        location: {
+          ...prevState.location,
+          [field]: value
+        }
+      }));
     } else {
+      console.log([name] , value);
       setFormData(prevState => ({ ...prevState, [name]: value }));
     }
   };
+  
 
   const handleSubmit = async (event:any) => {
     event.preventDefault();
     setLoading(true);
 
-    console.log("Gdsf");
+    console.log(formData);
     try {
-      await landContract.methods
-        .addLandRecord(
+      await landContract.methods.addLandRecord(
+        formData.name,
+        formData.mutationNumber,
+        formData.location,
+        formData.recordHash,
+        formData.price,
+        formData.isForSale
+      )
+      .call({ from: accounts[0] });
+      await landContract.methods.addLandRecord(
           formData.name,
           formData.mutationNumber,
           formData.location,
@@ -72,6 +91,7 @@ const AddRecord = () => {
         isForSale: false
       });
     } catch (err) {
+      console.log(err);
       setLoading(false);
     }
   };
