@@ -13,7 +13,7 @@ contract UserRecords {
         address my;
     }
 
-    mapping(address =>  UserData) public userDataMap;
+    mapping(address => UserData) public userDataMap;
     mapping(string => bool) public AadharNumber;
     mapping(string => UserData) public aadToUser;
     mapping(string => uint256[]) public landIdsMap;
@@ -22,33 +22,44 @@ contract UserRecords {
     UserData[] private userRecords;
     address private admin;
 
-    constructor(){
-          admin = msg.sender;
+    constructor() {
+        admin = msg.sender;
     }
 
+    event LogDebug(string message);
 
-     event LogDebug(string message);
-
-     modifier onlyAdmin() {
-        require(msg.sender == admin,"You are not authorized to perform this action.");
+    modifier onlyAdmin() {
+        require(
+            msg.sender == admin,
+            "You are not authorized to perform this action."
+        );
         _;
     }
+
     function isUserVerified(address user) public view returns (bool) {
         return userDataMap[user].isVerified;
     }
 
-    function addUser(string memory _name,string memory _dateOfBirth,string memory _aadharNumber,string memory _profilePhoto,string memory _officialDocument) public {
+    function addUser(
+        string memory _name,
+        string memory _dateOfBirth,
+        string memory _aadharNumber,
+        string memory _profilePhoto,
+        string memory _officialDocument
+    ) public {
         require(msg.sender != address(0), "Invalid user address");
         require(AadharNumber[_aadharNumber] == false, "User already exists");
-        userRecords.push(UserData({
-            name: _name,
-            dateOfBirth: _dateOfBirth,
-            aadharNumber: _aadharNumber,
-            profilePhoto: _profilePhoto,
-            officialDocument: _officialDocument,
-            isVerified: false,
-            my: msg.sender
-        }));
+        userRecords.push(
+            UserData({
+                name: _name,
+                dateOfBirth: _dateOfBirth,
+                aadharNumber: _aadharNumber,
+                profilePhoto: _profilePhoto,
+                officialDocument: _officialDocument,
+                isVerified: false,
+                my: msg.sender
+            })
+        );
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
     }
@@ -57,27 +68,27 @@ contract UserRecords {
         public
         view
         returns (
-            string memory,
-            string memory,
-            string memory,
-            string memory,
-            bool,
-            address,
-            uint256[] memory
+            string memory name,
+            string memory dateOfBirth,
+            string memory profilePhoto,
+            string memory officialDocument,
+            bool isVerified,
+            address my,
+            uint256[] memory landIds
         )
     {
-        require(msg.sender == address(0), "Invalid user address");
-        UserData memory user = userDataMap[msg.sender];
+        require(msg.sender != address(0), "Invalid user address");
 
-        return (
-            user.name,
-            user.dateOfBirth,
-            user.profilePhoto,
-            user.officialDocument,
-            user.isVerified,
-            user.my,
-            landIdsMap[user.aadharNumber]
-        );
+        UserData memory user = userDataMap[msg.sender];
+        require(bytes(user.name).length > 0, "Profile not found");
+
+        name = user.name;
+        dateOfBirth = user.dateOfBirth;
+        profilePhoto = user.profilePhoto;
+        officialDocument = user.officialDocument;
+        isVerified = user.isVerified;
+        my = user.my;
+        landIds = landIdsMap[user.aadharNumber];
     }
 
     function getUserProfile(
@@ -134,19 +145,26 @@ contract UserRecords {
     }
 
     function verifyUser(address _user) public {
-        require(isCurrentGovernmentOfficial() , "Only goverment officals can verify the user");
+        require(
+            isCurrentGovernmentOfficial(),
+            "Only goverment officals can verify the user"
+        );
         userDataMap[_user].isVerified = true;
     }
 
-     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {
+    function addGovernmentOfficial(address _officialAddress) public onlyAdmin {
         governmentOfficials[_officialAddress] = true;
     }
 
-    function removeGovernmentOfficial(address _officialAddress) public onlyAdmin {
+    function removeGovernmentOfficial(
+        address _officialAddress
+    ) public onlyAdmin {
         delete governmentOfficials[_officialAddress];
     }
 
-    function isGovernmentOfficial(address _officialAddress) public view returns (bool) {
+    function isGovernmentOfficial(
+        address _officialAddress
+    ) public view returns (bool) {
         return governmentOfficials[_officialAddress];
     }
 
@@ -164,21 +182,23 @@ contract UserRecords {
         return result;
     }
 
-     function isAdmin() public view returns(bool){
-        return msg.sender ==  admin;
+    function isAdmin() public view returns (bool) {
+        return msg.sender == admin;
     }
 
-      function whoIsAdmin() public view returns (address) {
+    function whoIsAdmin() public view returns (address) {
         return admin;
     }
 
-    function getAllUsers() public view returns(UserData[] memory , bool[] memory ){
-          bool[] memory govt = new bool[](userRecords.length);
-            for(uint256 i = 0;i<userRecords.length;i++){
-                     govt[i] = isGovernmentOfficial(userRecords[i].my);
-            }
-        return  (userRecords  , govt);
+    function getAllUsers()
+        public
+        view
+        returns (UserData[] memory, bool[] memory)
+    {
+        bool[] memory govt = new bool[](userRecords.length);
+        for (uint256 i = 0; i < userRecords.length; i++) {
+            govt[i] = isGovernmentOfficial(userRecords[i].my);
+        }
+        return (userRecords, govt);
     }
-
-
 }
