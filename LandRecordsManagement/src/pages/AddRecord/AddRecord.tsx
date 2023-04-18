@@ -5,7 +5,7 @@ import './style.scss'
 import Loader from '../../components/Loader/Loader';
 
 const AddRecord = () => {
-  const { accounts, contract } = useContext(LoginContext);
+  const { accounts, landContract : contract } = useContext(LoginContext);
   const [formData, setFormData] = useState({
     name: "",
     mutationNumber: "",
@@ -190,6 +190,7 @@ const AddRecord = () => {
           type="checkbox"
           checked={formData.isForSale}
           onChange={handleInputChange}
+          value = ""
         />
         <Input id="Images" type="file" ref={inputRef}
           onChange={handleInputChange}
