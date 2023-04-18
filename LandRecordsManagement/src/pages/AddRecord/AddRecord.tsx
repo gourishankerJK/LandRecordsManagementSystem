@@ -5,7 +5,7 @@ import './style.scss'
 import Loader from '../../components/Loader/Loader';
 
 const AddRecord = () => {
-  const { accounts, landContract : contract } = useContext(LoginContext);
+  const { accounts, landContract , userContract } = useContext(LoginContext);
   const [formData, setFormData] = useState({
     name: "",
     mutationNumber: "",
@@ -42,7 +42,7 @@ const AddRecord = () => {
 
     console.log("Gdsf");
     try {
-      await contract.methods
+      await landContract.methods
         .addLandRecord(
           formData.name,
           formData.mutationNumber,
