@@ -77,11 +77,10 @@
 
             .right {
                 flex: 6;
-
+                display: flex;
+                justify-content: flex-end;
                 .images {
-                    position: relative;
-
-
+                    
                     .main-bg {
                         background-blend-mode: multiply;
                         height: 60vh;

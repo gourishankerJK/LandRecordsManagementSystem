@@ -4,6 +4,8 @@ import { Routes, Route, Link, Navigate } from 'react-router-dom'
 import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
 import { AddRecord, UserDashboard, Profile } from '../index'
 import LandDetails from '../LandDetails/LandDetails'
+import AdminDashboard from '../AdminDashboard/AdminDashboard'
+import DashboardHeader from '../common/DashBoardHeader'
 const Dashboard = () => {
   return (
     <div id='dashboard'>
@@ -57,12 +59,13 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="main-page">
+        <DashboardHeader value = "Gouri Shanker"></DashboardHeader>
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<Profile name= { "Gouri Shanker"} aadharNumber='1234542131' verified  ={ true} photo ={DashboradIcon}  />} />
           <Route path="land-details" element={<LandDetails />} />
-          <Route path="admin" element={<UserDashboard />} />
+          <Route path="admin" element={<AdminDashboard />} />
           <Route path="/" element={null} />
           <Route path="*" element={<Navigate to='404' />} />
         </Routes>

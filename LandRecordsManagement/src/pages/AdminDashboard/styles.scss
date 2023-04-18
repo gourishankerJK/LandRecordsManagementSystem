@@ -1,0 +1,127 @@
+@import "../../App.scss";
+
+.admin-dashboard {
+	background-color: #f5f5f5;
+	padding: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+
+	.add-official {
+		display: flex;
+		align-items: center;
+		margin-bottom: 20px;
+
+		input[type="text"] {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			margin-right: 10px;
+		}
+
+		button {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: $base_color;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+
+			&:hover {
+				background-color: darken($base_color, 10%);
+			}
+		}
+	}
+
+	.officials {
+		background-color: white;
+		padding: 10px;
+		border-radius: 5px;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+		margin-bottom: 20px;
+
+		h2 {
+			margin-top: 0;
+			font-size: 24px;
+			font-weight: normal;
+			color: $base_color;
+			margin-bottom: 10px;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			li {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 10px;
+				border-bottom: 1px solid #f5f5f5;
+
+				&:last-child {
+					border-bottom: none;
+				}
+
+				button {
+					padding: 5px 10px;
+					border: none;
+					border-radius: 5px;
+					background-color: red;
+					color: white;
+					cursor: pointer;
+					transition: all 0.3s ease;
+
+					&:hover {
+						background-color: darken(red, 10%);
+					}
+				}
+			}
+		}
+	}
+
+	.users {
+		background-color: white;
+		padding: 10px;
+		border-radius: 5px;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+		h2 {
+			margin-top: 0;
+			font-size: 24px;
+			font-weight: normal;
+			color: $base_color;
+			margin-bottom: 10px;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			li {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 10px;
+				border-bottom: 1px solid #f5f5f5;
+
+				&:last-child {
+					border-bottom: none;
+				}
+
+				button {
+					padding: 5px 10px;
+					border: none;
+					border-radius: 5px;
+					cursor: pointer;
+					transition: all 0.3s ease;
+
+					&:hover {
+						background-color: #f5f5f5;
+					}
+				}
+			}
+		}
+	}
+}

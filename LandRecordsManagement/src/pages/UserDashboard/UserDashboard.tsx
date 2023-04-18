@@ -146,16 +146,6 @@ const UserDashboard = () => {
 
   return (
     <div id="user-dashboard">
-      <div className="header">
-        <h1 className="dash-heading">Welcome to Your Dashboard...</h1>
-        <div className="user-info">
-          <span className='icon'>R</span>
-          <div className="user">
-            <span className='name'>Rahul Chuadhary</span>
-            <img src={Verified} alt="verify" />
-          </div>
-        </div>
-      </div>
       <div className="content">
         <div className="grid2">
           <div className="col-1">

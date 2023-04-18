@@ -1,11 +1,28 @@
-import React from 'react'
+import React from 'react';
+import './style.scss';
+import { Verified } from '../../assets';
 
-const Profile = () => {
-  return (
-    <div >
-      <h1>Profile Page</h1>
-    </div>
-  )
+interface ProfilePageProps {
+  name: string;
+  photo: string;
+  verified: boolean;
+  aadharNumber: string;
 }
 
-export default Profile
+const Profile: React.FC<ProfilePageProps> = ({ name, photo, verified, aadharNumber }) => {
+  return (
+
+    <div className="profile-page">
+      <div className="profile-header">
+        <img src={photo} alt={name} />
+        <h1>{name}</h1>
+        {verified && <span className="verified-badge">Verified</span>}
+      </div>
+      <div className="aadhar-info">
+        <p>Aadhar number: {aadharNumber}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;

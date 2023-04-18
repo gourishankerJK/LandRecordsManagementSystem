@@ -13,13 +13,13 @@ contract UserRecords {
         address my;
     }
 
-    mapping(address => UserData) public userDataMap;
+    mapping(address =>  UserData) public userDataMap;
     mapping(string => bool) public AadharNumber;
     mapping(string => UserData) public aadToUser;
     mapping(string => uint256[]) public landIdsMap;
     mapping(address => bool) private governmentOfficials;
 
-
+    UserData[] private userRecords;
     address private admin;
 
     constructor(){
@@ -40,7 +40,7 @@ contract UserRecords {
     function addUser(string memory _name,string memory _dateOfBirth,string memory _aadharNumber,string memory _profilePhoto,string memory _officialDocument) public {
         require(msg.sender != address(0), "Invalid user address");
         require(AadharNumber[_aadharNumber] == false, "User already exists");
-        userDataMap[msg.sender] = UserData({
+        userRecords.push(UserData({
             name: _name,
             dateOfBirth: _dateOfBirth,
             aadharNumber: _aadharNumber,
@@ -48,7 +48,7 @@ contract UserRecords {
             officialDocument: _officialDocument,
             isVerified: false,
             my: msg.sender
-        });
+        }));
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
     }
@@ -134,6 +134,7 @@ contract UserRecords {
     }
 
     function verifyUser(address _user) public {
+        require(isCurrentGovernmentOfficial() , "Only goverment officals can verify the user");
         userDataMap[_user].isVerified = true;
     }
 
@@ -170,5 +171,14 @@ contract UserRecords {
       function whoIsAdmin() public view returns (address) {
         return admin;
     }
+
+    function getAllUsers() public view returns(UserData[] memory , bool[] memory ){
+          bool[] memory govt = new bool[](userRecords.length);
+            for(uint256 i = 0;i<userRecords.length;i++){
+                     govt[i] = isGovernmentOfficial(userRecords[i].my);
+            }
+        return  (userRecords  , govt);
+    }
+
 
 }
