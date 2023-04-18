@@ -128,11 +128,12 @@ const Profile: React.FC<ProfilePageProps> = ({
                     </div>
                     <div className='col'>
                       <Input
-                        id='officialDoc'
+                        id='officialdoc'
                         type='file'
                         onChange={handleChange}
                         accept='image/*'
                         label={'Official Document'}
+                        name='officialdoc'
                         value={values.officialdoc}
                       />
                       {errors.officialdoc && (
