@@ -6,6 +6,8 @@ import { AddRecord, UserDashboard, Profile } from '../index'
 import LandDetails from '../LandDetails/LandDetails'
 import AdminDashboard from '../AdminDashboard/AdminDashboard'
 import DashboardHeader from '../common/DashBoardHeader'
+import GovDashboard from '../GovOfficialDashboard/GovDashboard'
+
 const Dashboard = () => {
   return (
     <div id='dashboard'>
@@ -25,6 +27,12 @@ const Dashboard = () => {
                 </li>
               </Link>
               <Link style={{ textDecoration: "none" }} to='/dashboard/user'>
+                <li className='side-nav-item'>
+                  <img src={DashboradIcon} alt="" />
+                  <span>Dashboard</span>
+                </li>
+              </Link>
+              <Link style={{ textDecoration: "none" }} to='/dashboard/gov'>
                 <li className='side-nav-item'>
                   <img src={DashboradIcon} alt="" />
                   <span>Dashboard</span>
@@ -59,13 +67,14 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="main-page">
-        <DashboardHeader value = "Gouri Shanker"></DashboardHeader>
+        <DashboardHeader value = "Parvesh Barak"></DashboardHeader>
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
-          <Route path="profile" element={<Profile name= { "Gouri Shanker"} aadharNumber='1234542131' verified  ={ true} photo ={DashboradIcon}  />} />
+          <Route path="profile" element={<Profile name= { "Parvesh Barak"} aadharNumber='1234542131' verified  ={ true} photo ={DashboradIcon}  />} />
           <Route path="land-details" element={<LandDetails />} />
           <Route path="admin" element={<AdminDashboard />} />
+          <Route path="gov" element={<GovDashboard />} />
           <Route path="/" element={null} />
           <Route path="*" element={<Navigate to='404' />} />
         </Routes>
