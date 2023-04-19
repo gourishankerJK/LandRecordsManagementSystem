@@ -71,6 +71,7 @@ contract UserRecords {
         returns (
             string memory name,
             string memory dateOfBirth,
+            string memory aadharNumber,
             string memory profilePhoto,
             string memory officialDocument,
             bool isVerified,
@@ -85,6 +86,7 @@ contract UserRecords {
 
         name = user.name;
         dateOfBirth = user.dateOfBirth;
+        aadharNumber = user.aadharNumber;
         profilePhoto = user.profilePhoto;
         officialDocument = user.officialDocument;
         isVerified = user.isVerified;
@@ -102,6 +104,7 @@ contract UserRecords {
             string memory,
             string memory,
             string memory,
+            string memory,
             bool,
             address,
             uint256[] memory
@@ -113,6 +116,7 @@ contract UserRecords {
             user.name,
             user.dateOfBirth,
             user.profilePhoto,
+            user.aadharNumber,
             user.officialDocument,
             user.isVerified,
             user.my,

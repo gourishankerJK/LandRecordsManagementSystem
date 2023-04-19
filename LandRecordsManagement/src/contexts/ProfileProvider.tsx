@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { DefaultIcon } from '../assets'
 import ProfileContext,{ UserProfile }  from './ProfileContext'
 
 interface ProfileProviderProps {
@@ -17,6 +18,9 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     isVerified: false,
   })
 
+  const [profilePhoto, setProfilePhoto] = useState(DefaultIcon)
+  const [officialDocument, setOfficialDocument] = useState('')
+
   const updateProfile = (newProfile: UserProfile) => {
     setUserProfile(newProfile)
   }
@@ -24,6 +28,10 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   const contextValue = {
     userProfile,
     updateProfile,
+    profilePhoto,
+    officialDocument,
+    setOfficialDocument,
+    setProfilePhoto
   }
 
   return (

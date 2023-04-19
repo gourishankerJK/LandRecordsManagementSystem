@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { DefaultIcon } from '../assets'
 
 export interface UserProfile {
   name: string
@@ -11,7 +12,11 @@ export interface UserProfile {
 
 interface ProfileContextProps {
   userProfile: UserProfile
+  profilePhoto: string
+  officialDocument: string
   updateProfile: (newProfile: UserProfile) => void
+  setProfilePhoto: (value: any) => void
+  setOfficialDocument: (value: any) => void
 }
 
 const ProfileContext = createContext<ProfileContextProps>({
@@ -23,7 +28,11 @@ const ProfileContext = createContext<ProfileContextProps>({
     officialDocument: '',
     isVerified: false,
   },
+  officialDocument:"",
+  profilePhoto: DefaultIcon,
   updateProfile: () => {},
+  setProfilePhoto: () => {},
+  setOfficialDocument: () => {},
 })
 
 export default ProfileContext

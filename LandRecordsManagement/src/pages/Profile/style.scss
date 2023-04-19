@@ -32,7 +32,10 @@
       margin-bottom: 5px;
     }
 
-    .verified-badge {
+    .verified-badge,
+    .unverified-badge {
+      width: 20px;
+      height: 20px;
       background-color: $base_color;
       color: white;
       font-size: 12px;

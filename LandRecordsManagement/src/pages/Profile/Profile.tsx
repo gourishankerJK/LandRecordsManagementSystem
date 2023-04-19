@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
-import { Bg, DefaultIcon, Verified } from '../../assets'
+import { Bg, DefaultIcon, Verified, Unverified } from '../../assets'
 import Input from '../../components/common/Input'
 import profileValidationSchema from '../../utils/Validations/ProfieValidations'
 import { Formik } from 'formik'
@@ -8,6 +8,7 @@ import { getProfile } from '../../utils/admin'
 import LoginContext from '../../contexts/LoginContext'
 import { addData, getDataAsUrl } from '../../utils/ipfs'
 import { addProfile } from '../../utils/user'
+import ProfileContext from '../../contexts/ProfileContext'
 
 interface ProfilePageProps {
   name: string
@@ -24,9 +25,8 @@ const Profile: React.FC<ProfilePageProps> = ({
 }) => {
 
   const { accounts, userContract } = useContext(LoginContext);
-  const [profile, setProfile] = useState(null)
+  const {userProfile, updateProfile, profilePhoto, setProfilePhoto} = useContext(ProfileContext);
   const [loading, setLoading] = useState(false)
-  const [profilePhoto , setProfilePhoto]  = useState(DefaultIcon);
   const submitHandler = (values: any) => {
     const {name , dob , officialdoc , aadhar , profileimg} = values;
 
@@ -51,7 +51,7 @@ const Profile: React.FC<ProfilePageProps> = ({
       const data = await getProfile(userContract, accounts);
       if (data) {
         const temp = await getDataAsUrl(data.profilePhoto , 'image/jpeg');
-        setProfile(data);
+        updateProfile(data);
         setProfilePhoto(temp);
       }
 
@@ -60,9 +60,12 @@ const Profile: React.FC<ProfilePageProps> = ({
     fetch();
   }, [accounts]);
 
+
+  console.log('userProfile', userProfile)
+
   return (
     <>
-      {!profile ? (
+      {userProfile.name.length <= 0 ? (
         <Formik
           validationSchema={profileValidationSchema}
           initialValues={{
@@ -167,11 +170,11 @@ const Profile: React.FC<ProfilePageProps> = ({
         <div className='profile-page'>
           <div className='profile-header'>
             <img src={profilePhoto} alt={name} />
-            <h1>{name}</h1>
-            {verified && <span className='verified-badge'>Verified</span>}
+            <h1>{userProfile.name}</h1>
+            {userProfile.isVerified ? <img className='verified-badge' src={Verified}/> : <img className='unverified-badge' src={Verified}/>}
           </div>
           <div className='aadhar-info'>
-            <p>Aadhar number: {aadharNumber}</p>
+            <p>Aadhar number: {userProfile.aadharNumber}</p>
           </div>
         </div>
       )}
