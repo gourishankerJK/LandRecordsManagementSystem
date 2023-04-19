@@ -1,22 +1,29 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
-interface ProfileContextType {
-    accounts: any;
-    userContract : any;
-    error: string;
-    setAccounts: (value : Array<string>) => void;
-    setUserContract: (value : any) => void;
-    setError: (value : string) => void;
-    connectMetamask : () => void;
-  }
-const LoginContext = createContext<ProfileContextType>({
-    accounts: new Array<string>(),
-    userContract : "",
-    error : "",
-    setAccounts: () => {}  ,
-    setUserContract : () =>{},
-    setError : ()=>{} ,
-    connectMetamask : ()=>{},
-});
+export interface UserProfile {
+  name: string
+  dateOfBirth: string
+  aadharNumber: string
+  profilePhoto: string
+  officialDocument: string
+  isVerified: boolean
+}
 
-export default ProfileContext;
+interface ProfileContextProps {
+  userProfile: UserProfile
+  updateProfile: (newProfile: UserProfile) => void
+}
+
+const ProfileContext = createContext<ProfileContextProps>({
+  userProfile: {
+    name: '',
+    dateOfBirth: '',
+    aadharNumber: '',
+    profilePhoto: '',
+    officialDocument: '',
+    isVerified: false,
+  },
+  updateProfile: () => {},
+})
+
+export default ProfileContext
