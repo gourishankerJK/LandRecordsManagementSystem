@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
-import { Bg, Verified } from '../../assets'
+import { Bg, DefaultIcon, Verified } from '../../assets'
 import Input from '../../components/common/Input'
 import profileValidationSchema from '../../utils/Validations/ProfieValidations'
 import { Formik } from 'formik'
@@ -26,11 +26,11 @@ const Profile: React.FC<ProfilePageProps> = ({
   const { accounts, userContract } = useContext(LoginContext);
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [profilePhoto , setProfilePhoto]  = useState('');
-  let img = 'sff'
+  const [profilePhoto , setProfilePhoto]  = useState(DefaultIcon);
   const submitHandler = (values: any) => {
     const {name , dob , officialdoc , aadhar , profileimg} = values;
-    async function  inner() {
+
+    (async function() {
       const cidO = await addData(officialdoc);
       const cidP = await addData(profileimg);
 
@@ -42,12 +42,7 @@ const Profile: React.FC<ProfilePageProps> = ({
         officialDocument : cidO
       }
       await addProfile(userContract , accounts , obj); 
-      console.log(obj)
-    }
-    inner();
-    
-    console.log(values);
-    //  getFileFromPath(officialdoc);
+    })();
 
   }
 
@@ -55,9 +50,8 @@ const Profile: React.FC<ProfilePageProps> = ({
     async function fetch() {
       const data = await getProfile(userContract, accounts);
       if (data) {
-        setProfile(data);
         const temp = await getDataAsUrl(data.profilePhoto , 'image/jpeg');
-        console.log(temp);
+        setProfile(data);
         setProfilePhoto(temp);
       }
 
@@ -95,18 +89,13 @@ const Profile: React.FC<ProfilePageProps> = ({
                 <div className='container'>
                   <div className='form-ele'>
                     <div className='profile-img'>
-                      {!img ? (
-                        <span className='avatar'>
-                          <p className='initials'>AB</p>
-                        </span>
-                      ) : (
+                      
                         <img
-                          src={Bg}
+                          src={profilePhoto}
                           id='profileimg'
                           alt='Profile Img'
                           height='150'
                         />
-                      )}
                     </div>
                     <Input
                       id='Images'
