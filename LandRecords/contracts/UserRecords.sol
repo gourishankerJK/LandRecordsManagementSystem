@@ -60,6 +60,7 @@ contract UserRecords {
                 my: msg.sender
             })
         );
+        userDataMap[msg.sender] = userRecords[userRecords.length-1];
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
     }

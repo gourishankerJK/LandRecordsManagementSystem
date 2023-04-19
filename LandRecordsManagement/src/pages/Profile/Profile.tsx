@@ -6,6 +6,8 @@ import profileValidationSchema from '../../utils/Validations/ProfieValidations'
 import { Formik } from 'formik'
 import { getProfile } from '../../utils/admin'
 import LoginContext from '../../contexts/LoginContext'
+import { addData, getDataAsUrl } from '../../utils/ipfs'
+import { addProfile } from '../../utils/user'
 
 interface ProfilePageProps {
   name: string
@@ -24,17 +26,46 @@ const Profile: React.FC<ProfilePageProps> = ({
   const { accounts, userContract } = useContext(LoginContext);
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [profilePhoto , setProfilePhoto]  = useState('');
   let img = 'sff'
   const submitHandler = (values: any) => {
-    console.log(values)
+    const {name , dob , officialdoc , aadhar , profileimg} = values;
+    async function  inner() {
+      const cidO = await addData(officialdoc);
+      const cidP = await addData(profileimg);
+
+      const obj = {
+        name ,
+        dateOfBirth : dob,
+        aadharNumber : aadhar,
+        profilePhoto : cidP,
+        officialDocument : cidO
+      }
+      await addProfile(userContract , accounts , obj); 
+      console.log(obj)
+    }
+    inner();
+    
+    console.log(values);
+    //  getFileFromPath(officialdoc);
+
   }
+
   useEffect(() => {
     async function fetch() {
       const data = await getProfile(userContract, accounts);
-      if (data) setProfile(data);
+      if (data) {
+        setProfile(data);
+        const temp = await getDataAsUrl(data.profilePhoto , 'image/jpeg');
+        console.log(temp);
+        setProfilePhoto(temp);
+      }
+
+      
     }
     fetch();
-  }, [profile])
+  }, [accounts]);
+
   return (
     <>
       {!profile ? (
@@ -43,13 +74,14 @@ const Profile: React.FC<ProfilePageProps> = ({
           initialValues={{
             name: '',
             dob: '',
-            officialdoc: '',
-            adhar: '',
-            profileimg: '',
+            officialdoc: null,
+            aadhar: '',
+            profileimg: null,
           }}
           onSubmit={(values) => submitHandler(values)}
         >
           {({
+            setFieldValue,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -79,17 +111,13 @@ const Profile: React.FC<ProfilePageProps> = ({
                     <Input
                       id='Images'
                       type='file'
-                      onChange={handleChange}
+                      onChange={(event) => { setFieldValue('profileimg', event.currentTarget.files[0]); }}
                       accept='image/*'
-                      label={'Images'}
+                      label={'Profile Image'}
                       name='profileimg'
-                      value={values.profileimg}
+                      value=""
+                      errors = {errors}
                     />
-                    {errors.profileimg && (
-                      <p style={{ fontSize: 10, color: 'red' }}>
-                        {errors.profileimg}
-                      </p>
-                    )}
                   </div>
                   <div className='row'>
                     <div className='col'>
@@ -99,12 +127,8 @@ const Profile: React.FC<ProfilePageProps> = ({
                         name='name'
                         value={values.name}
                         onChange={handleChange}
+                        errors={ errors}
                       />
-                      {errors.name && (
-                        <p style={{ fontSize: 10, color: 'red' }}>
-                          {errors.name}
-                        </p>
-                      )}
                     </div>
                     <div className='col'>
                       <Input
@@ -114,44 +138,32 @@ const Profile: React.FC<ProfilePageProps> = ({
                         type='date'
                         value={values.dob}
                         onChange={handleChange}
+                        errors = {errors}
                       />
-                      {errors.dob && (
-                        <p style={{ fontSize: 10, color: 'red' }}>
-                          {errors.dob}
-                        </p>
-                      )}
                     </div>
                   </div>
-                  <div className='row'>
+                  <div className='row'> 
                     <div className='col'>
                       <Input
-                        id='adhar'
-                        label='Adhar Numbeer'
-                        name='adhar'
-                        value={values.adhar}
+                        id='aadhar'
+                        label='Aadhar Number'
+                        name='aadhar'
+                        value={values.aadhar}
                         onChange={handleChange}
+                        errors = {errors}
                       />
-                      {errors.adhar && (
-                        <p style={{ fontSize: 10, color: 'red' }}>
-                          {errors.adhar}
-                        </p>
-                      )}
                     </div>
                     <div className='col'>
                       <Input
                         id='officialdoc'
                         type='file'
-                        onChange={handleChange}
+                        onChange={(event) => { setFieldValue('officialdoc', event.currentTarget.files[0]); }}
                         accept='image/*'
                         label={'Official Document'}
                         name='officialdoc'
-                        value={values.officialdoc}
+                        value=""
+                        errors = {errors}
                       />
-                      {errors.officialdoc && (
-                        <p style={{ fontSize: 10, color: 'red' }}>
-                          {errors.officialdoc}
-                        </p>
-                      )}
                     </div>
                   </div>
                   <button type='submit' disabled={loading}>
@@ -165,7 +177,7 @@ const Profile: React.FC<ProfilePageProps> = ({
       ) : (
         <div className='profile-page'>
           <div className='profile-header'>
-            <img src={photo} alt={name} />
+            <img src={profilePhoto} alt={name} />
             <h1>{name}</h1>
             {verified && <span className='verified-badge'>Verified</span>}
           </div>

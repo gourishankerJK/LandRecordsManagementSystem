@@ -47,14 +47,14 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
         const web3 = new Web3(customWindow.ethereum);
         const lcontract = new web3.eth.Contract(landAbiFile.abi as AbiItem[], contractAdress.Land_address);
         const ucontract = new web3.eth.Contract(userAbiFile.abi as AbiItem[], contractAdress.User_address);
-
+        console.log('hello');
         setAccounts([customWindow.ethereum.selectedAddress]);
         setLandContract(lcontract);
         setUserContract(ucontract);
       } catch (error) {
         console.error(error);
       }
-    }
+    } else {console.log("Fucked up")};
   };
 
   const isAuthenticated = (): boolean => {

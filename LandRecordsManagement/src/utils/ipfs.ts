@@ -6,8 +6,10 @@ const ipfs = create({
   protocol: 'http'
 })
 
+
+
 // Function to insert data to IPFS
-export async function addData(data: string): Promise<string> {
+export async function addData(data : any): Promise<string> {
   try {
     const result = await ipfs.add(data)
     return result.cid.toString()
@@ -49,6 +51,7 @@ export async function getDataAsUrl(cid : string  ,type : string) {
         chunks.push(chunk);
     }
     const imageData = new Blob(chunks, { type: type });
+    console.log(imageData);
     return URL.createObjectURL(imageData);
 }
 

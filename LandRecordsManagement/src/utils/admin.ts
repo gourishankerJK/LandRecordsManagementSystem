@@ -14,6 +14,7 @@ export const getProfile = async (contract: any , accounts :any)=>{
             return data;
        }
        catch(err){
+              console.log(err);
               return null;
        }
 }
