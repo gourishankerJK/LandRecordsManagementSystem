@@ -1,0 +1,25 @@
+.box-input {
+	display: flex;
+	flex-direction: column;
+}
+.input {
+	padding: 0.5rem;
+	font-size: 15px;
+	letter-spacing: 0.02em;
+	border: 1px solid grey;
+	border-radius: 5px;
+	outline: #ff8533;
+}
+
+.label-input {
+	padding: 0.5rem 0;
+	font-size: 15px;
+	letter-spacing: 0.02em;
+}
+
+.input-checked {
+	flex-direction: row;
+    gap : 10px;
+    align-items: center;
+
+}

@@ -1,11 +1,12 @@
 import React from 'react'
-
+import './Input.scss';
 interface InputProps {
   label: string
-  name : string
-  value: string
+  name: string
+  value?: string
   id: string
-  errors: any
+  errors?: any
+  classes?: any
   onChange: (value: any) => void
   [x: string]: any
 }
@@ -17,37 +18,26 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   errors,
+  classes,
   ...rest
 }) => {
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className={`box-input ${classes}`}  >
         <label
           htmlFor={id}
-          style={{
-            padding: '0.5rem 0',
-            fontSize: '15px',
-            letterSpacing: '0.02em',
-          }}
+          className="label-input"
         >
           {label}
         </label>
         <input
-
           name={name}
           {...rest}
           onChange={onChange}
-          style={{
-            padding: '0.5rem',
-            fontSize: '15px',
-            letterSpacing: '0.02em',
-            border: '1px solid #FF8533',
-            outline: '#FF8533',
-            borderRadius: "5px"
-          }}
+          className= 'input'
         />
 
-        {errors[name] && (<p style={{ fontSize: 10, color: 'red' }}>{errors[name]}</p>)}
+        {errors && errors[name] && (<p style={{ fontSize: 10, color: 'red' }}>{errors[name]}</p>)}
       </div>
 
 

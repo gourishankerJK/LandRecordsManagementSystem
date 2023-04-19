@@ -24,6 +24,12 @@ $sm: 576px; // mobile and low-res tablets
     padding: .5rem 1rem;
     
 }
+.submit{
+  margin: 1rem 0;
+   background: $base_color;
+   color: #fff;
+   padding: 10px 10px;
+}
 .section-heading{
     font-size: 35px;
     font-weight: 500;
