@@ -171,10 +171,16 @@ const Profile: React.FC<ProfilePageProps> = ({
           <div className='profile-header'>
             <img src={profilePhoto} alt={name} />
             <h1>{userProfile.name}</h1>
-            {userProfile.isVerified ? <img className='verified-badge' src={Verified}/> : <img className='unverified-badge' src={Verified}/>}
+            {userProfile.isVerified ? <img className='verified-badge' src={Verified}/> : <img className='unverified-badge' src={Unverified}/>}
           </div>
           <div className='aadhar-info'>
             <p>Aadhar number: {userProfile.aadharNumber}</p>
+          </div>
+          <div className='dateOfBirth'>
+            <p>Date of Birth: {userProfile.dateOfBirth}</p>
+          </div>
+          <div className='totalLands'>
+            <p>Total Lands: {userProfile.landIds.length}</p>
           </div>
         </div>
       )}

@@ -7,6 +7,7 @@ export interface UserProfile {
   aadharNumber: string
   profilePhoto: string
   officialDocument: string
+  landIds:(value : Array<string>) => void
   isVerified: boolean
 }
 
@@ -26,6 +27,7 @@ const ProfileContext = createContext<ProfileContextProps>({
     aadharNumber: '',
     profilePhoto: '',
     officialDocument: '',
+    landIds: new Array<string>(),
     isVerified: false,
   },
   officialDocument:"",
