@@ -7,7 +7,7 @@ export interface UserProfile {
   aadharNumber: string
   profilePhoto: string
   officialDocument: string
-  landIds:(value : Array<string>) => void
+  landIds: Array<string>
   isVerified: boolean
 }
 

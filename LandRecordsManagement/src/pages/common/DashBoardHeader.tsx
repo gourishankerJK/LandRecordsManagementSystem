@@ -3,7 +3,7 @@ import { Verified } from '../../assets';
 import './styles.scss';
 
 const DashboardHeader = ({value }) => {
- 
+  console.log(value);
   return (
     <div id="header-dashboard">
       <div className="header">
@@ -11,7 +11,7 @@ const DashboardHeader = ({value }) => {
         <div className="user-info">
           <span className='icon'>R</span>
           <div className="user">
-            <span className='name'>{value}</span>
+            <span className='name'>{value.name}</span>
             <img src={Verified} alt="verify" />
           </div>
         </div>

@@ -6,6 +6,10 @@ module.exports = {
 			network_id: "*",
 			port: 8545,
 			host: "127.0.0.1",
+			database: {
+				dbPath: "file:./ganache_db",
+			  }
+			
 		},
 	},
 	mocha: {},

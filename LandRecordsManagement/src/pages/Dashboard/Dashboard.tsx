@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './style.scss'
 import { Routes, Route, Link, Navigate } from 'react-router-dom'
 import { Logo, Add, DashboradIcon, NotificationIcon, LogoutIcon, Details, SettingIcon } from '../../assets'
@@ -6,7 +6,26 @@ import { AddRecord, UserDashboard, Profile } from '../index'
 import LandDetails from '../LandDetails/LandDetails'
 import AdminDashboard from '../AdminDashboard/AdminDashboard'
 import DashboardHeader from '../common/DashBoardHeader'
+import LoginContext from '../../contexts/LoginContext'
+import ProfileContext from '../../contexts/ProfileContext'
+import { getProfile } from '../../utils/admin'
+import { getDataAsUrl } from '../../utils/ipfs'
 const Dashboard = () => {
+  const {updateMetaMask ,userContract , accounts} = useContext(LoginContext)
+  const { userProfile, updateProfile ,setProfilePhoto } = useContext(ProfileContext);
+  useEffect(() => {
+    updateMetaMask();
+    (async function fetch() {
+      const data = await getProfile(userContract, accounts);
+      if (data) {
+        const temp = await getDataAsUrl(data.profilePhoto, 'image/jpeg');
+        updateProfile(data);
+        setProfilePhoto(temp);
+      }
+
+    })();
+  }, [])
+
   return (
     <div id='dashboard'>
       {/* Sidebar  */}
@@ -59,11 +78,11 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="main-page">
-        <DashboardHeader value = "Gouri Shanker"></DashboardHeader>
+        <DashboardHeader value = {userProfile}></DashboardHeader>
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
-          <Route path="profile" element={<Profile name= { "Gouri Shanker"} aadharNumber='1234542131' verified  ={ true} photo ={DashboradIcon}  />} />
+          <Route path="profile" element={<Profile/>} />
           <Route path="land-details" element={<LandDetails />} />
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="/" element={null} />
