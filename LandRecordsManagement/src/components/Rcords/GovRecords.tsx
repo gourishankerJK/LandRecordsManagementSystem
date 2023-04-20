@@ -16,6 +16,7 @@ interface recordsProps {
 }
 
 const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
+  console.log('detail', detail)
   const [popupId, setPopupId] = useState(0)
 
   let subtitle: any
@@ -74,7 +75,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                         children={
                           ele.aadharNumber ?
                           <UserDetail
-                            content={detail.find(
+                            content={detail[0].find(
                               (e) => e.aadharNumber === popupId
                             )}
                           /> :

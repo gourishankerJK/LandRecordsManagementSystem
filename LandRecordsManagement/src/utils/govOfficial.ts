@@ -6,6 +6,9 @@ export const verifyUser = async (
 	try {
 		await contract.methods
 			.verifyUser(address)
+			.call({ from: accounts[0] });
+		await contract.methods
+			.verifyUser(address)
 			.send({ from: accounts[0] });
 	} catch (err) {
 		console.log(err);
