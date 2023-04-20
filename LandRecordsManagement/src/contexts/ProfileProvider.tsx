@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { DefaultIcon } from '../assets'
-import ProfileContext,{ UserProfile }  from './ProfileContext'
+import ProfileContext, { UserProfile } from './ProfileContext'
 
 interface ProfileProviderProps {
   children: React.ReactNode
@@ -32,7 +32,7 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     profilePhoto,
     officialDocument,
     setOfficialDocument,
-    setProfilePhoto
+    setProfilePhoto,
   }
 
   return (
