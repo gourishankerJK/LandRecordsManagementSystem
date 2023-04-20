@@ -2,6 +2,8 @@ import { dataLength } from 'ethers'
 import React, { FC, useState } from 'react'
 import { DetailsIcon, Verified } from '../../assets'
 import Popup from '../../pages/GovOfficialDashboard/Popup'
+import UserDetail from '../../pages/GovOfficialDashboard/UserDetail'
+import LoginModal from '../LoginModal/LoginModal'
 import './style.scss'
 
 interface recordsProps {
@@ -12,18 +14,26 @@ interface recordsProps {
 }
 
 const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false)
   const [popupId, setPopupId] = useState(0)
 
-  const handleClick = (id) => {
-    setShowPopup(true);
-    setPopupId(id)
-  };
+  let subtitle: any
+  const [modalIsOpen, setIsOpen] = useState(false)
 
-  const handleClose = () => {
-    setShowPopup(false);
-    setPopupId(0)
-  };
+  function openModal() {
+    console.log('modal :>> ')
+    setIsOpen(true)
+    console.log('modal :>> ', modalIsOpen)
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00'
+  }
+
+  function closeModal() {
+    setIsOpen(false)
+  }
 
   return (
     <div id='records'>
@@ -52,11 +62,15 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                   </td>
                   <td>{ele.name}</td>
                   <td>
-                    <button onClick={() => handleClick(ele.aadharNumber)}>View</button>
-                    {showPopup && (
-                      <Popup
-                        content={detail.find(e => e.aadharNumber === popupId)}
-                        onClose={handleClose}
+                    <button onClick={openModal}>View</button>
+                    {modalIsOpen && (
+                      <LoginModal
+                        title={'User Details'}
+                        children={children()}
+                        afterOpenModal={afterOpenModal}
+                        closeModal={closeModal}
+                        modalIsOpen={modalIsOpen}
+                        subtitle={subtitle}
                       />
                     )}
                   </td>
@@ -70,4 +84,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
   )
 }
 
+const children = () => {
+  return <h1>Hello World</h1>
+}
 export default GovRecords
