@@ -1,0 +1,56 @@
+@import '../../App.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  .profile-img {
+    display: flex;
+    justify-content: space-around;
+    gap: 3rem;
+    align-items: center;
+    img {
+      height: 250px;
+      width: 250px;
+      object-fit: fill;
+      border-radius: 5px;
+      border: 1px solid $base_color;
+    }
+    span {
+      font-size: 25px;
+      letter-spacing: 0.02em;
+      color: grey;
+    }
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    .ele {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5rem;
+      margin: 0.5rem 0;
+      .label {
+        font-size: 18px;
+        letter-spacing: 0.02em;
+        color: grey;
+        font-weight: 500;
+      }
+      .value{
+         color: $base_color;
+         letter-spacing: 0.02em;
+         font-weight: 200;
+      }
+      .btnele{
+         color: #fff;
+      }
+    }
+  }
+  .verify{
+     button{
+        background-color: green;
+        color: #fff;
+        padding: 5px 20px;
+        cursor: pointer;
+     }
+  }
+}

@@ -87,32 +87,32 @@ const GovDashboard = () => {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341234',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341235',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341236',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341237',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
   ]
@@ -131,14 +131,14 @@ const GovDashboard = () => {
         area:'1000'
       },
       mutationNumber: '123455',
-      recordHash: '123455',
+      recordHash: 'QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk',
       price: '200',
       isForSale: true,
       isVerified: false
     },
     {
       id: '126',
-      name: 'Parvesh Barak',
+      name: 'Gouri',
       location: {
         state: 'Haryana',
         district: 'Rohtak',
@@ -150,14 +150,14 @@ const GovDashboard = () => {
         area:'1000'
       },
       mutationNumber: '123459',
-      recordHash: '1234569',
+      recordHash: 'QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk',
       price: '200',
       isForSale: true,
       isVerified: false
     },
     {
       id: '125',
-      name: 'Parvesh Barak',
+      name: 'Rhul',
       location: {
         state: 'Haryana',
         district: 'Rohtak',
@@ -169,14 +169,14 @@ const GovDashboard = () => {
         area:'1000'
       },
       mutationNumber: '123458',
-      recordHash: '123458',
+      recordHash: 'QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk',
       price: '200',
       isForSale: true,
       isVerified: false
     },
     {
       id: '124',
-      name: 'Parvesh Barak',
+      name: 'Parvesh',
       location: {
         state: 'Haryana',
         district: 'Rohtak',
@@ -188,7 +188,7 @@ const GovDashboard = () => {
         area:'1000'
       },
       mutationNumber: '123457',
-      recordHash: '123457',
+      recordHash: 'QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk',
       price: '200',
       isForSale: true,
       isVerified: false
@@ -207,7 +207,7 @@ const GovDashboard = () => {
         area:'1000'
       },
       mutationNumber: '123456',
-      recordHash: '123456',
+      recordHash: 'QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk',
       price: '200',
       isForSale: true,
       isVerified: false
@@ -238,19 +238,19 @@ const GovDashboard = () => {
     },
     {
       mutationNumber: '123457',
-      name: 'Parvesh'
+      name: 'Rhul'
     },
     {
       mutationNumber: '123458',
-      name: 'Parvesh'
+      name: 'Gulshan'
     },
     {
       mutationNumber: '123459',
-      name: 'Parvesh'
+      name: 'Gouri'
     },
     {
       mutationNumber: '123455',
-      name: 'Parvesh'
+      name: 'Parvesh Barak'
     },
   ]
   let userHeading = ['AdharNumber', 'Name', 'Details']

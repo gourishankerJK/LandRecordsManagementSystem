@@ -1,0 +1,42 @@
+@import '../../App.scss';
+
+.preview {
+  background-color: $base_color;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  .row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+    margin: 0.5rem 1.5rem;
+    .col {
+      .ele {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .label {
+          font-size: 18px;
+          letter-spacing: 0.02em;
+          color: grey;
+          font-weight: 500;
+        }
+        .value {
+          color: $base_color;
+          letter-spacing: 0.02em;
+          font-weight: 200;
+          padding-left: 0.5rem;
+        }
+      }
+    }
+  }
+  .verify {
+    margin: 1rem 0.3rem;
+  }
+}
