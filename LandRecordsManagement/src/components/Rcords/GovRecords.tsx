@@ -65,7 +65,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                   </td>
                   <td>{ele.name}</td>
                   <td>
-                    <button onClick={() => openModal(ele.aadharNumber)}>
+                    <button onClick={() => openModal(ele.aadharNumber ? ele.aadharNumber : ele.mutationNumber)}>
                       View
                     </button>
                     {modalIsOpen && (
@@ -80,7 +80,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                           /> :
                           <LandDetail
                           content={detail.find(
-                            (e) => e.aadharNumber === popupId
+                            (e) => e.mutationNumber === popupId
                           )}
                         />
                         }

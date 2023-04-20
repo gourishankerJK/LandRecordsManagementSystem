@@ -88,7 +88,7 @@ const GovDashboard = () => {
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341234',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
+      officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       isVerified: true
     },
     {
@@ -96,7 +96,7 @@ const GovDashboard = () => {
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341235',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
+      officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       isVerified: true
     },
     {
@@ -104,7 +104,7 @@ const GovDashboard = () => {
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341236',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
+      officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       isVerified: true
     },
     {
@@ -112,7 +112,7 @@ const GovDashboard = () => {
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341237',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
+      officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       isVerified: true
     },
   ]
@@ -157,7 +157,7 @@ const GovDashboard = () => {
     },
     {
       id: '125',
-      name: 'Rhul',
+      name: 'Rahul',
       location: {
         state: 'Haryana',
         district: 'Rohtak',
@@ -254,7 +254,7 @@ const GovDashboard = () => {
     },
   ]
   let userHeading = ['AdharNumber', 'Name', 'Details']
-  let landHeading = ['Mutyation Number', 'Owner', 'Details']
+  let landHeading = ['Mutation Number', 'Owner', 'Details']
 
   return (
     <div id='user-dashboard'>
