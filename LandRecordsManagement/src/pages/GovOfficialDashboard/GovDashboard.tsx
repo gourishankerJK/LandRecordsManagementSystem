@@ -11,6 +11,7 @@ export interface UserRecord {
   profilePhoto: string
   officialDocument: string
   isVerified: boolean
+  my: string
 }
 
 export interface UserInfo {
@@ -89,7 +90,8 @@ const GovDashboard = () => {
       aadharNumber: '123412341234',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      isVerified: true
+      isVerified: true,
+      my : "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c"
     },
     {
       name: 'Parvesh',
@@ -97,7 +99,8 @@ const GovDashboard = () => {
       aadharNumber: '123412341235',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      isVerified: true
+      isVerified: true,
+      my : "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c"
     },
     {
       name: 'Parvesh',
@@ -105,7 +108,8 @@ const GovDashboard = () => {
       aadharNumber: '123412341236',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      isVerified: true
+      isVerified: true,
+      my : "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c"
     },
     {
       name: 'Parvesh',
@@ -113,7 +117,8 @@ const GovDashboard = () => {
       aadharNumber: '123412341237',
       profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
       officialDocument: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
-      isVerified: true
+      isVerified: true,
+      my : "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c"
     },
   ]
   let landData = [

@@ -1,8 +1,10 @@
-import React, { useEffect, useState, FC } from 'react'
+import React, { useEffect, useState, FC, useContext } from 'react'
 import { Unverified, Verified } from '../../assets'
 import { getDataAsUrl } from '../../utils/ipfs'
 import './style.scss'
 import FileViewer from 'react-file-viewer'
+import { verifyUser } from '../../utils/govOfficial'
+import LoginContext from '../../contexts/LoginContext'
 
 interface Props {
   content: any
@@ -11,12 +13,21 @@ interface Props {
 const UserDetail: FC<Props> = ({ content }) => {
   console.log('content', content)
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('')
-  const [officialDocUrl, setOfficialDocUrl] = useState('')  
-  const [view, setView] = useState(false);
+  const [officialDocUrl, setOfficialDocUrl] = useState('')
+  const [view, setView] = useState(false)
+  const { userContract, accounts } = useContext(LoginContext)
 
   const handleView = () => {
-    setView(!view);
-  };
+    setView(!view)
+  }
+
+  const handleVerify = async (user_address: any) => {
+    try {
+      await verifyUser(userContract, accounts, user_address)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
 
   useEffect(() => {
     ;(async function () {
@@ -32,7 +43,7 @@ const UserDetail: FC<Props> = ({ content }) => {
         console.log('err :>> ', err)
       }
     })()
-  },[])
+  }, [])
   console.log('profilePhotoUrl', profilePhotoUrl)
   return (
     <div className='container'>
@@ -55,17 +66,17 @@ const UserDetail: FC<Props> = ({ content }) => {
         </div>
         <div className='ele'>
           <span className='label'>Offical Documet</span>
-          <button className='value btnele' onClick={handleView} >Privew Document</button>
+          <button className='value btnele' onClick={handleView}>
+            Privew Document
+          </button>
         </div>
-        {view && (
-        <FileViewer
-          fileType='jpeg'
-          filePath={officialDocUrl}
-        />
-      )}
+        {view && <FileViewer fileType='jpeg' filePath={officialDocUrl} />}
       </div>
       <div className='verify'>
-        <button type='button'> Verify </button>
+        <button type='button' onClick={() => handleVerify(content.my)}>
+          {' '}
+          Verify{' '}
+        </button>
       </div>
     </div>
   )
