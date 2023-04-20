@@ -31,7 +31,7 @@ const LandDetail: FC<Props> = ({ content }) => {
 
   console.log('officialDocUrl :>> ', officialDocUrl)
   return (
-    <div className='container'>
+    <div id='landdetails-container'>
       <div className='row'>
         <div className='col'>
           <div className='ele'>

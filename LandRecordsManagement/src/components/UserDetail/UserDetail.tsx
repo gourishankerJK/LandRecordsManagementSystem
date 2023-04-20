@@ -46,7 +46,7 @@ const UserDetail: FC<Props> = ({ content }) => {
   }, [])
   console.log('profilePhotoUrl', profilePhotoUrl)
   return (
-    <div className='container'>
+    <div id='user-container'>
       <div className='profile-img'>
         <img src={profilePhotoUrl} alt='profile' className='image' />
         <span className='label'>Profile Image</span>

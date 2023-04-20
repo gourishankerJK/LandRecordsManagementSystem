@@ -1,6 +1,6 @@
 @import '../../App.scss';
 
-.container {
+#user-container {
   display: flex;
   flex-direction: column;
   .profile-img {
@@ -35,27 +35,27 @@
         color: grey;
         font-weight: 500;
       }
-      .value{
-         color: $base_color;
-         letter-spacing: 0.02em;
-         font-weight: 200;
+      .value {
+        color: $base_color;
+        letter-spacing: 0.02em;
+        font-weight: 200;
       }
-      .btnele{
-         color: #fff;
+      .btnele {
+        color: #fff;
       }
     }
   }
-  .verify{
-     button{
-        background-color: green;
-        color: #fff;
-        padding: 5px 20px;
-        cursor: pointer;
-     }
+  .verify {
+    button {
+      background-color: green;
+      color: #fff;
+      padding: 5px 20px;
+      cursor: pointer;
+    }
   }
 }
 
-.pg-viewer-wrapper{
+.pg-viewer-wrapper {
   height: 400px !important;
   #pg-photo-container {
     height: 150% !important;
