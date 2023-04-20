@@ -6,9 +6,8 @@ import { addOffical, getAllUsers, checkOffical } from "../../utils/admin";
 const AdminDashboard = () => {
 	const [users, setUsers] = useState([]);
 	const [newOfficalAddress, setNewOfficialAddress] = useState("");
-	const [officalAdded , setOfficalAdded] = useState(false);
-	const { userContract, accounts} =
-		useContext(LoginContext);
+	const [officalAdded, setOfficalAdded] = useState(false);
+	const { userContract, accounts } = useContext(LoginContext);
 
 	const handleAddOfficial = (address) => {
 		setOfficalAdded(true);
@@ -39,12 +38,9 @@ const AdminDashboard = () => {
 	useEffect(() => {
 		(async () => {
 			const data = await getAllUsers(userContract, accounts);
+			console.log("data", data);
 			if (data) {
-				let temp = [...data[0]];
-				for (let i = 0; i < temp.length; i++) {
-					temp[i] = { ...temp[i], isGovt: data[1][i] };
-				}
-				setUsers(temp);
+				setUsers(data);
 			}
 		})();
 	}, [userContract]);
@@ -71,8 +67,8 @@ const AdminDashboard = () => {
 			<div className="officials">
 				<h2>Officials</h2>
 				<ul>
-					{users.map((official) => {
-						if (official.isGovt)
+					{users.map(({ isGovt, user: official }) => {
+						if (isGovt)
 							return (
 								<li key={official.my}>
 									<span>{official.name}</span>
@@ -88,8 +84,8 @@ const AdminDashboard = () => {
 			<div className="users">
 				<h2> Users</h2>
 				<ul>
-					{users.map((user) => {
-						if (!user.isGovt) {
+					{users.map(({ isGovt, user }) => {
+						if (!isGovt) {
 							return (
 								<li key={user.my}>
 									<span>{user.name}</span>
