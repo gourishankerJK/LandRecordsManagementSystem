@@ -6,15 +6,18 @@ import { addOffical, getAllUsers, checkOffical } from "../../utils/admin";
 const AdminDashboard = () => {
 	const [users, setUsers] = useState([]);
 	const [newOfficalAddress, setNewOfficialAddress] = useState("");
+	const [officalAdded , setOfficalAdded] = useState(false);
 	const { userContract, accounts} =
 		useContext(LoginContext);
 
 	const handleAddOfficial = (address) => {
+		setOfficalAdded(true);
 		if (address)
 			(async () => await addOffical(userContract, accounts, address))();
 		else
 			(async () =>
 				await addOffical(userContract, accounts, newOfficalAddress))();
+		setOfficalAdded(false);
 	};
 	const handleCheckOfficial = () => {
 		(async () => {

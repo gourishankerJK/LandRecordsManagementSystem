@@ -6,7 +6,7 @@ contract UserRecords {
     struct UserData {
         string name;
         string dateOfBirth;
-        string aadharNumber;
+        uint256 aadharNumber;
         string profilePhoto;
         string officialDocument;
         bool isVerified;
@@ -14,9 +14,9 @@ contract UserRecords {
     }
 
     mapping(address => UserData) public userDataMap;
-    mapping(string => bool) public AadharNumber;
-    mapping(string => UserData) public aadToUser;
-    mapping(string => uint256[]) public landIdsMap;
+    mapping(uint256 => bool) public AadharNumber;
+    mapping(uint256 => UserData) public aadToUser;
+    mapping(uint256 => uint256[]) public landIdsMap;
     mapping(address => bool) private governmentOfficials;
 
     UserData[] private userRecords;
@@ -43,7 +43,7 @@ contract UserRecords {
     function addUser(
         string memory _name,
         string memory _dateOfBirth,
-        string memory _aadharNumber,
+        uint256 _aadharNumber,
         string memory _profilePhoto,
         string memory _officialDocument
     ) public {
@@ -60,7 +60,7 @@ contract UserRecords {
                 my: msg.sender
             })
         );
-        userDataMap[msg.sender] = userRecords[userRecords.length-1];
+        userDataMap[msg.sender] = userRecords[userRecords.length - 1];
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
     }
@@ -71,7 +71,7 @@ contract UserRecords {
         returns (
             string memory name,
             string memory dateOfBirth,
-            string memory aadharNumber,
+            uint256 aadharNumber,
             string memory profilePhoto,
             string memory officialDocument,
             bool isVerified,
@@ -95,7 +95,7 @@ contract UserRecords {
     }
 
     function getUserProfile(
-        string memory _aadharNumber
+        uint256 _aadharNumber
     )
         public
         view
@@ -103,7 +103,7 @@ contract UserRecords {
             string memory,
             string memory,
             string memory,
-            string memory,
+            uint256,
             string memory,
             bool,
             address,
@@ -137,7 +137,7 @@ contract UserRecords {
         }
     }
 
-    function getAadharNumber(address user) public view returns (string memory) {
+    function getAadharNumber(address user) public view returns (uint256) {
         return userDataMap[user].aadharNumber;
     }
 
