@@ -6,10 +6,10 @@ import Loader from "../../components/Loader/Loader";
 import ProfileContext from "../../contexts/ProfileContext";
 import { Formik } from "formik";
 import addrecordValidationSchema from "../../utils/Validations/Addrecordvalidation";
+import { addData } from "../../utils/ipfs";
+import { addLandRecord } from "../../utils/lands";
 const AddRecord = () => {
 	const { accounts, landContract, userContract } = useContext(LoginContext);
-	const { userProfile, updateProfile, profilePhoto, setProfilePhoto } =
-		useContext(ProfileContext);
 	const [formData, setFormData] = useState({
 		name: "",
 		mutationNumber: "",
@@ -28,41 +28,31 @@ const AddRecord = () => {
 		isForSale: false,
 	});
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-	const inputRef = useRef<HTMLInputElement>(null);
-
 
 	const submitHandler = async (values: any) => {
-		// setLoading(true);
+
+   
+		setLoading(true);
 		console.log(values);
-		// try {
-		// 	await landContract.methods
-		// 		.addLandRecord(
-		// 			values.name,
-		// 			values.mutationNumber,
-		// 			values.location,
-		// 			values.recordHash,
-		// 			values.price,
-		// 			values.isForSale
-		// 		)
-		// 		.call({ from: accounts[0] });
-		// 	await landContract.methods
-		// 		.addLandRecord(
-		// 			values.name,
-		// 			values.mutationNumber,
-		// 			values.location,
-		// 			values.recordHash,
-		// 			values.price,
-		// 			values.isForSale
-		// 		)
-		// 		.send({ from: accounts[0] });
-		// 	setLoading(false);
-		// 	setError(null);
-			
-		// } catch (err) {
-		// 	console.log(err);
-		// 	setLoading(false);
-		// }
+		 try {
+      const cid = await addData(values.supportDoc);
+      values['cid'] = cid;
+			addLandRecord( landContract , accounts , values);
+			// await landContract.methods
+			// 	.addLandRecord(
+			// 		values.name,
+			// 		values.mutationNumber,
+			// 		values.location,
+      //     cid,
+			// 		values.price,
+			// 		values.isForSale
+			// 	)
+			// 	.send({ from: accounts[0] });
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -89,8 +79,8 @@ const AddRecord = () => {
 		>
 			{({
 				setFieldValue,
-				handleChange,
 				handleBlur,
+				handleChange,
 				handleSubmit,
 				values,
 				errors,
@@ -115,6 +105,7 @@ const AddRecord = () => {
 									name="name"
 									value={values.name}
 									onChange={handleChange}
+									errors={errors}
 								/>
 							</div>
 							<div className="col">
@@ -124,6 +115,7 @@ const AddRecord = () => {
 									name="mutationNumber"
 									value={values.mutationNumber}
 									onChange={handleChange}
+									errors={errors}
 								/>
 							</div>
 						</div>
@@ -136,6 +128,7 @@ const AddRecord = () => {
 									name="location.state"
 									value={values.location.state}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 							<div className="col">
@@ -145,6 +138,7 @@ const AddRecord = () => {
 									name="location.district"
 									value={values.location.district}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 						</div>
@@ -157,6 +151,7 @@ const AddRecord = () => {
 									name="location.tehsil"
 									value={values.location.tehsil}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 							<div className="col">
@@ -166,6 +161,7 @@ const AddRecord = () => {
 									name="location.village"
 									value={values.location.village}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 						</div>
@@ -177,6 +173,7 @@ const AddRecord = () => {
 									name="location.pincode"
 									value={values.location.pincode}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 							<div className="col">
@@ -186,6 +183,7 @@ const AddRecord = () => {
 									name="location.longitude"
 									value={values.location.longitude}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 						</div>
@@ -197,6 +195,7 @@ const AddRecord = () => {
 									name="location.area"
 									value={values.location.area}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 							<div className="col">
@@ -206,6 +205,7 @@ const AddRecord = () => {
 									name="location.latitude"
 									value={values.location.latitude}
 									onChange={handleChange}
+									errors={errors.location}
 								/>
 							</div>
 						</div>
@@ -217,6 +217,7 @@ const AddRecord = () => {
 									name="price"
 									value={values.price}
 									onChange={handleChange}
+									errors={errors}
 								/>
 							</div>
 							<div className="col">
@@ -229,7 +230,7 @@ const AddRecord = () => {
 									name="files"
 									accept="image/*,application/pdf"
 									label={"Supporting Documents (PDF ONLY)"}
-									value={""}
+									errors={errors}
 								/>
 							</div>
 						</div>
@@ -243,6 +244,7 @@ const AddRecord = () => {
 									checked={values.isForSale}
 									onChange={handleChange}
 									classes="input-checked"
+									errors={errors}
 								/>
 							</div>
 						</div>

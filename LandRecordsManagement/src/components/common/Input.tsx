@@ -1,48 +1,41 @@
-import React from 'react'
-import './Input.scss';
+import React from "react";
+import "./Input.scss";
 interface InputProps {
-  label: string
-  name: string
-  value?: string
-  id: string
-  errors?: any
-  classes?: any
-  onChange: (value: any) => void
-  [x: string]: any
+	label: string;
+	name: string;
+	value?: string;
+	id: string;
+	errors?: any;
+	classes?: any;
+	onChange: (value: any) => void;
+	[x: string]: any;
 }
 
 const Input: React.FC<InputProps> = ({
-  id,
-  name,
-  label,
-  value,
-  onChange,
-  errors,
-  classes,
-  ...rest
+	id,
+	name,
+	label,
+	value,
+	onChange,
+	errors,
+	classes,
+	...rest
 }) => {
-  return (
-    <>
-      <div className={`box-input ${classes}`}  >
-        <label
-          htmlFor={id}
-          className="label-input"
-        >
-          {label}
-        </label>
-        <input
-          name={name}
-          {...rest}
-          onChange={onChange}
-          className= 'input'
-        />
+	let temp = name.split(".").slice(-1)[0];
+	return (
+		<>
+			<div className={`box-input ${classes}`}>
+				<label htmlFor={id} className="label-input">
+					{label}
+				</label>
+				<input name={name} {...rest} onChange={onChange} className="input" />
 
-        {errors && errors[name] && (<p style={{ fontSize: 10, color: 'red' }}>{errors[name]}</p>)}
-      </div>
+				{errors && errors[temp] && (
+					<p style={{ fontSize: 10, color: "red" }}>{errors[temp]}</p>
+				)}
+			</div>
+		</>
+	);
+};
 
-
-    </>
-  )
-}
-
-export default Input
+export default Input;

@@ -5,9 +5,8 @@ import { addOffical, getAllUsers, checkOffical } from "../../utils/admin";
 
 const AdminDashboard = () => {
 	const [users, setUsers] = useState([]);
-	const [officals, setOfficals] = useState([]);
 	const [newOfficalAddress, setNewOfficialAddress] = useState("");
-	const { userContract, accounts, updateMetaMask, setError } =
+	const { userContract, accounts} =
 		useContext(LoginContext);
 
 	const handleAddOfficial = (address) => {

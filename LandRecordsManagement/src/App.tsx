@@ -8,8 +8,7 @@ import ProtectedRoute from "./components/common/ProtectedRoutes";
 import NotFound from "./components/NotFound/NotFound";
 
 function App() {
-	const { updateMetaMask, accounts, isAuthenticated } =
-		useContext(LoginContext);
+	const { updateMetaMask, accounts, isAuthenticated } = useContext(LoginContext);
 	const refresh = useLocation();
 	useEffect(() => {
 		updateMetaMask();
