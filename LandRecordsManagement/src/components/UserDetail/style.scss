@@ -36,9 +36,12 @@
         font-weight: 500;
       }
       .value{
-        
+         color: $base_color;
          letter-spacing: 0.02em;
          font-weight: 200;
+      }
+      .btnele{
+         color: #fff;
       }
     }
   }

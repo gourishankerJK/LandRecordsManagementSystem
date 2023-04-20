@@ -48,7 +48,7 @@ const UserDetail: FC<Props> = ({ content }) => {
         </div>
         <div className='ele'>
           <span className='label'>Offical Documet</span>
-          <button className='value btn'>Privew Document</button>
+          <button className='value btnele'>Privew Document</button>
         </div>
       </div>
       <div className='verify'>

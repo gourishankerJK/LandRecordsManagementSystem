@@ -2,6 +2,8 @@ import { dataLength } from 'ethers'
 import React, { FC, useState } from 'react'
 import { DetailsIcon, Verified } from '../../assets'
 import Popup from '../../pages/GovOfficialDashboard/Popup'
+import LandDetails from '../../pages/LandDetails/LandDetails'
+import LandDetail from '../LandDetail/LandDetail'
 import LoginModal from '../LoginModal/LoginModal'
 import UserDetail from '../UserDetail/UserDetail'
 import './style.scss'
@@ -14,7 +16,6 @@ interface recordsProps {
 }
 
 const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
-  const [showPopup, setShowPopup] = useState(false)
   const [popupId, setPopupId] = useState(0)
 
   let subtitle: any
@@ -69,13 +70,19 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                     </button>
                     {modalIsOpen && (
                       <LoginModal
-                        title={'User Details'}
+                        title={ele.aadharNumber ? "User Detail" : "Land Detail"}
                         children={
+                          ele.aadharNumber ?
                           <UserDetail
                             content={detail.find(
                               (e) => e.aadharNumber === popupId
                             )}
-                          />
+                          /> :
+                          <LandDetail
+                          content={detail.find(
+                            (e) => e.aadharNumber === popupId
+                          )}
+                        />
                         }
                         afterOpenModal={afterOpenModal}
                         closeModal={closeModal}
