@@ -13,6 +13,7 @@
     "formik": "^2.2.9",
     "ipfs-http-client": "^60.0.0",
     "react": "^18.2.0",
+    "react-doc-viewer": "^0.1.5",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.10.0",

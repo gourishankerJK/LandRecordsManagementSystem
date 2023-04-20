@@ -2,8 +2,8 @@ import { dataLength } from 'ethers'
 import React, { FC, useState } from 'react'
 import { DetailsIcon, Verified } from '../../assets'
 import Popup from '../../pages/GovOfficialDashboard/Popup'
-import UserDetail from '../../pages/GovOfficialDashboard/UserDetail'
 import LoginModal from '../LoginModal/LoginModal'
+import UserDetail from '../UserDetail/UserDetail'
 import './style.scss'
 
 interface recordsProps {
@@ -20,9 +20,10 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
   let subtitle: any
   const [modalIsOpen, setIsOpen] = useState(false)
 
-  function openModal() {
+  function openModal(id: any) {
     console.log('modal :>> ')
     setIsOpen(true)
+    setPopupId(id)
     console.log('modal :>> ', modalIsOpen)
   }
 
@@ -33,6 +34,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
 
   function closeModal() {
     setIsOpen(false)
+    setPopupId(0)
   }
 
   return (
@@ -62,11 +64,19 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                   </td>
                   <td>{ele.name}</td>
                   <td>
-                    <button onClick={openModal}>View</button>
+                    <button onClick={() => openModal(ele.aadharNumber)}>
+                      View
+                    </button>
                     {modalIsOpen && (
                       <LoginModal
                         title={'User Details'}
-                        children={children()}
+                        children={
+                          <UserDetail
+                            content={detail.find(
+                              (e) => e.aadharNumber === popupId
+                            )}
+                          />
+                        }
                         afterOpenModal={afterOpenModal}
                         closeModal={closeModal}
                         modalIsOpen={modalIsOpen}

@@ -87,32 +87,32 @@ const GovDashboard = () => {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341234',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341235',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341236',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
     {
       name: 'Parvesh',
       dateOfBirth: '09-07-2001',
       aadharNumber: '123412341237',
-      profilePhoto: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
-      officialDocument: '/home/parvesh/Documents/LandRecordsManagementSystem/LandRecordsManagement/src/assets/bg.jpg',
+      profilePhoto: "QmRfXxKjmuuun2JXXAvcELnFXyuEqBoYYvsu3fC5Uo3jFk",
+      officialDocument: "0xCFD163CC20BeFCF842b10f9ee4FE44c1825BA87c",
       isVerified: true
     },
   ]
