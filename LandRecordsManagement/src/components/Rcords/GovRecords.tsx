@@ -1,16 +1,27 @@
 import { dataLength } from 'ethers'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { DetailsIcon, Verified } from '../../assets'
+import Popup from '../../pages/GovOfficialDashboard/Popup'
 import './style.scss'
 
 interface recordsProps {
   title: string
   heading: Array<string>
   item: Array<any>
-  trans: boolean
+  detail: Array<any>
 }
 
-const GovRecords: FC<recordsProps> = ({ title, heading, item, trans }) => {
+const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClick = () => {
+    setShowPopup(true);
+  };
+
+  const handleClose = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div id='records'>
       <h3 className='record-heading'>{title}</h3>
@@ -27,12 +38,27 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, trans }) => {
           <tbody>
             {item?.map((ele) => {
               return (
-                <tr key={ele&&(ele.mutationNum ? ele.mutationNum : ele.aadharNumber)}>
+                <tr
+                  key={
+                    ele &&
+                    (ele.mutationNumber ? ele.mutationNumber : ele.aadharNumber)
+                  }
+                >
                   <td>
-                    {ele.mutationNum ? ele.mutationNum : ele.aadharNumber}
+                    {ele.mutationNumber ? ele.mutationNumber : ele.aadharNumber}
                   </td>
                   <td>{ele.name}</td>
-                  <td><button>View</button></td>
+                  <td>
+                    <button onClick={handleClick}>View</button>
+                    {showPopup && (
+                      <Popup
+                        content={detail?.map((ele) => {
+                          
+                        })}
+                        onClose={handleClose}
+                      />
+                    )}
+                  </td>
                 </tr>
               )
             })}
