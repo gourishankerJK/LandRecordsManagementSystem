@@ -1,8 +1,10 @@
-import React, { useEffect, useState, FC } from 'react'
+import React, { useEffect, useState, FC, useContext } from 'react'
 import { Unverified, Verified } from '../../assets'
 import { getDataAsUrl } from '../../utils/ipfs'
 import './style.scss'
 import FileViewer from 'react-file-viewer'
+import LoginContext from '../../contexts/LoginContext'
+import { verifyLand } from '../../utils/govOfficial'
 
 interface Props {
   content: any
@@ -12,9 +14,18 @@ const LandDetail: FC<Props> = ({ content }) => {
   console.log('content', content)
   const [officialDocUrl, setOfficialDocUrl] = useState('')
   const [view, setView] = useState(false)
+  const { landContract, accounts } = useContext(LoginContext)
 
   const handleView = () => {
     setView(!view)
+  }
+
+  const handleVerify = async (land_id: any) => {
+    try {
+      await verifyLand(landContract, accounts, land_id)
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   useEffect(() => {
@@ -106,7 +117,7 @@ const LandDetail: FC<Props> = ({ content }) => {
         </div>
       </div>
       <div className='verify'>
-        <button type='button'> Verify </button>
+        <button type='button'onClick={() => handleVerify(content.id)}> Verify </button>
       </div>
     </div>
   )

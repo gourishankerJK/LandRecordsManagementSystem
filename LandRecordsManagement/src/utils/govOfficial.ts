@@ -14,3 +14,20 @@ export const verifyUser = async (
 		console.log(err);
 	}
 };
+
+export const verifyLand = async (
+	contract: any,
+	accounts: any,
+	land_id: string
+) => {
+	try {
+		await contract.methods
+			.verifyLandRecord(land_id)
+			.call({ from: accounts[0] });
+		await contract.methods
+			.verifyLandRecord(land_id)
+			.send({ from: accounts[0] });
+	} catch (err) {
+		console.log(err);
+	}
+};
