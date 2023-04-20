@@ -86,19 +86,11 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="main-page">
-<<<<<<< HEAD
         <DashboardHeader value = {userProfile}></DashboardHeader>
         <Routes>
           <Route path="addrecord" element={<AddRecord />} />
           <Route path="user" element={<UserDashboard />} />
           <Route path="profile" element={<Profile/>} />
-=======
-        <DashboardHeader value = "Parvesh Barak"></DashboardHeader>
-        <Routes>
-          <Route path="addrecord" element={<AddRecord />} />
-          <Route path="user" element={<UserDashboard />} />
-          <Route path="profile" element={<Profile name= { "Parvesh Barak"} aadharNumber='1234542131' verified  ={ true} photo ={DashboradIcon}  />} />
->>>>>>> 46255e079d69ce6a38b68332a3a22ba026dc46bc
           <Route path="land-details" element={<LandDetails />} />
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="gov" element={<GovDashboard />} />
