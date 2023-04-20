@@ -1,9 +1,10 @@
 import React from 'react'
 
 const UserDetail = ({ content }) => {
+  console.log('content', content)
   return (
     <div className='userDetail'>
-      <p>Hello Content</p>
+      <p>{content.aadharNumber}</p>
     </div>
   )
 }

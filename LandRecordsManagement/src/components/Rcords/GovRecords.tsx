@@ -13,13 +13,16 @@ interface recordsProps {
 
 const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
   const [showPopup, setShowPopup] = useState(false);
+  const [popupId, setPopupId] = useState(0)
 
-  const handleClick = () => {
+  const handleClick = (id) => {
     setShowPopup(true);
+    setPopupId(id)
   };
 
   const handleClose = () => {
     setShowPopup(false);
+    setPopupId(0)
   };
 
   return (
@@ -49,12 +52,10 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                   </td>
                   <td>{ele.name}</td>
                   <td>
-                    <button onClick={handleClick}>View</button>
+                    <button onClick={() => handleClick(ele.aadharNumber)}>View</button>
                     {showPopup && (
                       <Popup
-                        content={detail?.map((ele) => {
-                          
-                        })}
+                        content={detail.find(e => e.aadharNumber === popupId)}
                         onClose={handleClose}
                       />
                     )}
