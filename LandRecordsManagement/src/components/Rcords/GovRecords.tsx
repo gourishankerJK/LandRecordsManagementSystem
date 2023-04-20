@@ -16,6 +16,7 @@ interface recordsProps {
 }
 
 const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
+  console.log('detail', detail)
   const [popupId, setPopupId] = useState(0)
 
   let subtitle: any
@@ -65,7 +66,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                   </td>
                   <td>{ele.name}</td>
                   <td>
-                    <button onClick={() => openModal(ele.aadharNumber)}>
+                    <button onClick={() => openModal(ele.aadharNumber ? ele.aadharNumber : ele.mutationNumber)}>
                       View
                     </button>
                     {modalIsOpen && (
@@ -74,13 +75,13 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                         children={
                           ele.aadharNumber ?
                           <UserDetail
-                            content={detail.find(
+                            content={detail[0].find(
                               (e) => e.aadharNumber === popupId
                             )}
                           /> :
                           <LandDetail
                           content={detail.find(
-                            (e) => e.aadharNumber === popupId
+                            (e) => e.mutationNumber === popupId
                           )}
                         />
                         }

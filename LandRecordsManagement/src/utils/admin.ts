@@ -26,7 +26,7 @@ export const addOffical = async (
 	accounts: any,
 	address: string
 ) => {
-	try {
+	try { 
 		await contract.methods
 			.addGovernmentOfficial(address)
 			.call({ from: accounts[0] });
