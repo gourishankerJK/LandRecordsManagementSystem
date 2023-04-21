@@ -38,7 +38,6 @@ const LandDetails = () => {
     setLoading(true);
     (async () => {
       const data = await getMyLandRecords(landContract , accounts);
-      console.log(data);
       if(data) setLands(data);
       setLoading(false);
     })();
@@ -81,7 +80,7 @@ const LandDetails = () => {
           </div>
           <div className="land-details-row">
             <span className="land-details-label">Area:</span>
-            <span className="land-details-value">{land.location.area} sq. ft.</span>
+            <span className="land-details-value">{land.area} sq. ft.</span>
           </div>
           <div className="land-details-row">
             <span className="land-details-label">Mutation Number:</span>

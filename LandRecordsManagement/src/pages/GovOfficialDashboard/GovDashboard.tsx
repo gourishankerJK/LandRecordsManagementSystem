@@ -49,7 +49,6 @@ const GovDashboard = () => {
   const [userRecords, setUserRecords] = useState<UserRecord[]>([])
   const [landRecords, setLandRecords] = useState<LandRecord[]>([])
   const [loading, setLoading] = useState(false)
-  const [update , setUpdate] = useState(false);
 
 
   const getRecords = async () => {
@@ -71,7 +70,7 @@ const GovDashboard = () => {
       console.log('error :>> ', error)
       setLoading(false)
     }
-  }, [userContract, landContract , update])
+  }, [userContract, landContract])
 
   
   let userHeading = ['AdharNumber', 'Name', 'Details']
@@ -89,8 +88,6 @@ const GovDashboard = () => {
               heading={userHeading}
               title={'Users'}
               item={userRecords}
-              update = {update}
-              setUpdate = {setUpdate}
             />
           </div>
           <div className='col-2'>
@@ -98,8 +95,6 @@ const GovDashboard = () => {
               heading={landHeading}
               title={'Lands'}
               item={landRecords}
-              update = {update}
-              setUpdate = {setUpdate}
             />
           </div>
         </div>

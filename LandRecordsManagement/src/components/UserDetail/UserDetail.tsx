@@ -8,11 +8,9 @@ import LoginContext from '../../contexts/LoginContext'
 
 interface Props {
   content: any
-  update : boolean
-  setUpdate : any
 }
 
-const UserDetail: FC<Props> = ({ content , setUpdate , update }) => {
+const UserDetail: FC<Props> = ({ content }) => {
   console.log('content', content)
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('')
   const [officialDocUrl, setOfficialDocUrl] = useState('')
@@ -27,14 +25,13 @@ const UserDetail: FC<Props> = ({ content , setUpdate , update }) => {
   const handleVerify = async (user_address: any) => {
     try {
       await verifyUser(userContract, accounts, user_address)
-      setUpdate(!update)
     } catch (error) {
       console.log('error', error)
     }
   }
 
   useEffect(() => {
-    (async function () {
+    ;(async function () {
       console.log('hey')
       try {
         console.log('content.profilePhoto', content.officialDocument)

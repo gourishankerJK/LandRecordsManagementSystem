@@ -24,12 +24,12 @@ const Profile = () => {
 
   const submitHandler = (values: any) => {
     const { name, dob, officialdoc, aadhar, profileimg } = values;
-    console.log(values);
+
     (async function () {
        setBtnLoad(true);
       const cidO = await addData(officialdoc);
       const cidP = await addData(profileimg);
-       
+
       const obj = {
         name,
         dateOfBirth: dob,
@@ -53,9 +53,9 @@ const Profile = () => {
         updateProfile(data);
         setProfilePhoto(temp);
       }
-      setLoading(false);
+
     })();
-   
+    setLoading(false);
   }, [accounts , btnload]);
 
 
