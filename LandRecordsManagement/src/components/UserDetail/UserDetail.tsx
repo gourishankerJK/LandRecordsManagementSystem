@@ -15,6 +15,7 @@ const UserDetail: FC<Props> = ({ content }) => {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('')
   const [officialDocUrl, setOfficialDocUrl] = useState('')
   const [view, setView] = useState(false)
+  const [check, setCheck] = useState(false)
   const { userContract, accounts } = useContext(LoginContext)
 
   const handleView = () => {
@@ -45,6 +46,7 @@ const UserDetail: FC<Props> = ({ content }) => {
     })()
   }, [])
   console.log('profilePhotoUrl', profilePhotoUrl)
+  console.log('check :>> ', check);
   return (
     <div id='user-container'>
       <div className='profile-img'>
@@ -65,6 +67,10 @@ const UserDetail: FC<Props> = ({ content }) => {
           <span className='value'>{content.dateOfBirth}</span>
         </div>
         <div className='ele'>
+          <span className='label'>Verification Status</span>
+          <span className='value'>{content.isVerified ? "Verified" : "Not Verified"}</span>
+        </div>
+        <div className='ele'>
           <span className='label'>Offical Documet</span>
           <button className='value btnele' onClick={handleView}>
             Privew Document
@@ -72,8 +78,12 @@ const UserDetail: FC<Props> = ({ content }) => {
         </div>
         {view && <FileViewer fileType='jpeg' filePath={officialDocUrl} />}
       </div>
+        <div className='ele'>
+          <input type='checkbox' className='value' onClick={()=> setCheck(!check)} />
+          <span className='label'> I have verified all the details and documents</span>
+        </div>
       <div className='verify'>
-        <button type='button' onClick={() => handleVerify(content.my)}>
+        <button type='button' className={(content.isVerified || !check) ? 'disabled' : ''} onClick={() => handleVerify(content.my)} disabled={content.isVerified || !check}>
           {' '}
           Verify{' '}
         </button>
