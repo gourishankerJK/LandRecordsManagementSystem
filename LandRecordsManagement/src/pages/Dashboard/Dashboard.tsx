@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import {
@@ -16,22 +16,27 @@ import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import DashboardHeader from "../common/DashBoardHeader";
 import LoginContext from "../../contexts/LoginContext";
 import ProfileContext from "../../contexts/ProfileContext";
-import { getProfile } from "../../utils/admin";
+import { getProfile, isAdmin } from "../../utils/admin";
 import { getDataAsUrl } from "../../utils/ipfs";
 import GovDashboard from "../GovOfficialDashboard/GovDashboard";
+import ProtectedRoute from "../../components/common/ProtectedRoutes";
 
 const Dashboard = () => {
 	const { updateMetaMask, userContract, accounts } = useContext(LoginContext);
-	const { userProfile, updateProfile, setProfilePhoto } =
-		useContext(ProfileContext);
+	const { userProfile, updateProfile, setProfilePhoto } = useContext(ProfileContext);
+	const {admin , setAdmin} = useState(false);
 	useEffect(() => {
 		(async function fetch() {
 			const data = await getProfile(userContract, accounts);
+			const temp1 = await isAdmin(userContract , accounts);
 			if (data) {
 				const temp = await getDataAsUrl(data.profilePhoto, "image/jpeg");
+				
+				
 				updateProfile(data);
 				setProfilePhoto(temp);
 			}
+			setAdmin(temp1);
 		})();
 	}, [userContract]);
 
@@ -111,7 +116,16 @@ const Dashboard = () => {
 					<Route path="profile" element={<Profile />} />
 					<Route path="land-details" element={<LandDetails />} />
 					<Route path="user" element={<UserDashboard />} />
-					<Route path="admin" element={<AdminDashboard />} />
+					<Route
+						path="admin"
+						element={
+							<ProtectedRoute
+								redirectPath="/dashboard/profile"
+								isAuthenticated={()=>  admin}
+								children={<AdminDashboard />}
+							></ProtectedRoute>
+						}
+					/>
 					<Route path="gov" element={<GovDashboard />} />
 					<Route path="/" element={null} />
 					<Route path="*" element={<Navigate to="404" />} />

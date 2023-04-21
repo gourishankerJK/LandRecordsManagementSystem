@@ -46,15 +46,22 @@ const Profile = () => {
   useEffect(() => {
 
     (async function() {
-      setLoading(true);
-      const data = await getProfile(userContract, accounts);
-      console.log(data);
-      if (data) {
-        const temp = await getDataAsUrl(data.profilePhoto, 'image/jpeg');
-        updateProfile(data);
-        setProfilePhoto(temp);
+      try{
+        setLoading(true);
+        const data = await getProfile(userContract, accounts);
+        console.log(data);
+        if (data) {
+          const temp = await getDataAsUrl(data.profilePhoto, 'image/jpeg');
+          updateProfile(data);
+          setProfilePhoto(temp);
+        }
+        setLoading(false);
       }
-      setLoading(false);
+      catch(e){
+        console.log(e);
+        setLoading(false);
+      }
+    
     })();
   }, [accounts , btnload]);
 

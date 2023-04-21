@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import './style.scss'
 import Records from '../../components/Rcords/GovRecords'
 import LoginContext from '../../contexts/LoginContext'
-import { getAllUsers, getAllLands } from '../../utils/admin'
+import { getAllUsers } from '../../utils/admin'
 import { Loader } from '../../components'
 
 export interface UserRecord {

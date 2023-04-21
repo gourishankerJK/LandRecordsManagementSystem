@@ -67,12 +67,9 @@ export const removeOffical = async (contract, accounts, address) => {
 	}
 };
 
-export const getAllLands = async (contract: any, accounts: any) => {
+export const isAdmin =  async (contract: any, accounts: any) => {
 	const data = await contract.methods
-		.getAllLandRecords()
+		.isAdmin()
 		.call({ from: accounts[0] });
-	let officals = [];
-	let user = [];
-	console.log(data);
-	return data;
-};
+	return data
+}
