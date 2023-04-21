@@ -103,7 +103,7 @@ const LandDetail: FC<Props> = ({ content,   update , setUpdate }) => {
 				<div className="col">
 					<div className="ele">
 						<span className="label">Area:</span>
-						<span className="value">{content.area}</span>
+						<span className="value">{content.location.area} sq feet</span>
 					</div>
 				</div>
 			</div>

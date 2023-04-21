@@ -44,6 +44,8 @@ const LandDetails = () => {
 
   } , [accounts]);
 
+  console.log('lands :>> ', lands);
+
   if(loading) return <Loader/>
   if(lands.length == 0) return <NotFound message = {"You haven't added any Land"} />
   return (
@@ -80,7 +82,7 @@ const LandDetails = () => {
           </div>
           <div className="land-details-row">
             <span className="land-details-label">Area:</span>
-            <span className="land-details-value">{land.area} sq. ft.</span>
+            <span className="land-details-value">{land.location.area} sq. ft.</span>
           </div>
           <div className="land-details-row">
             <span className="land-details-label">Mutation Number:</span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Verified } from "../../assets";
+import { Verified, ProfileIcon } from "../../assets";
 import "./styles.scss";
 
 const DashboardHeader = ({ value }) => {
@@ -8,7 +8,7 @@ const DashboardHeader = ({ value }) => {
 			<div className="header">
 				<h1 className="dash-heading">Welcome to Your Dashboard...</h1>
 				<div className="user-info">
-					<span className="icon">R</span>
+					<span className="icon">{value.name ? value.name[0] : <img src={ProfileIcon} alt="P" />}</span>
 					<div className="user">
 						<span className="name">{value.name}</span>
 						<img src={Verified} alt="verify" />
