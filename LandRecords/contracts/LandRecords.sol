@@ -220,13 +220,11 @@ contract LandManagementSystem {
     // Get all unverified land records
 
     // Get all land records for the current user
-    function getLandRecordsForCurrentUser(
-        address _user
-    ) public view returns (LandRecord[] memory) {
+    function getLandRecordsForCurrentUser() public view returns (LandRecord[] memory) {
         require(userRecords.isUserVerified(msg.sender), "User not verified");
         uint256 userCount = 0;
         for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].owner == _user) {
+            if (landRecords[i].owner == msg.sender) {
                 userCount++;
             }
         }
@@ -234,7 +232,7 @@ contract LandManagementSystem {
         LandRecord[] memory ur = new LandRecord[](userCount);
         uint256 index = 0;
         for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].owner == _user) {
+            if (landRecords[i].owner == msg.sender) {
                 ur[index] = landRecords[i];
                 index++;
             }

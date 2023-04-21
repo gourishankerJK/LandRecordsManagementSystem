@@ -104,7 +104,7 @@ const Dashboard = () => {
 					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="user" element={<UserDashboard />} />
 					<Route path="profile" element={<Profile />} />
-					<Route path="land-details" element={<LandDetails />} />
+					<Route path="land-details" element={<LandDetails/>} />
 					<Route path="admin" element={<AdminDashboard />} />
 					<Route path="gov" element={<GovDashboard />} />
 					<Route path="/" element={null} />
