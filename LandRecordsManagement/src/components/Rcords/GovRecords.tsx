@@ -75,7 +75,7 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                         children={
                           ele.aadharNumber ?
                           <UserDetail
-                            content={detail[0].find(
+                            content={detail.find(
                               (e) => e.aadharNumber === popupId
                             )}
                           /> :
