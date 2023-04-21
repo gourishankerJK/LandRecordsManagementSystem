@@ -26,7 +26,7 @@ export const addOffical = async (
 	accounts: any,
 	address: string
 ) => {
-	try { 
+	try {
 		await contract.methods
 			.addGovernmentOfficial(address)
 			.call({ from: accounts[0] });
@@ -53,12 +53,26 @@ export const checkOffical = async (
 	}
 };
 
-
+export const removeOffical = async (contract, accounts, address) => {
+	console.log(address);
+	try {
+		await contract.methods
+			.removeGovernmentOfficial(address)
+			.call({ from: accounts[0] });
+		await contract.methods
+			.removeGovernmentOfficial(address)
+			.send({ from: accounts[0] });
+	} catch (e) {
+		console.log(e);
+	}
+};
 
 export const getAllLands = async (contract: any, accounts: any) => {
-  const data = await contract.methods.getAllLandRecords().call({ from: accounts[0] })
-  let officals = []
-  let user = []
-  console.log(data)
-  return data
-}
+	const data = await contract.methods
+		.getAllLandRecords()
+		.call({ from: accounts[0] });
+	let officals = [];
+	let user = [];
+	console.log(data);
+	return data;
+};

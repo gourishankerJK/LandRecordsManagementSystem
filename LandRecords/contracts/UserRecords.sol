@@ -155,9 +155,7 @@ contract UserRecords {
         governmentOfficials[_officialAddress] = true;
     }
 
-    function removeGovernmentOfficial(
-        address _officialAddress
-    ) public onlyAdmin {
+    function removeGovernmentOfficial(address _officialAddress) public onlyAdmin {
         delete governmentOfficials[_officialAddress];
     }
 
