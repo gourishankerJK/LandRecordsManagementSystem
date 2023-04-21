@@ -4,6 +4,7 @@ import { getMyLandRecords } from "../../utils/lands";
 import LoginContext from "../../contexts/LoginContext";
 import { Loader } from "../../components";
 import { getDataAsUrl } from "../../utils/ipfs";
+import NotFound from "../../components/NotFound/NotFound";
 
 const LandDetails = () => {
   const [lands , setLands] = useState([]);
@@ -45,6 +46,7 @@ const LandDetails = () => {
   } , [accounts]);
 
   if(loading) return <Loader/>
+  if(lands.length == 0) return <NotFound message = {"You haven't added any Land"} />
   return (
     <div className="land-details-container">
       {lands.map((land, index) => (
