@@ -70,8 +70,6 @@ contract UserRecords {
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
         userRecords.push(msg.sender);
-
-        emit LogDebug("User added sucessfully");
     }
 
     function getOwnProfile()
