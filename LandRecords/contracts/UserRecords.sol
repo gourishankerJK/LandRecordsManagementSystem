@@ -63,10 +63,9 @@ contract UserRecords {
             profilePhoto: _profilePhoto,
             officialDocument: _officialDocument,
             isVerified: false,
-            role: 1,
+            role: (msg.sender == admin ) ? 13 : 1,
             my: msg.sender
         });
-
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
         userRecords.push(msg.sender);

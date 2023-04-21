@@ -39,3 +39,15 @@ export const getMyLandRecords = async (contract : any, accounts : any) => {
 		console.log(err);
 	}
 };
+
+
+export const getAllLands = async (contract : any , accounts : any) =>{
+        try{
+             const data = await contract.methods.getAllLandRecords().call({from : accounts[0]});
+			 return data;
+		}
+
+		catch(err){
+			 return [];
+		}
+}

@@ -10,33 +10,30 @@ import {
 	Details,
 	SettingIcon,
 } from "../../assets";
-import { AddRecord, UserDashboard, Profile } from "../index";
+import { AddRecord , Profile } from "../index";
 import LandDetails from "../LandDetails/LandDetails";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import DashboardHeader from "../common/DashBoardHeader";
 import LoginContext from "../../contexts/LoginContext";
 import ProfileContext from "../../contexts/ProfileContext";
-import { getProfile, isAdmin } from "../../utils/admin";
+import { getProfile } from "../../utils/admin";
 import { getDataAsUrl } from "../../utils/ipfs";
 import GovDashboard from "../GovOfficialDashboard/GovDashboard";
 import ProtectedRoute from "../../components/common/ProtectedRoutes";
 
 const Dashboard = () => {
-	const { updateMetaMask, userContract, accounts } = useContext(LoginContext);
-	const { userProfile, updateProfile, setProfilePhoto } = useContext(ProfileContext);
-	const {admin , setAdmin} = useState(false);
+	const { userContract, accounts } = useContext(LoginContext);
+	const { userProfile, updateProfile, setProfilePhoto } =
+		useContext(ProfileContext);
 	useEffect(() => {
 		(async function fetch() {
 			const data = await getProfile(userContract, accounts);
-			const temp1 = await isAdmin(userContract , accounts);
 			if (data) {
 				const temp = await getDataAsUrl(data.profilePhoto, "image/jpeg");
-				
-				
+
 				updateProfile(data);
 				setProfilePhoto(temp);
 			}
-			setAdmin(temp1);
 		})();
 	}, [userContract]);
 
@@ -115,18 +112,21 @@ const Dashboard = () => {
 					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="profile" element={<Profile />} />
 					<Route path="land-details" element={<LandDetails />} />
-					<Route path="user" element={<UserDashboard />} />
 					<Route
 						path="admin"
 						element={
 							<ProtectedRoute
 								redirectPath="/dashboard/profile"
-								isAuthenticated={()=>  admin}
+								isAuthenticated={() => userProfile.role && userProfile.role.includes('3')}
 								children={<AdminDashboard />}
 							></ProtectedRoute>
 						}
 					/>
-					<Route path="gov" element={<GovDashboard />} />
+					<Route path="gov" element={<ProtectedRoute
+								redirectPath="/dashboard/profile"
+								isAuthenticated={() => userProfile.role && userProfile.role.includes('2')}
+								children={<GovDashboard />}
+							></ProtectedRoute>} />
 					<Route path="/" element={null} />
 					<Route path="*" element={<Navigate to="404" />} />
 				</Routes>
