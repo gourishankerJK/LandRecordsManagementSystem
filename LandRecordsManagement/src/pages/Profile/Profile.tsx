@@ -45,7 +45,6 @@ const Profile = () => {
 
   useEffect(() => {
 
-<<<<<<< HEAD
     (async function() {
       try{
         setLoading(true);
@@ -57,23 +56,8 @@ const Profile = () => {
           setProfilePhoto(temp);
         }
         setLoading(false);
-=======
-    (async function fetch() {
-      setLoading(true);
-      const data = await getProfile(userContract, accounts);
-      if (data) {
-        const temp = await getDataAsUrl(data.profilePhoto, 'image/jpeg');
-        updateProfile(data);
-        setProfilePhoto(temp);
->>>>>>> parent of 2c2180e (DB deleted)
-      }
-      catch(e){
-        console.log(e);
-        setLoading(false);
-      }
-    
-    })();
-  }, [accounts , btnload]);
+
+
 
 
 
