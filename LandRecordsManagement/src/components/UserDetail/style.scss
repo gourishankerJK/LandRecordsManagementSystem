@@ -5,9 +5,11 @@
   flex-direction: column;
   .profile-img {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-around;
-    gap: 3rem;
+    gap : 1rem;
     align-items: center;
+    margin: 10px;
     img {
       height: 250px;
       width: 250px;
@@ -51,6 +53,9 @@
       color: #fff;
       padding: 5px 20px;
       cursor: pointer;
+      .disabled {
+        opacity: 0.2;
+      }
     }
   }
 }
