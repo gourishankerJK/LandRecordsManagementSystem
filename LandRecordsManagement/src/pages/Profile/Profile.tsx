@@ -45,9 +45,10 @@ const Profile = () => {
 
   useEffect(() => {
 
-    (async function fetch() {
+    (async function() {
       setLoading(true);
       const data = await getProfile(userContract, accounts);
+      console.log(data);
       if (data) {
         const temp = await getDataAsUrl(data.profilePhoto, 'image/jpeg');
         updateProfile(data);
@@ -59,7 +60,7 @@ const Profile = () => {
   }, [accounts , btnload]);
 
 
-
+   
   if (loading) return <Loader />
 
   else if (userProfile.name.length <= 0) {
