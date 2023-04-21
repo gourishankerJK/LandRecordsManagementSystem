@@ -12,9 +12,11 @@ interface recordsProps {
   title: string
   heading: Array<string>
   item: Array<any>
+  update : boolean
+  setUpdate : any
 }
 
-const GovRecords: FC<recordsProps> = ({ title, heading, item }) => {
+const GovRecords: FC<recordsProps> = ({ title, heading, item  , setUpdate , update}) => {
   console.log('item', item)
   const [popupId, setPopupId] = useState(0)
 
@@ -74,14 +76,18 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item }) => {
                         children={
                           ele.aadharNumber ?
                           <UserDetail
-                            content={item.find(
-                              (e) => e.aadharNumber === popupId
-                            )}
+                            content={item.find((e) => e.aadharNumber === popupId)}
+                            setUpdate = {setUpdate}
+                            update = {update}
+                            
                           /> :
                           <LandDetail
                           content={item.find(
                             (e) => e.mutationNumber === popupId
                           )}
+
+                          setUpdate = {setUpdate}
+                          update = {update}
                         />
                         }
                         afterOpenModal={afterOpenModal}

@@ -8,9 +8,11 @@ import { verifyLand } from '../../utils/govOfficial'
 
 interface Props {
   content: any
+  setUpdate : any
+  update : boolean
 }
 
-const LandDetail: FC<Props> = ({ content }) => {
+const LandDetail: FC<Props> = ({ content , setUpdate , update }) => {
   console.log('content', content)
   const [officialDocUrl, setOfficialDocUrl] = useState('')
   const [view, setView] = useState(false)
@@ -23,7 +25,8 @@ const LandDetail: FC<Props> = ({ content }) => {
 
   const handleVerify = async (land_id: any) => {
     try {
-      await verifyLand(landContract, accounts, land_id)
+      await verifyLand(landContract, accounts, land_id);
+      setUpdate(!update)
     } catch (error) {
       console.log('error', error)
     }
@@ -76,7 +79,7 @@ const LandDetail: FC<Props> = ({ content }) => {
         <div className='col'>
           <div className='ele'>
             <span className='label'>Area:</span>
-            <span className='value'>{content.area}</span>
+            <span className='value'>{content.location.area}</span>
           </div>
         </div>
         <div className='col'>
