@@ -1,22 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./styles.scss";
 import LoginContext from "../../contexts/LoginContext";
-import { addOffical, getAllUsers, checkOffical } from "../../utils/admin";
+import { addOffical, getAllUsers, checkOffical, removeOffical } from "../../utils/admin";
 
 const AdminDashboard = () => {
 	const [users, setUsers] = useState([]);
 	const [newOfficalAddress, setNewOfficialAddress] = useState("");
-	const [officalAdded, setOfficalAdded] = useState(false);
+	const [officialAdded, setOfficialAdded] = useState(false);
 	const { userContract, accounts } = useContext(LoginContext);
 
 	const handleAddOfficial = (address) => {
-		setOfficalAdded(true);
 		if (address)
-			(async () => await addOffical(userContract, accounts, address))();
+			(async () => {await addOffical(userContract, accounts, address);
+				setOfficialAdded(!officialAdded);
+			})();
 		else
-			(async () =>
-				await addOffical(userContract, accounts, newOfficalAddress))();
-		setOfficalAdded(false);
+			(async () =>{
+				await addOffical(userContract, accounts, newOfficalAddress);
+				setOfficialAdded(!officialAdded);
+			})();
+			
 	};
 	const handleCheckOfficial = () => {
 		(async () => {
@@ -30,20 +33,28 @@ const AdminDashboard = () => {
 		})();
 	};
 
-	const handleRemoveOfficial = (address) => {};
+	const handleRemoveOfficial = (address) => {
+		(async () => {
+			 await removeOffical(
+				userContract,
+				accounts,
+				address
+			);
+			setOfficialAdded(!officialAdded);
+		})();
+		
+	};
 
 	const handlePromoteUser = (address) => {
 		handleAddOfficial(address);
 	};
 	useEffect(() => {
+		console.log("I was called");
 		(async () => {
 			const data = await getAllUsers(userContract, accounts);
-			console.log("data", data);
-			if (data) {
-				setUsers(data);
-			}
+			if (data) setUsers(data);
 		})();
-	}, [userContract]);
+	}, [userContract , officialAdded]);
 	return (
 		<div className="admin-dashboard">
 			<div className="add-official">
@@ -67,7 +78,7 @@ const AdminDashboard = () => {
 			<div className="officials">
 				<h2>Officials</h2>
 				<ul>
-					{users.map(({ isGovt, user: official }) => {
+					{users.map(({isGovt , user : official}) => {
 						if (isGovt)
 							return (
 								<li key={official.my}>
@@ -84,7 +95,7 @@ const AdminDashboard = () => {
 			<div className="users">
 				<h2> Users</h2>
 				<ul>
-					{users.map(({ isGovt, user }) => {
+					{users.map(({isGovt , user}) => {
 						if (!isGovt) {
 							return (
 								<li key={user.my}>
