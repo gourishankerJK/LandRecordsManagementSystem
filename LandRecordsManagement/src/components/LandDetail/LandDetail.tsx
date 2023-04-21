@@ -14,6 +14,7 @@ const LandDetail: FC<Props> = ({ content }) => {
   console.log('content', content)
   const [officialDocUrl, setOfficialDocUrl] = useState('')
   const [view, setView] = useState(false)
+  const [check, setCheck] = useState(false)
   const { landContract, accounts } = useContext(LoginContext)
 
   const handleView = () => {
@@ -107,17 +108,26 @@ const LandDetail: FC<Props> = ({ content }) => {
             <span className='preview' onClick={handleView}>
               Preivew
             </span>
-            {view && (
-              <FileViewer
-                fileType='jpeg'
-                filePath={officialDocUrl}
-              />
-            )}
+            {view && <FileViewer fileType='jpeg' filePath={officialDocUrl} />}
           </div>
         </div>
       </div>
+      <div className='ele'>
+        <input
+          type='checkbox'
+          className='value'
+          onClick={() => setCheck(!check)}
+        />
+        <span className='label'>
+          {' '}
+          I have verified all the details and documents
+        </span>
+      </div>
       <div className='verify'>
-        <button type='button'onClick={() => handleVerify(content.id)}> Verify </button>
+        <button type='button' className={(content.isVerified || !check) ? 'disabled' : ''} onClick={() => handleVerify(content.id)} disabled={content.isVerified || !check}>
+          {' '}
+          Verify{' '}
+        </button>
       </div>
     </div>
   )
