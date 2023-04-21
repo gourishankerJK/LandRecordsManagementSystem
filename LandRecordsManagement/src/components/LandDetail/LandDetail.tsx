@@ -1,5 +1,4 @@
 import React, { useEffect, useState, FC, useContext } from "react";
-import { Unverified, Verified } from "../../assets";
 import { getDataAsUrl } from "../../utils/ipfs";
 import "./style.scss";
 import FileViewer from "react-file-viewer";
@@ -8,11 +7,11 @@ import { verifyLand } from "../../utils/govOfficial";
 
 interface Props {
 	content: any;
-	update : boolean
-  setUpdate : any
+	update: boolean;
+	setUpdate: any;
 }
 
-const LandDetail: FC<Props> = ({ content,   update , setUpdate }) => {
+const LandDetail: FC<Props> = ({ content, update, setUpdate }) => {
 	const [officialDocUrl, setOfficialDocUrl] = useState("");
 	const [view, setView] = useState(false);
 	const [check, setCheck] = useState(false);
@@ -66,13 +65,14 @@ const LandDetail: FC<Props> = ({ content,   update , setUpdate }) => {
 						<span className="value">{content.name}</span>
 					</div>
 				</div>
-
 				<div className="col">
 					<div className="ele">
 						<span className="label">State:</span>
 						<span className="value">{content.location.state}</span>
 					</div>
 				</div>
+			</div>
+
 			<div className="row">
 				<div className="col">
 					<div className="ele">
@@ -86,10 +86,14 @@ const LandDetail: FC<Props> = ({ content,   update , setUpdate }) => {
 						<span className="value">{content.location.village}</span>
 					</div>
 				</div>
+			</div>
+			<div className="row">
 				<div className="col">
 					<div className="ele">
 						<span className="label">Verification Status:</span>
-						<span className="value">{content.isVerified ? 'Verified' : 'Verification pending'}</span>
+						<span className="value">
+							{content.isVerified ? "Verified" : "Verification pending"}
+						</span>
 					</div>
 				</div>
 				<div className="col">
@@ -107,28 +111,28 @@ const LandDetail: FC<Props> = ({ content,   update , setUpdate }) => {
 					</div>
 				</div>
 			</div>
-			</div>
-			<div className="row">
+			<div className="image">
 				<div className="col">
 					<div className="ele">
-						<span className="label">Document</span>
-						<span className="preview" onClick={handleView}>
-							Preivew
-						</span>
 						{view && <FileViewer fileType="jpeg" filePath={officialDocUrl} />}
+						<span className="preview" onClick={handleView}>
+							View Document 
+						</span>
 					</div>
 				</div>
 			</div>
-			<div className="ele">
-				<input
-					type="checkbox"
-					className="value"
-					onClick={() => setCheck(!check)}
-				/>
-				<span className="label">
-					{" "}
-					I have verified all the details and documents
-				</span>
+			<div className="line">
+				<div className="ele">
+					<input
+						type="checkbox"
+						className="value"
+						onClick={() => setCheck(!check)}
+					/>
+					<span className="label">
+						{" "}
+						I have verified all the details and documents
+					</span>
+				</div>
 			</div>
 			<div className="verify">
 				<button

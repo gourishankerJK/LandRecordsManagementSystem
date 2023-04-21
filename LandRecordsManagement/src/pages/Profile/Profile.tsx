@@ -173,9 +173,12 @@ const Profile = () => {
         <div className='profile-header'>
           <img src={profilePhoto} alt='/' />
           <h1>{userProfile.name}</h1>
+          <div className="icons">
           {userProfile.isVerified ?
-            <img className='verified-badge' src={Verified} /> :
-            <img className='unverified-badge' src={Unverified} />}
+            <img  src={Verified} /> :
+            <img  src={Unverified} />}
+            <span>{userProfile.isVerified ? "Verified" : "Not Verified"}</span>
+          </div>
         </div>
         <div className='aadhar-info'>
           <p>Aadhar number: {userProfile.aadharNumber}</p>

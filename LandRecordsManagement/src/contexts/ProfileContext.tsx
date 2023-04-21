@@ -9,6 +9,7 @@ export interface UserProfile {
   officialDocument: string
   landIds: Array<string>
   isVerified: boolean
+  role : string
 }
 
 interface ProfileContextProps {
@@ -29,6 +30,7 @@ const ProfileContext = createContext<ProfileContextProps>({
     officialDocument: '',
     landIds: new Array<string>(),
     isVerified: false,
+    role : '1'
   },
   officialDocument:"",
   profilePhoto: DefaultIcon,

@@ -72,6 +72,7 @@ const GovRecords: FC<recordsProps> = ({
 									<td>{ele.name}</td>
 									<td>
 										<button
+										   style={{ border:"none", background:"none", fontWeight:"500", letterSpacing:"0.03em", color:"#FF8533" }}
 											onClick={() =>
 												openModal(
 													ele.aadharNumber

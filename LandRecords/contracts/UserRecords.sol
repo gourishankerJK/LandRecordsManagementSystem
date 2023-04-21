@@ -27,9 +27,9 @@ contract UserRecords {
     address private admin;
 
     constructor() {
-        admin = msg.sender;    
-        for(uint32 i = 0;i<roles.length;i++) {
-            rolesMap[roles[i]] = i+1;
+        admin = msg.sender;
+        for (uint32 i = 0; i < roles.length; i++) {
+            rolesMap[roles[i]] = i + 1;
         }
     }
 
@@ -63,7 +63,7 @@ contract UserRecords {
             profilePhoto: _profilePhoto,
             officialDocument: _officialDocument,
             isVerified: false,
-            role: (msg.sender == admin ) ? 13 : 1,
+            role: (msg.sender == admin) ? 13 : 1,
             my: msg.sender
         });
         AadharNumber[_aadharNumber] = true;
@@ -111,9 +111,7 @@ contract UserRecords {
     }
 
     function getAllUsers() public view returns (UserData[] memory) {
-        UserData[] memory temp = new UserData[](
-            userRecords.length
-        );
+        UserData[] memory temp = new UserData[](userRecords.length);
         for (uint256 i = 0; i < userRecords.length; i++) {
             temp[i] = userDataMap[userRecords[i]];
         }
@@ -155,24 +153,37 @@ contract UserRecords {
     }
 
     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {
-        userDataMap[_officialAddress].role = userDataMap[_officialAddress].role*10 + 2;
+        userDataMap[_officialAddress].role =
+            userDataMap[_officialAddress].role *
+            10 +
+            2;
     }
 
-    function checkRole(uint32 oldRole, uint32 funcType, uint32 roleType) internal pure returns(uint32) {
+    function checkRole(
+        uint32 oldRole,
+        uint32 funcType,
+        uint32 roleType
+    ) internal pure returns (uint32) {
         uint32 newRole = 0;
         uint32 roleFlag = 0;
-        while(oldRole != 0) {
-            uint32 t = oldRole%10;
-            if(t != roleType) newRole = newRole*10 + t;
+        while (oldRole != 0) {
+            uint32 t = oldRole % 10;
+            if (t != roleType) newRole = newRole * 10 + t;
             else roleFlag = 1;
             oldRole /= 10;
         }
-        if(funcType == 1) return roleFlag;
+        if (funcType == 1) return roleFlag;
         else return newRole;
     }
 
-    function removeGovernmentOfficial(address _officialAddress) public onlyAdmin {
-        userDataMap[_officialAddress].role = checkRole(userDataMap[_officialAddress].role, 2, 2);
+    function removeGovernmentOfficial(
+        address _officialAddress
+    ) public onlyAdmin {
+        userDataMap[_officialAddress].role = checkRole(
+            userDataMap[_officialAddress].role,
+            2,
+            2
+        );
     }
 
     function isGovernmentOfficial(

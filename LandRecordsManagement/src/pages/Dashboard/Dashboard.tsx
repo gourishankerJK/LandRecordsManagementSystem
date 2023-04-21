@@ -20,11 +20,11 @@ import { getProfile } from "../../utils/admin";
 import { getDataAsUrl } from "../../utils/ipfs";
 import GovDashboard from "../GovOfficialDashboard/GovDashboard";
 import ProtectedRoute from "../../components/common/ProtectedRoutes";
+import UserDashboard from "../UserDashboard/UserDashboard";
 
 const Dashboard = () => {
 	const { userContract, accounts } = useContext(LoginContext);
-	const { userProfile, updateProfile, setProfilePhoto } =
-		useContext(ProfileContext);
+	const { userProfile, updateProfile, setProfilePhoto } = useContext(ProfileContext);
 	useEffect(() => {
 		(async function fetch() {
 			const data = await getProfile(userContract, accounts);
@@ -112,6 +112,7 @@ const Dashboard = () => {
 					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="profile" element={<Profile />} />
 					<Route path="land-details" element={<LandDetails />} />
+					<Route path = "user" element ={<UserDashboard/>}/>
 					<Route
 						path="admin"
 						element={
