@@ -10,20 +10,27 @@ contract UserRecords {
         string profilePhoto;
         string officialDocument;
         bool isVerified;
+        uint32 role;
         address my;
     }
+
+    string[] private roles = ["user", "govt", "admin"];
 
     mapping(address => UserData) public userDataMap;
     mapping(uint256 => bool) public AadharNumber;
     mapping(uint256 => UserData) public aadToUser;
     mapping(uint256 => uint256[]) public landIdsMap;
-    mapping(address => bool) private governmentOfficials;
+    mapping(string => uint32) private rolesMap;
+
     address[] private userRecords;
 
     address private admin;
 
     constructor() {
-        admin = msg.sender;
+        admin = msg.sender;    
+        for(uint32 i = 0;i<roles.length;i++) {
+            rolesMap[roles[i]] = i+1;
+        }
     }
 
     event LogDebug(string message);
@@ -56,6 +63,7 @@ contract UserRecords {
             profilePhoto: _profilePhoto,
             officialDocument: _officialDocument,
             isVerified: false,
+            role: 1,
             my: msg.sender
         });
 
@@ -74,6 +82,7 @@ contract UserRecords {
             string memory profilePhoto,
             string memory officialDocument,
             bool isVerified,
+            uint256 role,
             address my,
             uint256[] memory landIds
         )
@@ -89,6 +98,7 @@ contract UserRecords {
         profilePhoto = user.profilePhoto;
         officialDocument = user.officialDocument;
         isVerified = user.isVerified;
+        role = user.role;
         my = user.my;
         landIds = landIdsMap[user.aadharNumber];
     }
@@ -101,18 +111,12 @@ contract UserRecords {
         return (user, landIdsMap[user.aadharNumber]);
     }
 
-    struct UserDataForReturn {
-        UserData user;
-        bool isGovt;
-    }
-
-    function getAllUsers() public view returns (UserDataForReturn[] memory) {
-        UserDataForReturn[] memory temp = new UserDataForReturn[](
+    function getAllUsers() public view returns (UserData[] memory) {
+        UserData[] memory temp = new UserData[](
             userRecords.length
         );
         for (uint256 i = 0; i < userRecords.length; i++) {
-            temp[i].user = userDataMap[userRecords[i]];
-            temp[i].isGovt = isGovernmentOfficial(temp[i].user.my);
+            temp[i] = userDataMap[userRecords[i]];
         }
         return temp;
     }
@@ -152,21 +156,34 @@ contract UserRecords {
     }
 
     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {
-        governmentOfficials[_officialAddress] = true;
+        userDataMap[_officialAddress].role = userDataMap[_officialAddress].role*10 + 2;
+    }
+
+    function checkRole(uint32 oldRole, uint32 funcType, uint32 roleType) internal pure returns(uint32) {
+        uint32 newRole = 0;
+        uint32 roleFlag = 0;
+        while(oldRole != 0) {
+            uint32 t = oldRole%10;
+            if(t != roleType) newRole = newRole*10 + t;
+            else roleFlag = 1;
+            oldRole /= 10;
+        }
+        if(funcType == 1) return roleFlag;
+        else return newRole;
     }
 
     function removeGovernmentOfficial(address _officialAddress) public onlyAdmin {
-        delete governmentOfficials[_officialAddress];
+        userDataMap[_officialAddress].role = checkRole(userDataMap[_officialAddress].role, 2, 2);
     }
 
     function isGovernmentOfficial(
         address _officialAddress
     ) public view returns (bool) {
-        return governmentOfficials[_officialAddress];
+        return checkRole(userDataMap[_officialAddress].role, 1, 2) == 1;
     }
 
     function isCurrentGovernmentOfficial() public view returns (bool) {
-        return governmentOfficials[msg.sender];
+        return checkRole(userDataMap[msg.sender].role, 1, 2) == 1;
     }
 
     function isAdmin(address _u) public returns (bool) {

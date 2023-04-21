@@ -67,13 +67,19 @@ const Dashboard = () => {
 									<span>Dashboard</span>
 								</li>
 							</Link>
+							<Link style={{ textDecoration: "none" }} to="/dashboard/admin">
+								<li className="side-nav-item">
+									<img src={DashboradIcon} alt="" />
+									<span>Dashboard</span>
+								</li>
+							</Link>
 							<Link
 								style={{ textDecoration: "none" }}
 								to="/dashboard/land-details"
 							>
 								<li className="side-nav-item">
 									<img src={Details} alt="" />
-									<span>Land Details</span>
+									<span>My Lands</span>
 								</li>
 							</Link>
 							<Link style={{ textDecoration: "none" }} to="/dashboard/profile">
@@ -102,9 +108,9 @@ const Dashboard = () => {
 				<DashboardHeader value={userProfile}></DashboardHeader>
 				<Routes>
 					<Route path="addrecord" element={<AddRecord />} />
-					<Route path="user" element={<UserDashboard />} />
 					<Route path="profile" element={<Profile />} />
 					<Route path="land-details" element={<LandDetails />} />
+					<Route path="user" element={<UserDashboard />} />
 					<Route path="admin" element={<AdminDashboard />} />
 					<Route path="gov" element={<GovDashboard />} />
 					<Route path="/" element={null} />

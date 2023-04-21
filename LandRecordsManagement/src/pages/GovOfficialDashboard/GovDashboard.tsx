@@ -47,30 +47,17 @@ export interface LandInfo {
 const GovDashboard = () => {
   const { accounts, userContract, landContract } = useContext(LoginContext)
   const [userRecords, setUserRecords] = useState<UserRecord[]>([])
-  const [userInfo, setUserInfo] = useState<Array<UserInfo>>()
   const [landRecords, setLandRecords] = useState<LandRecord[]>([])
-  const [landInfo, setLandInfo] = useState<Array<LandInfo>>()
   const [loading, setLoading] = useState(false)
 
 
   const getRecords = async () => {
     const userRecords = await getAllUsers(userContract, accounts)
     console.log('userRecords --:>> ', userRecords)
-    const temp = userRecords.map((item: any) => {
-      return { aadharNumber: item.user.aadharNumber, name: item.user.name }
-    })
-    const temp2 = userRecords.map((item: any) => {
-      return item.user
-    })
-    setUserRecords(temp2)
-    setUserInfo(temp)
+    setUserRecords(userRecords)
     const landRecords = await getAllLands(landContract, accounts)
     console.log('landRecords :>> ', landRecords)
     setLandRecords(landRecords)
-    const temp3 = landRecords.map((item:any) => {
-      return { mutationNumber: item.mutationNumber, name: item.name }
-    })
-    setLandInfo(temp3)
   }
 
   useEffect(() => {
@@ -83,7 +70,7 @@ const GovDashboard = () => {
       console.log('error :>> ', error)
       setLoading(false)
     }
-  }, [loading , userContract, landContract])
+  }, [userContract, landContract])
 
   
   let userHeading = ['AdharNumber', 'Name', 'Details']
@@ -100,16 +87,14 @@ const GovDashboard = () => {
             <Records
               heading={userHeading}
               title={'Users'}
-              item={userInfo}
-              detail={userRecords}
+              item={userRecords}
             />
           </div>
           <div className='col-2'>
             <Records
               heading={landHeading}
               title={'Lands'}
-              item={landInfo}
-              detail={landRecords}
+              item={landRecords}
             />
           </div>
         </div>

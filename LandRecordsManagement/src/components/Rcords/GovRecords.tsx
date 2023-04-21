@@ -12,11 +12,10 @@ interface recordsProps {
   title: string
   heading: Array<string>
   item: Array<any>
-  detail: Array<any>
 }
 
-const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
-  console.log('detail', detail)
+const GovRecords: FC<recordsProps> = ({ title, heading, item }) => {
+  console.log('item', item)
   const [popupId, setPopupId] = useState(0)
 
   let subtitle: any
@@ -75,12 +74,12 @@ const GovRecords: FC<recordsProps> = ({ title, heading, item, detail }) => {
                         children={
                           ele.aadharNumber ?
                           <UserDetail
-                            content={detail.find(
+                            content={item.find(
                               (e) => e.aadharNumber === popupId
                             )}
                           /> :
                           <LandDetail
-                          content={detail.find(
+                          content={item.find(
                             (e) => e.mutationNumber === popupId
                           )}
                         />

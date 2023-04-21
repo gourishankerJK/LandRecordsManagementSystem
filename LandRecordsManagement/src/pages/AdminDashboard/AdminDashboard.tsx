@@ -78,8 +78,8 @@ const AdminDashboard = () => {
 			<div className="officials">
 				<h2>Officials</h2>
 				<ul>
-					{users.map(({isGovt , user : official}) => {
-						if (isGovt)
+					{users.map((official) => {
+						if (official.role.includes('2'))
 							return (
 								<li key={official.my}>
 									<span>{official.name}</span>
@@ -95,8 +95,8 @@ const AdminDashboard = () => {
 			<div className="users">
 				<h2> Users</h2>
 				<ul>
-					{users.map(({isGovt , user}) => {
-						if (!isGovt) {
+					{users.map((user) => {
+						if (!user.role.includes('2')) {
 							return (
 								<li key={user.my}>
 									<span>{user.name}</span>
