@@ -37,6 +37,8 @@ const Dashboard = () => {
 		})();
 	}, [userContract]);
 
+	let dashboardType = (userProfile.role && userProfile.role.includes('3')) ? 'admin' : (userProfile.role && userProfile.role.includes('2'))? 'gov' : 'user' ;
+
 	return (
 		<div id="dashboard">
 			{/* Sidebar  */}
@@ -57,19 +59,7 @@ const Dashboard = () => {
 									<span>Add Record</span>
 								</li>
 							</Link>
-							<Link style={{ textDecoration: "none" }} to="/dashboard/user">
-								<li className="side-nav-item">
-									<img src={DashboradIcon} alt="" />
-									<span>Dashboard</span>
-								</li>
-							</Link>
-							<Link style={{ textDecoration: "none" }} to="/dashboard/gov">
-								<li className="side-nav-item">
-									<img src={DashboradIcon} alt="" />
-									<span>Dashboard</span>
-								</li>
-							</Link>
-							<Link style={{ textDecoration: "none" }} to="/dashboard/admin">
+							<Link style={{ textDecoration: "none" }} to={`/dashboard/${dashboardType}`}>
 								<li className="side-nav-item">
 									<img src={DashboradIcon} alt="" />
 									<span>Dashboard</span>

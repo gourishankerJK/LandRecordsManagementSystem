@@ -5,6 +5,7 @@ import LoginContext from "../../contexts/LoginContext";
 import { getAllUsers } from "../../utils/admin";
 import { Loader } from "../../components";
 import { getAllLands } from "../../utils/lands";
+import { Verified } from "../../assets";
 
 export interface UserRecord {
 	name: string;
@@ -69,8 +70,8 @@ const GovDashboard = () => {
 		}
 	}, [userContract, landContract , update]);
 
-	let userHeading = ["AdharNumber", "Name", "Details"];
-	let landHeading = ["Mutation Number", "Owner", "Details"];
+	let userHeading = ["AadharNumber", "Name",'Verified', "Details"];
+	let landHeading = ["Mutation Number", "Owner","Verified", "Details"];
 
 	if (loading) return <Loader />;
 	return (
@@ -91,11 +92,12 @@ const GovDashboard = () => {
 							heading={landHeading}
 							title={"Lands"}
 							item={landRecords}
-              update = {update}
+                            update = {update}
 							setUpdate ={setUpdate}
 						/>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 		// <div><p>This are coming up soon!</p></div>

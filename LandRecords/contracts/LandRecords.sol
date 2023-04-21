@@ -204,7 +204,6 @@ contract LandManagementSystem {
         emit OwnershipTransferred(landRecords[_id].owner, newOwner);
     }
 
-    // Get all verified land records
     function getAllLandRecords() public view returns (LandRecord[] memory) {
         require(userRecords.isUserVerified(msg.sender), "User not verified");
         LandRecord[] memory rcs = new LandRecord[](totalLands);
@@ -220,7 +219,11 @@ contract LandManagementSystem {
     // Get all unverified land records
 
     // Get all land records for the current user
-    function getLandRecordsForCurrentUser() public view returns (LandRecord[] memory) {
+    function getLandRecordsForCurrentUser()
+        public
+        view
+        returns (LandRecord[] memory)
+    {
         require(userRecords.isUserVerified(msg.sender), "User not verified");
         uint256 userCount = 0;
         for (uint256 i = 0; i < totalLands; i++) {

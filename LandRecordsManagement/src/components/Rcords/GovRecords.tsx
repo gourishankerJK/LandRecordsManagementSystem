@@ -7,6 +7,7 @@ import LandDetail from "../LandDetail/LandDetail";
 import LoginModal from "../LoginModal/LoginModal";
 import UserDetail from "../UserDetail/UserDetail";
 import "./style.scss";
+import { Unverified } from "../../assets";
 
 interface recordsProps {
 	title: string;
@@ -54,6 +55,7 @@ const GovRecords: FC<recordsProps> = ({
 							<th>{heading[0]}</th>
 							<th>{heading[1]} </th>
 							<th>{heading[2]}</th>
+							<th>{heading[3]} </th>
 						</tr>
 					</thead>
 
@@ -70,6 +72,10 @@ const GovRecords: FC<recordsProps> = ({
 										{ele.mutationNumber ? ele.mutationNumber : ele.aadharNumber}
 									</td>
 									<td>{ele.name}</td>
+									<td>
+										{ele.isVerified ? <img className = 'verified-badge' src={Verified} alt="" /> : <img className = 'unverified-badge' src={Unverified}/>}
+										
+									</td>
 									<td>
 										<button
 										   style={{ border:"none", background:"none", fontWeight:"500", letterSpacing:"0.03em", color:"#FF8533" }}

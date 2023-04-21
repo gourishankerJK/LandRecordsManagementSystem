@@ -35,7 +35,6 @@ const UserDetail: FC<Props> = ({ content, update, setUpdate }) => {
 
 	useEffect(() => {
 		(async function () {
-			console.log("hey");
 			try {
 				console.log("content.profilePhoto", content.officialDocument);
 				const temp = await getDataAsUrl(content.profilePhoto, "image/jpeg");
@@ -51,8 +50,6 @@ const UserDetail: FC<Props> = ({ content, update, setUpdate }) => {
 			}
 		})();
 	}, []);
-	console.log("profilePhotoUrl", profilePhotoUrl);
-	console.log("check :>> ", check);
 	return (
 		<div id="user-container">
 			<div className="profile-img">
@@ -61,7 +58,7 @@ const UserDetail: FC<Props> = ({ content, update, setUpdate }) => {
 			</div>
 			<div className="content">
 				<div className="ele">
-					<span className="label">Adhaar Number</span>
+					<span className="label">Aadhaar Number</span>
 					<span className="value">{content.aadharNumber}</span>
 				</div>
 				<div className="ele">
