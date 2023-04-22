@@ -4,6 +4,7 @@ import "./style.scss";
 import FileViewer from "react-file-viewer";
 import LoginContext from "../../contexts/LoginContext";
 import { verifyLand } from "../../utils/govOfficial";
+import { toast } from "react-toastify";
 
 interface Props {
 	content: any;
@@ -22,23 +23,14 @@ const LandDetail: FC<Props> = ({ content, update, setUpdate }) => {
 	};
 
 	const handleVerify = async (land_id: any) => {
-		try {
-			await verifyLand(landContract, accounts, land_id);
-			setUpdate(!update);
-		} catch (error) {
-			console.log("error", error);
-			setUpdate(!update);
-		}
+		await verifyLand(landContract, accounts, land_id);
+		setUpdate(!update);
 	};
 
 	useEffect(() => {
 		(async function () {
-			try {
-				const temp = await getDataAsUrl(content.recordHash, "image/jpeg");
-				setOfficialDocUrl(temp);
-			} catch (err) {
-				console.log("err :>> ", err);
-			}
+			const temp = await getDataAsUrl(content.recordHash, "image/jpeg");
+			setOfficialDocUrl(temp);
 		})();
 	}, []);
 
@@ -116,7 +108,7 @@ const LandDetail: FC<Props> = ({ content, update, setUpdate }) => {
 					<div className="ele">
 						{view && <FileViewer fileType="jpeg" filePath={officialDocUrl} />}
 						<span className="preview" onClick={handleView}>
-							View Document 
+							View Document
 						</span>
 					</div>
 				</div>

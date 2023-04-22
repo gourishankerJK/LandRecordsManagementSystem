@@ -4,6 +4,7 @@ import "./style.scss";
 import FileViewer from "react-file-viewer";
 import { verifyUser } from "../../utils/govOfficial";
 import LoginContext from "../../contexts/LoginContext";
+import { toast } from "react-toastify";
 
 interface Props {
 	content: any;
@@ -24,30 +25,16 @@ const UserDetail: FC<Props> = ({ content, update, setUpdate }) => {
 	};
 
 	const handleVerify = async (user_address: any) => {
-		try {
-			await verifyUser(userContract, accounts, user_address);
-			setUpdate(!update);
-		} catch (error) {
-			console.log("error", error);
-			setUpdate(!update);
-		}
+		await verifyUser(userContract, accounts, user_address);
+		setUpdate(!update);
 	};
 
 	useEffect(() => {
 		(async function () {
-			try {
-				console.log("content.profilePhoto", content.officialDocument);
-				const temp = await getDataAsUrl(content.profilePhoto, "image/jpeg");
-				const temp2 = await getDataAsUrl(
-					content.officialDocument,
-					"image/jpeg"
-				);
-				console.log("temp :>> ", temp);
-				setProfilePhotoUrl(temp);
-				setOfficialDocUrl(temp2);
-			} catch (err) {
-				console.log("err :>> ", err);
-			}
+			const temp = await getDataAsUrl(content.profilePhoto, "image/jpeg");
+			const temp2 = await getDataAsUrl(content.officialDocument, "image/jpeg");
+			setProfilePhotoUrl(temp);
+			setOfficialDocUrl(temp2);
 		})();
 	}, []);
 	return (

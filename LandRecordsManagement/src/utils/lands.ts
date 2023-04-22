@@ -39,6 +39,17 @@ const _getAllLands = async (contract: any, accounts: any) => {
 	return data;
 };
 
+export const transferOwnerShip = wrapper(async (contract, accounts, obj) => {
+	console.log(obj.mutationNumber, obj.aadharNumber);
+	await contract.methods
+		.transferOwnership(obj.mutationNumber, obj.aadharNumber)
+		.call({ from: accounts[0] });
+	await contract.methods
+		.transferOwnership(obj.mutationNumber, obj.aadharNumber)
+		.send({ from: accounts[0] });
+
+	toast.success("Ownership transferred sucesfully");
+});
 export const getMyLandRecords = wrapper(_getMyLandRecords);
 export const getAllLands = wrapper(_getAllLands);
 export const addLandRecord = wrapper(_addLandRecord);

@@ -41,7 +41,6 @@ export async function getDataAsBlob(cid: string , type : string): Promise<Blob> 
     return blob
   } catch (error) {
     console.error('Error getting data from IPFS:', error)
-    throw error
   }
 }
 

@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 	const [officialAdded, setOfficialAdded] = useState(false);
 	const { userContract, accounts } = useContext(LoginContext);
 
-	const handleAddOfficial = (address) => {
+	const handleAddOfficial = (address : any) => {
 		if (address)
 			(async () => {
 				await addOffical(userContract, accounts, address);
@@ -38,14 +38,14 @@ const AdminDashboard = () => {
 		})();
 	};
 
-	const handleRemoveOfficial = (address) => {
+	const handleRemoveOfficial = (address : any) => {
 		(async () => {
 			await removeOffical(userContract, accounts, address);
 			setOfficialAdded(!officialAdded);
 		})();
 	};
 
-	const handlePromoteUser = (address) => {
+	const handlePromoteUser = (address : any) => {
 		handleAddOfficial(address);
 	};
 	useEffect(() => {

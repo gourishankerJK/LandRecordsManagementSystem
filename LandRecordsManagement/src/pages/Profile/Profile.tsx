@@ -49,6 +49,7 @@ const Profile = () => {
 				updateProfile(result);
 				setProfilePhoto(temp);
 			}
+			setLoading(false);
 		})();
 		setLoading(false);
 	}, [accounts, btnload]);

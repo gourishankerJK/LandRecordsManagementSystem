@@ -5,10 +5,11 @@ import "./style.scss";
 import Records from "../../components/Rcords/Records";
 import TransectionHistory from "../../components/TransectionHistory/TransectionHistory";
 import Input from "../../components/common/Input";
-import { getAllLands } from "../../utils/lands";
+import { getAllLands, transferOwnerShip } from "../../utils/lands";
 import { getMyLandRecords } from "../../utils/lands";
 import { Formik } from "formik";
 import { transferOwnerValidationSchema } from "../../utils/Validations/TransferOwnerShip";
+import { getUsingAadharNumber } from "../../utils/user";
 
 export interface LandRecord {
 	id: number;
@@ -46,10 +47,27 @@ const UserDashboard = () => {
 		["", ""],
 	];
 
-	const { landContract, accounts } = useContext(LoginContext);
+	const { landContract, accounts, userContract } = useContext(LoginContext);
+
 	const [allLands, setAllLands] = useState([]);
 	const [currentUserVerifiedLand, setCurrentUserVerifiedLand] = useState([]);
 	const [transactionData, setTransactionData] = useState([]);
+
+	const handleSubmitT = (values) => {
+		console.log('result', values);
+		(async () => {
+			const { errors, result } = await getUsingAadharNumber(
+				userContract,
+				accounts , 
+				values.aadharNumber
+			);
+			
+			if (!errors) {
+				values.aadharNumber = result;
+				await transferOwnerShip(landContract, accounts, values);
+			}
+		})();
+	};
 
 	useEffect(() => {
 		(async () => {
@@ -95,9 +113,7 @@ const UserDashboard = () => {
 					<Formik
 						validationSchema={transferOwnerValidationSchema}
 						initialValues={{ mutationNumber: "", aadharNumber: "" }}
-						onSubmit={(values) => {
-							console.log(values);
-						}}
+						onSubmit={(values)=> handleSubmitT(values)}
 					>
 						{({ values, handleSubmit, handleChange, errors, isSubmitting }) => (
 							<form onSubmit={handleSubmit} className="transfer-form">
@@ -115,7 +131,6 @@ const UserDashboard = () => {
 										>
 											<option value="">Select Mutation Number</option>
 											{currentUserVerifiedLand.map((land) => {
-												console.log("this", land);
 												return (
 													<option
 														key={land.mutationNumber}
@@ -146,8 +161,7 @@ const UserDashboard = () => {
 								</div>
 								<button
 									type="submit"
-									className={isSubmitting ? "submit submiting" : "submit"}
-									disabled={isSubmitting}
+									className={isSubmitting ? "submit" : "submit"}
 								>
 									Transfer OwnerShip
 								</button>

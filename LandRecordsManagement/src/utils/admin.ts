@@ -10,6 +10,7 @@ export const getProfile = wrapper(async (contract: any, accounts: any) => {
 	const data = await contract.methods
 		.getOwnProfile()
 		.call({ from: accounts[0] });
+		console.log(data);
 	return data;
 });
 

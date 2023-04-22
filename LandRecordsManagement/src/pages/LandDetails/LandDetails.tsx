@@ -17,7 +17,6 @@ const LandDetails = () => {
 	const openModal = (land) => {
 		(async () => {
 			const url = await getDataAsUrl(land.recordHash, "image/jpeg");
-			console.log(url);
 			setDocumentUrl(url);
 			setSelectedLand(land);
 		})();

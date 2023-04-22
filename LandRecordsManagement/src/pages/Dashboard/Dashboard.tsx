@@ -27,17 +27,17 @@ const Dashboard = () => {
 	const { userProfile, updateProfile, setProfilePhoto } = useContext(ProfileContext);
 	useEffect(() => {
 		(async function fetch() {
-			const data = await getProfile(userContract, accounts);
-			if (data) {
-				const temp = await getDataAsUrl(data.profilePhoto, "image/jpeg");
-
-				updateProfile(data);
+			const {errors , result } = await getProfile(userContract, accounts);
+			if (!errors) {
+				const temp = await getDataAsUrl(result.profilePhoto, "image/jpeg");
+				updateProfile(result);
 				setProfilePhoto(temp);
 			}
 		})();
 	}, [userContract]);
 
 	let dashboardType = (userProfile.role && userProfile.role.includes('3')) ? 'admin' : (userProfile.role && userProfile.role.includes('2'))? 'gov' : 'user' ;
+	console.log('dashboardType', dashboardType , userProfile)
 
 	return (
 		<div id="dashboard">

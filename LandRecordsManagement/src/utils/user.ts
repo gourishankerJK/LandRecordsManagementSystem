@@ -23,9 +23,6 @@ export const addProfile = wrapper(async (contract, address, obj) => {
 	toast.success("Profile added sucessfully!");
 });
 
-
-export const transferOwnerShip = wrapper(async (contract , accounts , obj)=>{
-      await contract.methods.transferOwnership().call({from : accounts[0]});
-      await contract.methods.transferOwnership().send({from : accounts[0]})
-
+export const getUsingAadharNumber = wrapper(async (contract , address , aadharNumber )=>{
+	return await contract.methods.getUsingAadharNumber(aadharNumber).call({ from: address[0] });
 })

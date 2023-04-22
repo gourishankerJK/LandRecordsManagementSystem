@@ -11,9 +11,9 @@ const customStyles = {
 		bottom: "auto",
 		marginRight: "-50%",
 		transform: "translate(-50%, -50%)",
-		maxHeight : '90vh'
+		maxHeight: "90vh",
 	},
-	overlay: { zIndex: 999},
+	overlay: { zIndex: 999 },
 };
 
 interface loginModalProps {

@@ -126,13 +126,17 @@ contract UserRecords {
             if (userLandIds[i] == landId) {
                 userLandIds[i] = userLandIds[userLandIds.length - 1];
                 userLandIds.pop();
-                return;
             }
         }
+        landIdsMap[userDataMap[user].aadharNumber] = userLandIds;
     }
 
     function getAadharNumber(address user) public view returns (uint256) {
         return userDataMap[user].aadharNumber;
+    }
+    function getUsingAadharNumber(uint256 aadharNumber) public view returns (address) {
+        require(bytes(aadToUser[aadharNumber].name).length > 0 , "This aadhar is not registered with us");
+        return aadToUser[aadharNumber].my;
     }
 
     function updateLandIds(address user, uint256 id) public {
