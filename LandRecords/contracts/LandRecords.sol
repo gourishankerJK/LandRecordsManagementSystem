@@ -26,6 +26,7 @@ contract LandManagementSystem {
         bool isVerified;
     }
     mapping(uint256 => LandRecord) private landRecords;
+    mapping(uint256 => LandRecord) private landRecordsMutation;
 
     mapping(uint256 => bool) private _mutationNumbers;
 
@@ -110,6 +111,17 @@ contract LandManagementSystem {
             _isForSale,
             false
         );
+        landRecordsMutation[_mutationNumber] = LandRecord(
+            totalLands,
+            msg.sender,
+            _name,
+            _mutationNumber,
+            _location,
+            _recordHash,
+            _price,
+            _isForSale,
+            false
+        );
         totalLands++;
         _mutationNumbers[_mutationNumber] = true;
         userRecords.updateLandIds(msg.sender, totalLands - 1);
@@ -162,30 +174,31 @@ contract LandManagementSystem {
 
     function buyLand(uint256 _id) public payable {
         require(
-            landRecords[_id].isVerified,
+            landRecordsMutation[_id].isVerified,
             "Land is not verified by the officials"
         );
         require(userRecords.isUserVerified(msg.sender), "User not verified");
-        require(landRecords[_id].isForSale, "Land is not for sale");
-        require(msg.value == landRecords[_id].price, "Incorrect amount sent");
+        require(landRecordsMutation[_id].isForSale, "Land is not for sale");
+        require(msg.value == landRecordsMutation[_id].price, "Incorrect amount sent");
 
         transferOwnership(_id, msg.sender);
 
-        emit LandSold(_id, msg.sender, landRecords[_id].price);
+        emit LandSold(_id, msg.sender, landRecordsMutation[_id].price);
     }
 
     function sellLand(uint256 _id, uint256 _price) public onlyOwner(_id) {
         require(
-            landRecords[_id].isVerified,
+            landRecordsMutation[_id].isVerified,
             "Land is not verified by the officials"
         );
         require(userRecords.isUserVerified(msg.sender), "User not verified");
-        require(_id >= 0 && _id < totalLands, "Invalid Land iD");
+        require(_id >= 0 , "Invalid Land iD");
 
-        landRecords[_id].isForSale = true;
-        landRecords[_id].price = _price;
-
-        emit LandForSale(_id, landRecords[_id].owner, _price);
+        landRecordsMutation[_id].isForSale = true;
+        landRecordsMutation[_id].price = _price;
+        landRecords[landRecordsMutation[_id]._id].isForSale = true;
+        landRecords[landRecordsMutation[_id]._id].price = _price;
+        emit LandForSale(_id, landRecordsMutation[_id].owner, _price);
     }
 
     function transferOwnership(
@@ -194,14 +207,16 @@ contract LandManagementSystem {
     ) public onlyOwner(_id) {
         require(newOwner != address(0), "Invalid address");
         require(
-            landRecords[_id].owner != newOwner,
+            landRecordsMutation[_id].owner != newOwner,
             "You can't transfer the ownership to yourself"
         );
         require(userRecords.isUserVerified(msg.sender), "User not verified");
-        userRecords.removeLandFromUser(landRecords[_id].owner, _id);
-        landRecords[_id].owner = newOwner;
-        landRecords[_id].isForSale = false;
-        emit OwnershipTransferred(landRecords[_id].owner, newOwner);
+        userRecords.removeLandFromUser(landRecordsMutation[_id].owner, _id);
+        landRecordsMutation[_id].owner = newOwner;
+        landRecordsMutation[_id].isForSale = false;
+        landRecords[landRecordsMutation[_id]._id].owner = newOwner;
+        landRecords[landRecordsMutation[_id]._id].isForSale = false;
+        emit OwnershipTransferred(landRecordsMutation[_id].owner, newOwner);
     }
 
     function getAllLandRecords() public view returns (LandRecord[] memory) {
@@ -236,6 +251,31 @@ contract LandManagementSystem {
         uint256 index = 0;
         for (uint256 i = 0; i < totalLands; i++) {
             if (landRecords[i].owner == msg.sender) {
+                ur[index] = landRecords[i];
+                index++;
+            }
+        }
+
+        return ur;
+    }
+
+    function getLandRecordsExceptForCurrentUser()
+        public
+        view
+        returns (LandRecord[] memory)
+    {
+        require(userRecords.isUserVerified(msg.sender), "User not verified");
+        uint256 userCount = 0;
+        for (uint256 i = 0; i < totalLands; i++) {
+            if (landRecords[i].owner != msg.sender) {
+                userCount++;
+            }
+        }
+
+        LandRecord[] memory ur = new LandRecord[](userCount);
+        uint256 index = 0;
+        for (uint256 i = 0; i < totalLands; i++) {
+            if (landRecords[i].owner != msg.sender) {
                 ur[index] = landRecords[i];
                 index++;
             }

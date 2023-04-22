@@ -54,24 +54,31 @@ const GovDashboard = () => {
 	const [update, setUpdate] = useState(false);
 
 	const getRecords = async () => {
-		const userRecords = await getAllUsers(userContract, accounts);
-		setUserRecords(userRecords);
-		const landRecords = await getAllLands(landContract, accounts);
-		setLandRecords(landRecords);
 	};
-
+	
 	useEffect(() => {
-		setLoading(true);
-		try {
-			getRecords();
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-		}
-	}, [userContract, landContract , update]);
+		(async ()=> {setLoading(true);
+		const {errors : uErros , result : userRecords} = await getAllUsers(userContract, accounts);
+		const {errors : lErrors , result : landRecords} = await getAllLands(landContract, accounts);
+		if(!uErros) setUserRecords(userRecords);
+		if(!lErrors) setLandRecords(landRecords);
+		console.log(userRecords , landRecords)
+		setLoading(false);})();
+		
+	}, [userContract, landContract, update]);
 
-	let userHeading = ["AadharNumber", "Name",'Verified', "Details"];
-	let landHeading = ["Mutation Number", "Owner","Verified", "Details"];
+	let userHeading = [
+		["AadharNumber", "aadharNumber"],
+		["Name", "name"],
+		["Verified", "isVerified"],
+		["Details", "view"],
+	];
+	let landHeading = [
+		["Mutation Number", "mutationNumber"],
+		["Owner", "name"],
+		["Verified", "isVerified"],
+		["Details", "view"],
+	];
 
 	if (loading) return <Loader />;
 	return (
@@ -83,8 +90,8 @@ const GovDashboard = () => {
 							heading={userHeading}
 							title={"Users"}
 							item={userRecords}
-							update = {update}
-							setUpdate ={setUpdate}
+							update={update}
+							setUpdate={setUpdate}
 						/>
 					</div>
 					<div className="col-2">
@@ -92,12 +99,11 @@ const GovDashboard = () => {
 							heading={landHeading}
 							title={"Lands"}
 							item={landRecords}
-                            update = {update}
-							setUpdate ={setUpdate}
+							update={update}
+							setUpdate={setUpdate}
 						/>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 		// <div><p>This are coming up soon!</p></div>

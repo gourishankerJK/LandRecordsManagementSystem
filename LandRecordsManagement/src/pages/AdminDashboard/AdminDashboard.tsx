@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./styles.scss";
 import LoginContext from "../../contexts/LoginContext";
-import { addOffical, getAllUsers, checkOffical, removeOffical } from "../../utils/admin";
+import {
+	addOffical,
+	getAllUsers,
+	checkOffical,
+	removeOffical,
+} from "../../utils/admin";
 
 const AdminDashboard = () => {
 	const [users, setUsers] = useState([]);
@@ -11,19 +16,19 @@ const AdminDashboard = () => {
 
 	const handleAddOfficial = (address) => {
 		if (address)
-			(async () => {await addOffical(userContract, accounts, address);
+			(async () => {
+				await addOffical(userContract, accounts, address);
 				setOfficialAdded(!officialAdded);
 			})();
 		else
-			(async () =>{
+			(async () => {
 				await addOffical(userContract, accounts, newOfficalAddress);
 				setOfficialAdded(!officialAdded);
 			})();
-			
 	};
 	const handleCheckOfficial = () => {
 		(async () => {
-			const data = await checkOffical(
+			const { errors: E, result: data } = await checkOffical(
 				userContract,
 				accounts,
 				newOfficalAddress
@@ -35,26 +40,20 @@ const AdminDashboard = () => {
 
 	const handleRemoveOfficial = (address) => {
 		(async () => {
-			 await removeOffical(
-				userContract,
-				accounts,
-				address
-			);
+			await removeOffical(userContract, accounts, address);
 			setOfficialAdded(!officialAdded);
 		})();
-		
 	};
 
 	const handlePromoteUser = (address) => {
 		handleAddOfficial(address);
 	};
 	useEffect(() => {
-		console.log("I was called");
 		(async () => {
-			const data = await getAllUsers(userContract, accounts);
-			if (data) setUsers(data);
+			const { errors, result } = await getAllUsers(userContract, accounts);
+			if (!errors) setUsers(result);
 		})();
-	}, [userContract , officialAdded]);
+	}, [userContract, officialAdded]);
 	return (
 		<div className="admin-dashboard">
 			<div className="add-official">
@@ -79,7 +78,7 @@ const AdminDashboard = () => {
 				<h2>Officials</h2>
 				<ul>
 					{users.map((official) => {
-						if (official.role.includes('2'))
+						if (official.role.includes("2"))
 							return (
 								<li key={official.my}>
 									<span>{official.name}</span>
@@ -96,7 +95,7 @@ const AdminDashboard = () => {
 				<h2> Users</h2>
 				<ul>
 					{users.map((user) => {
-						if (!user.role.includes('2')) {
+						if (!user.role.includes("2")) {
 							return (
 								<li key={user.my}>
 									<span>{user.name}</span>

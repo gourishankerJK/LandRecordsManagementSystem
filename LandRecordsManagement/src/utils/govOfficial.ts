@@ -1,33 +1,19 @@
-export const verifyUser = async (
-	contract: any,
-	accounts: any,
-	address: string
-) => {
-	try {
-		await contract.methods
-			.verifyUser(address)
-			.call({ from: accounts[0] });
-		await contract.methods
-			.verifyUser(address)
-			.send({ from: accounts[0] });
-	} catch (err) {
-		console.log(err);
-	}
-};
+import { wrapper } from "./wrapper";
 
-export const verifyLand = async (
-	contract: any,
-	accounts: any,
-	land_id: string
-) => {
-	try {
+export const verifyUser = wrapper(
+	async (contract: any, accounts: any, address: string) => {
+		await contract.methods.verifyUser(address).call({ from: accounts[0] });
+		await contract.methods.verifyUser(address).send({ from: accounts[0] });
+	}
+);
+
+export const verifyLand = wrapper(
+	async (contract: any, accounts: any, land_id: string) => {
 		await contract.methods
 			.verifyLandRecord(land_id)
 			.call({ from: accounts[0] });
 		await contract.methods
 			.verifyLandRecord(land_id)
 			.send({ from: accounts[0] });
-	} catch (err) {
-		console.log(err);
 	}
-};
+);

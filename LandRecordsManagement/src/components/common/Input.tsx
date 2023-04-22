@@ -22,6 +22,7 @@ const Input: React.FC<InputProps> = ({
 	...rest
 }) => {
 	let temp = name.split(".").slice(-1)[0];
+	console.log(temp , errors)
 	return (
 		<>
 			<div className={`box-input ${classes}`}>

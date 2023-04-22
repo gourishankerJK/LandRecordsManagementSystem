@@ -23,6 +23,62 @@
      }
       
     }
+    .transfer{
+       display: flex;
+       flex-direction: column;
+       margin: 1rem 0.5rem;
+       box-shadow: $dashboard_shadow;
+       padding: 0.5rem 1rem;
+       .transfer-form{
+         h1{
+           color: $base_color;
+           letter-spacing: 0.03em;
+           font-weight: 400;
+         }
+         .form-inputs{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+           .form-content{
+               display: flex;
+               flex-direction: column;
+               label{
+                 margin-top:1.5rem;
+                 padding-top: 0.6rem;
+               }
+               select{
+                 margin-top:0.5rem;
+                 padding: 0.5rem ;
+                 outline: none;
+               }
+               .input-feedback{
+                 color: red;
+                 font-size: 10px;
+               }
+           }
+         }
+         .submit{
+            background: $base_color;
+            color: #fff;
+            font-weight: 500;
+            margin-top: 1rem ;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            letter-spacing: 0.03em;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+          }
+          .submit:hover{
+             opacity: 0.6;
+          }
+          .submiting{
+             opacity: 0.2;
+          }
+       }
+    }
+
   }
 
 }
+

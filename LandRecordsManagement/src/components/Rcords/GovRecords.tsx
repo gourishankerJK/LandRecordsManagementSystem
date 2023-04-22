@@ -11,7 +11,7 @@ import { Unverified } from "../../assets";
 
 interface recordsProps {
 	title: string;
-	heading: Array<string>;
+	heading: Array<Array<string>>;
 	item: Array<any>;
 	update: boolean;
 	setUpdate: any;
@@ -52,40 +52,38 @@ const GovRecords: FC<recordsProps> = ({
 				<table>
 					<thead>
 						<tr>
-							<th>{heading[0]}</th>
-							<th>{heading[1]} </th>
-							<th>{heading[2]}</th>
-							<th>{heading[3]} </th>
+							<th>{heading[0][0]}</th>
+							<th>{heading[1][0]} </th>
+							<th>{heading[2][0]}</th>
+							<th>{heading[3][0]} </th>
 						</tr>
 					</thead>
 
 					<tbody>
 						{item?.map((ele) => {
 							return (
-								<tr
-									key={
-										ele &&
-										(ele.mutationNumber ? ele.mutationNumber : ele.aadharNumber)
-									}
-								>
-									<td>
-										{ele.mutationNumber ? ele.mutationNumber : ele.aadharNumber}
-									</td>
-									<td>{ele.name}</td>
-									<td>
-										{ele.isVerified ? <img className = 'verified-badge' src={Verified} alt="" /> : <img className = 'unverified-badge' src={Unverified}/>}
-										
+								<tr key={ele && ele[heading[0][1]]}>
+									<td>{ele[heading[0][1]]}</td>
+									<td>{ele[heading[1][1]]}</td>
+									<td className="status">
+										{ele[heading[2][1]] ? (
+											<img className="verified-badge" src={Verified} alt="" />
+										) : (
+											<img
+												className="unverified-badge"
+												style={{
+													height: "20px",
+													width: "20px",
+													objectFit: "contain",
+												}}
+												src={Unverified}
+											/>
+										)}
 									</td>
 									<td>
 										<button
-										   style={{ border:"none", background:"none", fontWeight:"500", letterSpacing:"0.03em", color:"#FF8533" }}
-											onClick={() =>
-												openModal(
-													ele.aadharNumber
-														? ele.aadharNumber
-														: ele.mutationNumber
-												)
-											}
+											className="record-btn"
+											onClick={() => openModal(ele[heading[0][1]])}
 										>
 											View
 										</button>
@@ -128,7 +126,4 @@ const GovRecords: FC<recordsProps> = ({
 	);
 };
 
-const children = () => {
-	return <h1>Hello World</h1>;
-};
 export default GovRecords;

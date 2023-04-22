@@ -1,75 +1,51 @@
-export const getAllUsers = async (contract: any, accounts: any) => {
-	try {
-		const data = await contract.methods
-			.getAllUsers()
-			.call({ from: accounts[0] });
-		return data;
-	} catch (er) {
-		console.log(er);
-	}
-};
+import { toast } from "react-toastify";
+import { wrapper } from "./wrapper";
 
-export const getProfile = async (contract: any, accounts: any) => {
-	try {
-		const data = await contract.methods
-			.getOwnProfile()
-			.call({ from: accounts[0] });
-		return data;
-	} catch (err) {
-		console.log(err);
-		return null;
-	}
-};
+export const getAllUsers = wrapper(async (contract: any, accounts: any) => {
+	const data = await contract.methods.getAllUsers().call({ from: accounts[0] });
+	return data;
+});
 
-export const addOffical = async (
-	contract: any,
-	accounts: any,
-	address: string
-) => {
-	try {
+export const getProfile = wrapper(async (contract: any, accounts: any) => {
+	const data = await contract.methods
+		.getOwnProfile()
+		.call({ from: accounts[0] });
+	return data;
+});
+
+export const addOffical = wrapper(
+	async (contract: any, accounts: any, address: string) => {
 		await contract.methods
 			.addGovernmentOfficial(address)
 			.call({ from: accounts[0] });
 		await contract.methods
 			.addGovernmentOfficial(address)
 			.send({ from: accounts[0] });
-	} catch (err) {
-		console.log(err);
+		toast.success("Offical added!");
 	}
-};
+);
 
-export const checkOffical = async (
-	contract: any,
-	accounts: any,
-	address: string
-) => {
-	try {
+export const checkOffical = wrapper(
+	async (contract: any, accounts: any, address: string) => {
 		const data = await contract.methods
 			.isGovernmentOfficial(address)
 			.call({ from: accounts[0] });
 		return data;
-	} catch (err) {
-		console.log(err);
 	}
-};
+);
 
-export const removeOffical = async (contract, accounts, address) => {
-	console.log(address);
-	try {
-		await contract.methods
-			.removeGovernmentOfficial(address)
-			.call({ from: accounts[0] });
-		await contract.methods
-			.removeGovernmentOfficial(address)
-			.send({ from: accounts[0] });
-	} catch (e) {
-		console.log(e);
-	}
-};
-
-export const isAdmin =  async (contract: any, accounts: any) => {
-	const data = await contract.methods
-		.isAdmin()
+export const removeOffical = wrapper(async (contract, accounts, address) => {
+	await contract.methods
+		.removeGovernmentOfficial(address)
 		.call({ from: accounts[0] });
-	return data
-}
+	await contract.methods
+		.removeGovernmentOfficial(address)
+		.send({ from: accounts[0] });
+
+	toast.success("Official removed sucessfully");
+});
+
+export const isAdmin = wrapper(async (contract: any, accounts: any) => {
+	const data = await contract.methods.isAdmin().call({ from: accounts[0] });
+	return data;
+});
