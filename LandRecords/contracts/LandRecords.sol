@@ -170,6 +170,7 @@ contract LandManagementSystem {
             "This land record is already verified."
         );
         landRecords[_id].isVerified = true;
+        landRecordsMutation[landRecords[_id].mutationNumber].isVerified = true;
     }
 
     function buyLand(uint256 mutationNumber) public payable {
@@ -178,18 +179,29 @@ contract LandManagementSystem {
             "Land is not verified by the officials"
         );
         require(userRecords.isUserVerified(msg.sender), "User not verified");
-        require(landRecordsMutation[mutationNumber].isForSale, "Land is not for sale");
+        require(
+            landRecordsMutation[mutationNumber].isForSale,
+            "Land is not for sale"
+        );
         require(
             msg.value == landRecordsMutation[mutationNumber].price,
             "Incorrect amount sent"
         );
 
-        transferOwnership(mutationNumber, msg.sender);
-
-        emit LandSold(mutationNumber, msg.sender, landRecordsMutation[mutationNumber].price);
+        userRecords.removeLandFromUser(
+            landRecordsMutation[mutationNumber].owner,
+            mutationNumber
+        );
+        landRecordsMutation[mutationNumber].owner = msg.sender;
+        landRecordsMutation[mutationNumber].isForSale = false;
+        landRecords[landRecordsMutation[mutationNumber].id].owner = msg.sender;
+        landRecords[landRecordsMutation[mutationNumber].id].isForSale = false;
     }
 
-    function sellLand(uint256 mutationNumber, uint256 _price) public onlyOwner(mutationNumber) {
+    function sellLand(
+        uint256 mutationNumber,
+        uint256 _price
+    ) public onlyOwner(mutationNumber) {
         require(
             landRecordsMutation[mutationNumber].isVerified,
             "Land is not verified by the officials"
@@ -201,7 +213,6 @@ contract LandManagementSystem {
         landRecordsMutation[mutationNumber].price = _price;
         landRecords[landRecordsMutation[mutationNumber].id].isForSale = true;
         landRecords[landRecordsMutation[mutationNumber].id].price = _price;
-        emit LandForSale(mutationNumber, landRecordsMutation[mutationNumber].owner, _price);
     }
 
     function getAllLandRecords() public view returns (LandRecord[] memory) {
@@ -302,7 +313,10 @@ contract LandManagementSystem {
             "You can't transfer the ownership to yourself"
         );
         require(userRecords.isUserVerified(msg.sender), "User not verified");
-        userRecords.removeLandFromUser(landRecordsMutation[mutationNumber].owner, mutationNumber);
+        userRecords.removeLandFromUser(
+            landRecordsMutation[mutationNumber].owner,
+            mutationNumber
+        );
         landRecordsMutation[mutationNumber].owner = newOwner;
         landRecordsMutation[mutationNumber].isForSale = false;
         landRecords[landRecordsMutation[mutationNumber].id].owner = newOwner;

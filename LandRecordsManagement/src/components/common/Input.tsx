@@ -3,7 +3,7 @@ import "./Input.scss";
 interface InputProps {
 	label: string;
 	name: string;
-	value?: string;
+	value?: any;
 	id: string;
 	errors?: any;
 	classes?: any;

@@ -5,7 +5,11 @@ import "./style.scss";
 import Records from "../../components/Rcords/Records";
 import TransectionHistory from "../../components/TransectionHistory/TransectionHistory";
 import Input from "../../components/common/Input";
-import { getAllLands, transferOwnerShip } from "../../utils/lands";
+import {
+	getAllLands,
+	getLandRecordsExceptForCurrentUser,
+	transferOwnerShip,
+} from "../../utils/lands";
 import { getMyLandRecords } from "../../utils/lands";
 import { Formik } from "formik";
 import { transferOwnerValidationSchema } from "../../utils/Validations/TransferOwnerShip";
@@ -35,7 +39,7 @@ const UserDashboard = () => {
 		["Name", "name"],
 		["Price", "price"],
 		["Status", "isVerified"],
-		["Availibity", "Isforsale"],
+		["Availibity", "isForSale"],
 		["", ""],
 	];
 	let trasactionHeading = [
@@ -48,20 +52,19 @@ const UserDashboard = () => {
 	];
 
 	const { landContract, accounts, userContract } = useContext(LoginContext);
-
+	const [load, setLoad] = React.useState(false);
 	const [allLands, setAllLands] = useState([]);
 	const [currentUserVerifiedLand, setCurrentUserVerifiedLand] = useState([]);
 	const [transactionData, setTransactionData] = useState([]);
 
 	const handleSubmitT = (values) => {
-		console.log('result', values);
 		(async () => {
 			const { errors, result } = await getUsingAadharNumber(
 				userContract,
-				accounts , 
+				accounts,
 				values.aadharNumber
 			);
-			
+
 			if (!errors) {
 				values.aadharNumber = result;
 				await transferOwnerShip(landContract, accounts, values);
@@ -71,14 +74,14 @@ const UserDashboard = () => {
 
 	useEffect(() => {
 		(async () => {
-			const { errors: landError, result: lands } = await getAllLands(
-				landContract,
-				accounts
-			);
+			const { errors: landError, result: lands } =
+				await getLandRecordsExceptForCurrentUser(landContract, accounts);
 			const { errors: myLandError, result: myLands } = await getMyLandRecords(
 				landContract,
 				accounts
 			);
+
+			console.log(lands);
 			if (!myLandError) {
 				const myVerifiedLands = myLands.filter((item) => {
 					if (item.isVerified) return item;
@@ -87,7 +90,7 @@ const UserDashboard = () => {
 			}
 			if (!landError) setAllLands(lands);
 		})();
-	}, [accounts]);
+	}, [accounts, load]);
 
 	return (
 		<div id="user-dashboard">
@@ -98,6 +101,8 @@ const UserDashboard = () => {
 							heading={recordHeading}
 							title={"Available Lands"}
 							item={allLands}
+							load={load}
+							setLoad={setLoad}
 						/>
 					</div>
 					<div className="col-2">
@@ -105,6 +110,8 @@ const UserDashboard = () => {
 							heading={trasactionHeading}
 							title={"Transaction History"}
 							item={transactionData}
+							load={load}
+							setLoad={setLoad}
 						/>
 					</div>
 				</div>
@@ -113,7 +120,7 @@ const UserDashboard = () => {
 					<Formik
 						validationSchema={transferOwnerValidationSchema}
 						initialValues={{ mutationNumber: "", aadharNumber: "" }}
-						onSubmit={(values)=> handleSubmitT(values)}
+						onSubmit={(values) => handleSubmitT(values)}
 					>
 						{({ values, handleSubmit, handleChange, errors, isSubmitting }) => (
 							<form onSubmit={handleSubmit} className="transfer-form">

@@ -6,6 +6,7 @@ interface LoginContextType {
     landContract: any;
     userContract : any;
     error: string;
+    web3 : any;
     setAccounts: (value : Array<string>) => void;
     setLandContract: (value : any) => void;
     setUserContract: (value : any) => void;
@@ -19,6 +20,7 @@ const LoginContext = createContext<LoginContextType>({
     landContract : "",
     userContract : "",
     error : "",
+    web3 : "", 
     setAccounts: () => {}  ,
     setLandContract : () =>{},
     setUserContract : () =>{},

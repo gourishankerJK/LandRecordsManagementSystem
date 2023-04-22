@@ -1,19 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
-import { getMyLandRecords } from "../../utils/lands";
+import { buyLand, getMyLandRecords, sellLand } from "../../utils/lands";
 import LoginContext from "../../contexts/LoginContext";
 import { Loader } from "../../components";
 import { getDataAsUrl } from "../../utils/ipfs";
 import NotFound from "../../components/NotFound/NotFound";
+import Input from "../../components/common/Input";
 
 const LandDetails = () => {
 	const [lands, setLands] = useState([]);
 	const { accounts, landContract } = useContext(LoginContext);
 	const [loading, setLoading] = useState(false);
-
+	const [load, setLoad] = useState(false);
+	const [price, setPrice] = useState(0);
 	const [selectedLand, setSelectedLand] = useState(null);
 	const [documentUrl, setDocumentUrl] = useState("");
 
+	const handleSaleIt = (land) => {
+		(async () => {
+			await sellLand(landContract, accounts, land.mutationNumber, price);
+			setLoad(!load);
+		})();
+	};
 	const openModal = (land) => {
 		(async () => {
 			const url = await getDataAsUrl(land.recordHash, "image/jpeg");
@@ -31,9 +39,9 @@ const LandDetails = () => {
 		(async () => {
 			const { errors, result } = await getMyLandRecords(landContract, accounts);
 			if (!errors) setLands(result);
-			setLoading(false);
 		})();
-	}, [accounts]);
+		setLoading(false);
+	}, [accounts, load, loading]);
 
 	if (loading) return <Loader />;
 	if (lands.length == 0)
@@ -104,8 +112,49 @@ const LandDetails = () => {
 					</div>
 
 					<div className="land-details-row">
-						<button onClick={() => openModal(land)}>View Document</button>
+						<button
+							className="submit"
+							style={{ fontSize: "18px" }}
+							onClick={() => openModal(land)}
+						>
+							View Document
+						</button>
 					</div>
+					{land.isVerified && (
+						<div className="land-details-row">
+							{!land.isForSale && (
+								<>
+									<Input
+										name="price"
+										id="price"
+										label="Set New Price"
+										type="number"
+										value={price}
+										onChange={(e) => {
+											setPrice(e.target.value);
+										}}
+									/>
+									<button
+										className="submit"
+										style={{ fontSize: "18px", marginTop: "2.2rem" }}
+										onClick={() => handleSaleIt(land)}
+									>
+										Sell
+									</button>
+								</>
+							)}
+						</div>
+					)}
+					{land.isForSale && (
+						<div className="land-details-row">
+							<p>***Already Available for Sale :) </p>
+						</div>
+					)}
+					{!land.isForSale && !land.isVerified && (
+						<div className="land-details-row">
+							<p>***Not Available for Sale , not yet verified :( </p>
+						</div>
+					)}
 				</div>
 			))}
 			{selectedLand && (

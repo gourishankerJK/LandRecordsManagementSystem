@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { wrapper } from "./wrapper";
+import { web3 } from "web3";
 
 const _addLandRecord = async (contract: any, accounts: any, values: any) => {
 	await contract.methods
@@ -50,6 +51,43 @@ export const transferOwnerShip = wrapper(async (contract, accounts, obj) => {
 
 	toast.success("Ownership transferred sucesfully");
 });
+
+export const buyLand = wrapper(
+	async (contract, accounts, web3, mutationNumber, price) => {
+		await contract.methods.buyLand(mutationNumber).call({
+			from: accounts[0],
+			value: web3.utils.toWei(price.toString(), "wei"),
+		});
+		await contract.methods.buyLand(mutationNumber).send({
+			from: accounts[0],
+			value: web3.utils.toWei(price.toString(), "wei"),
+		});
+
+		toast.success("Successfully bought the land");
+	}
+);
+
+export const sellLand = wrapper(
+	async (contract, accounts, mutationNumber, price) => {
+		await contract.methods.sellLand(mutationNumber, price).call({
+			from: accounts[0],
+		});
+		await contract.methods.sellLand(mutationNumber, price).send({
+			from: accounts[0],
+		});
+
+		toast.success("Land Successfully put up for the Sale");
+	}
+);
+
+export const getLandRecordsExceptForCurrentUser = wrapper(
+	async (contract: any, accounts: any) => {
+		const data = await contract.methods
+			.getLandRecordsExceptForCurrentUser()
+			.call({ from: accounts[0] });
+		return data;
+	}
+);
 export const getMyLandRecords = wrapper(_getMyLandRecords);
 export const getAllLands = wrapper(_getAllLands);
 export const addLandRecord = wrapper(_addLandRecord);

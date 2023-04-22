@@ -18,6 +18,7 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
 
   const [landContract, setLandContract] = useState<Web3["eth"]["Contract"]>();
   const [userContract, setUserContract] = useState<Web3["eth"]["Contract"]>();
+  const [web3 , setWeb3] = useState<CustomWindow>();
   const [error, setError] = useState<string>('');
 
   const connectMetamask = async (): Promise<void> => {
@@ -32,6 +33,7 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
         setAccounts(accounts);
         setLandContract(lcontract);
         setUserContract(ucontract);
+        setWeb3(web3);
       } catch (error) {
         console.error(error);
       }
@@ -47,10 +49,10 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
         const web3 = new Web3(customWindow.ethereum);
         const lcontract = new web3.eth.Contract(landAbiFile.abi as AbiItem[], contractAdress.Land_address);
         const ucontract = new web3.eth.Contract(userAbiFile.abi as AbiItem[], contractAdress.User_address);
-        console.log('hello');
         setAccounts([customWindow.ethereum.selectedAddress]);
         setLandContract(lcontract);
         setUserContract(ucontract);
+        setWeb3(web3);
       } catch (error) {
         console.error(error);
       }
@@ -64,7 +66,7 @@ function LoginProvider(props: LoginProviderProps): JSX.Element {
 
   return (
     <LoginContext.Provider
-      value={{ accounts, landContract, userContract, error, setAccounts, setLandContract, setUserContract, setError, connectMetamask, updateMetaMask, isAuthenticated }}
+      value={{web3,  accounts, landContract, userContract, error, setAccounts, setLandContract, setUserContract, setError, connectMetamask, updateMetaMask, isAuthenticated }}
     >
       {props.children}
     </LoginContext.Provider>
