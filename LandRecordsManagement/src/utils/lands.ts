@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 import { wrapper } from "./wrapper";
-import { web3 } from "web3";
 
 const _addLandRecord = async (contract: any, accounts: any, values: any) => {
 	await contract.methods
@@ -56,11 +55,11 @@ export const buyLand = wrapper(
 	async (contract, accounts, web3, mutationNumber, price) => {
 		await contract.methods.buyLand(mutationNumber).call({
 			from: accounts[0],
-			value: web3.utils.toWei(price.toString(), "wei"),
+			value: web3.utils.toWei(price.toString(), "ether"),
 		});
 		await contract.methods.buyLand(mutationNumber).send({
 			from: accounts[0],
-			value: web3.utils.toWei(price.toString(), "wei"),
+			value: web3.utils.toWei(price.toString(), "ether"),
 		});
 
 		toast.success("Successfully bought the land");
@@ -88,6 +87,11 @@ export const getLandRecordsExceptForCurrentUser = wrapper(
 		return data;
 	}
 );
+
+
+export const getVerifiedLandRecordsForCurrentUser = wrapper(async (contract , accounts)=>{
+	  return await contract.methods.getVerifiedLandRecordsForCurrentUser(accounts[0]).call({from : accounts[0]});
+})
 export const getMyLandRecords = wrapper(_getMyLandRecords);
 export const getAllLands = wrapper(_getAllLands);
 export const addLandRecord = wrapper(_addLandRecord);

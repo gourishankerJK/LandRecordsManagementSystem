@@ -51,6 +51,7 @@ const LandModal: React.FC<landModalProps> = ({
                   land.price
               );
               setLoad(!load);
+			  closeModal();
       })();
     }
 	return (

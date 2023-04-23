@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./style.scss";
-import Records from "../../components/Rcords/GovRecords";
+import GovRecords from "../../components/Rcords/GovRecords";
+
 import LoginContext from "../../contexts/LoginContext";
 import { getAllUsers } from "../../utils/admin";
 import { Loader } from "../../components";
 import { getAllLands } from "../../utils/lands";
 import { Verified } from "../../assets";
+import { getTransactionHistory } from "../../utils/transactions";
+import Records from "../../components/Rcords/Records";
 
 export interface UserRecord {
 	name: string;
@@ -47,24 +50,38 @@ export interface LandInfo {
 }
 
 const GovDashboard = () => {
-	const { accounts, userContract, landContract } = useContext(LoginContext);
+	const { accounts, userContract, landContract, transContract } =
+		useContext(LoginContext);
 	const [userRecords, setUserRecords] = useState<UserRecord[]>([]);
 	const [landRecords, setLandRecords] = useState<LandRecord[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [update, setUpdate] = useState(false);
+	const [transactionData, setTransactionData] = useState([]);
 
-	const getRecords = async () => {
-	};
-	
+	const getRecords = async () => {};
+
 	useEffect(() => {
-		(async ()=> {setLoading(true);
-		const {errors : uErros , result : userRecords} = await getAllUsers(userContract, accounts);
-		const {errors : lErrors , result : landRecords} = await getAllLands(landContract, accounts);
-		if(!uErros) setUserRecords(userRecords);
-		if(!lErrors) setLandRecords(landRecords);
-		console.log(userRecords , landRecords)
-		setLoading(false);})();
-		
+		(async () => {
+			setLoading(true);
+			const { errors: uErros, result: userRecords } = await getAllUsers(
+				userContract,
+				accounts
+			);
+			const { errors: lErrors, result: landRecords } = await getAllLands(
+				landContract,
+				accounts
+			);
+			const { errors: transErrors, result: transaction } =
+				await getTransactionHistory(transContract, accounts);
+			if (!transErrors) {
+				let temp = transaction.filter((t) => parseInt(t.to , 16) !== 0);
+				setTransactionData(temp);
+			}
+			if (!uErros) setUserRecords(userRecords);
+			if (!lErrors) setLandRecords(landRecords);
+			console.log(userRecords, landRecords);
+			setLoading(false);
+		})();
 	}, [userContract, landContract, update]);
 
 	let userHeading = [
@@ -79,6 +96,14 @@ const GovDashboard = () => {
 		["Verified", "isVerified"],
 		["Details", "view"],
 	];
+	let trasactionHeading = [
+		["Sender", "from"],
+		["Reciever", "to"],
+		["Type of Transaction", "typeOf"],
+		["Desp", "description"],
+		["Date", "date"],
+		["", ""],
+	];
 
 	if (loading) return <Loader />;
 	return (
@@ -86,7 +111,7 @@ const GovDashboard = () => {
 			<div className="content">
 				<div className="grid2">
 					<div className="col-1">
-						<Records
+						<GovRecords
 							heading={userHeading}
 							title={"Users"}
 							item={userRecords}
@@ -95,7 +120,7 @@ const GovDashboard = () => {
 						/>
 					</div>
 					<div className="col-2">
-						<Records
+						<GovRecords
 							heading={landHeading}
 							title={"Lands"}
 							item={landRecords}
@@ -105,6 +130,13 @@ const GovDashboard = () => {
 					</div>
 				</div>
 			</div>
+			<Records
+				heading={trasactionHeading}
+				title={"Transactions"}
+				item={transactionData}
+				update={update}
+				setUpdate={setUpdate}
+			/>
 		</div>
 		// <div><p>This are coming up soon!</p></div>
 	);

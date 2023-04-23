@@ -8,12 +8,14 @@ import Input from "../../components/common/Input";
 import {
 	getAllLands,
 	getLandRecordsExceptForCurrentUser,
+	getVerifiedLandRecordsForCurrentUser,
 	transferOwnerShip,
 } from "../../utils/lands";
 import { getMyLandRecords } from "../../utils/lands";
 import { Formik } from "formik";
 import { transferOwnerValidationSchema } from "../../utils/Validations/TransferOwnerShip";
 import { getUsingAadharNumber } from "../../utils/user";
+import { getTransactionHistory } from "../../utils/transactions";
 
 export interface LandRecord {
 	id: number;
@@ -45,17 +47,19 @@ const UserDashboard = () => {
 	let trasactionHeading = [
 		["Sender", "from"],
 		["Reciever", "to"],
-		["Mutation Number", "mutationNumber"],
-		["Amount", "amount"],
+		["Type of Transaction", "typeOf"],
+		["Desp", "description"],
 		["Date", "date"],
 		["", ""],
 	];
 
-	const { landContract, accounts, userContract } = useContext(LoginContext);
+	const { landContract, transContract, accounts, userContract } =
+		useContext(LoginContext);
 	const [load, setLoad] = React.useState(false);
 	const [allLands, setAllLands] = useState([]);
 	const [currentUserVerifiedLand, setCurrentUserVerifiedLand] = useState([]);
 	const [transactionData, setTransactionData] = useState([]);
+
 
 	const handleSubmitT = (values) => {
 		(async () => {
@@ -81,11 +85,15 @@ const UserDashboard = () => {
 				accounts
 			);
 
-			console.log(lands);
+			const { errors: transErrors, result: transaction } =
+				await getTransactionHistory(transContract, accounts);
+			if (!transErrors) {
+				let temp = transaction.filter((t) => parseInt(t.to) !== 0);
+				setTransactionData(temp);
+				console.log(transaction);
+			}
 			if (!myLandError) {
-				const myVerifiedLands = myLands.filter((item) => {
-					if (item.isVerified) return item;
-				});
+				let myVerifiedLands = myLands.filter((land) => land.isVerified);
 				setCurrentUserVerifiedLand(myVerifiedLands);
 			}
 			if (!landError) setAllLands(lands);

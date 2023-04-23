@@ -10,7 +10,7 @@ import {
 	Details,
 	SettingIcon,
 } from "../../assets";
-import { AddRecord , Profile } from "../index";
+import { AddRecord, Profile } from "../index";
 import LandDetails from "../LandDetails/LandDetails";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import DashboardHeader from "../common/DashBoardHeader";
@@ -24,10 +24,11 @@ import UserDashboard from "../UserDashboard/UserDashboard";
 
 const Dashboard = () => {
 	const { userContract, accounts } = useContext(LoginContext);
-	const { userProfile, updateProfile, setProfilePhoto } = useContext(ProfileContext);
+	const { userProfile, updateProfile, setProfilePhoto } =
+		useContext(ProfileContext);
 	useEffect(() => {
 		(async function fetch() {
-			const {errors , result } = await getProfile(userContract, accounts);
+			const { errors, result } = await getProfile(userContract, accounts);
 			if (!errors) {
 				const temp = await getDataAsUrl(result.profilePhoto, "image/jpeg");
 				updateProfile(result);
@@ -36,8 +37,12 @@ const Dashboard = () => {
 		})();
 	}, [userContract]);
 
-	let dashboardType = (userProfile.role && userProfile.role.includes('3')) ? 'admin' : (userProfile.role && userProfile.role.includes('2'))? 'gov' : 'user' ;
-	console.log('dashboardType', dashboardType , userProfile)
+	let dashboardType =
+		userProfile.role && userProfile.role.includes("3")
+			? "admin"
+			: userProfile.role && userProfile.role.includes("2")
+			? "gov"
+			: "user";
 
 	return (
 		<div id="dashboard">
@@ -59,7 +64,10 @@ const Dashboard = () => {
 									<span>Add Record</span>
 								</li>
 							</Link>
-							<Link style={{ textDecoration: "none" }} to={`/dashboard/${dashboardType}`}>
+							<Link
+								style={{ textDecoration: "none" }}
+								to={`/dashboard/${dashboardType}`}
+							>
 								<li className="side-nav-item">
 									<img src={DashboradIcon} alt="" />
 									<span>Dashboard</span>
@@ -102,22 +110,31 @@ const Dashboard = () => {
 					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="profile" element={<Profile />} />
 					<Route path="land-details" element={<LandDetails />} />
-					<Route path = "user" element ={<UserDashboard/>}/>
+					<Route path="user" element={<UserDashboard />} />
 					<Route
 						path="admin"
 						element={
 							<ProtectedRoute
 								redirectPath="/dashboard/profile"
-								isAuthenticated={() => userProfile.role && userProfile.role.includes('3')}
+								isAuthenticated={() =>
+									userProfile.role && userProfile.role.includes("3")
+								}
 								children={<AdminDashboard />}
 							></ProtectedRoute>
 						}
 					/>
-					<Route path="gov" element={<ProtectedRoute
+					<Route
+						path="gov"
+						element={
+							<ProtectedRoute
 								redirectPath="/dashboard/profile"
-								isAuthenticated={() => userProfile.role && userProfile.role.includes('2')}
+								isAuthenticated={() =>
+									userProfile.role && userProfile.role.includes("2")
+								}
 								children={<GovDashboard />}
-							></ProtectedRoute>} />
+							></ProtectedRoute>
+						}
+					/>
 					<Route path="/" element={null} />
 					<Route path="*" element={<Navigate to="404" />} />
 				</Routes>

@@ -8,11 +8,11 @@ interface recordsProps {
 	title: string;
 	heading: Array<Array<string>>;
 	item: Array<any>;
-	load ?: any
-	setLoad ? : any
+	load?: any;
+	setLoad?: any;
 }
 
-const Records: FC<recordsProps> = ({ title, heading, item  , load , setLoad}) => {
+const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 	let subtitle: any;
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const [selectedland, setSelectedLand] = React.useState({
@@ -46,9 +46,6 @@ const Records: FC<recordsProps> = ({ title, heading, item  , load , setLoad}) =>
 		setIsOpen(false);
 	}
 
-	
-
-
 	return (
 		<div id="records">
 			<h3 className="record-heading">{title}</h3>
@@ -69,39 +66,49 @@ const Records: FC<recordsProps> = ({ title, heading, item  , load , setLoad}) =>
 						{item?.map((ele) => {
 							return (
 								<tr key={ele[heading[0][1]]}>
-									<td>{ele[heading[0][1]]}</td>
+									<td> {ele[heading[0][1]]}</td>
 									<td>{ele[heading[1][1]]}</td>
-									<td>{ele[heading[2][1]]}</td>
+									{heading[2][1] !== "typeOf" ? (
+										<td>{ele[heading[2][1]]}</td>
+									) : (
+										<td>{ele[heading[2][1]]}</td>
+									)}
 									<td>
-										<div className="status">
-											{ele[heading[3][1]] ? (
-												<img src={Verified} alt="" />
-											) : (
-												<img
-													className="unverified-badge"
-													src={Unverified}
-													alt=""
-												/>
-											)}
-										</div>
+										{heading[3][0] !== "Desp" ? (
+											<div className="status">
+												{ele[heading[3][1]] ? (
+													<img src={Verified} alt="" />
+												) : (
+													<img
+														className="unverified-badge"
+														src={Unverified}
+														alt=""
+													/>
+												)}
+											</div>
+										) : (
+											<p>{ele[heading[3][1]]}</p>
+										)}
 									</td>
 									<td>
-										{
-										(heading[4][0] === "Date")
+										{heading[4][0] === "Date"
 											? ele[heading[4][1]]
-											: (ele[heading[4][1]] ? "Yes": "No")
-										}
+											: ele[heading[4][1]]
+											? "Yes"
+											: "No"}
 									</td>
 									<td>
-										<button
-											className="record-btn"
-											onClick={() => {
-												setSelectedLand(ele);
-												openModal();
-											}}
-										>
-											View
-										</button>
+										{heading[4][0] !== "Date" && (
+											<button
+												className="record-btn"
+												onClick={() => {
+													setSelectedLand(ele);
+													openModal();
+												}}
+											>
+												View
+											</button>
+										)}
 									</td>
 								</tr>
 							);
@@ -118,8 +125,8 @@ const Records: FC<recordsProps> = ({ title, heading, item  , load , setLoad}) =>
 				modalIsOpen={modalIsOpen}
 				openModal={openModal}
 				subtitle={subtitle}
-				load = {load}
-				setLoad = {setLoad}
+				load={load}
+				setLoad={setLoad}
 			/>
 		</div>
 	);

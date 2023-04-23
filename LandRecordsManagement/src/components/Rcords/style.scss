@@ -30,10 +30,11 @@ $table-cell-padding: 10px;
 			background-color: $table-background;
 			border-top: $table-border;
 			border-top-left-radius: 15px;
+
 			thead {
 				tr {
-                    position: sticky;
-                    top : 0;
+					position: sticky;
+					top: 0;
 					th {
 						background-color: $base_color;
 						color: #fff;
@@ -51,6 +52,8 @@ $table-cell-padding: 10px;
 						border-bottom: $table-border;
 						text-align: center;
 						color: $text_color;
+						max-width: 125px;
+						overflow-wrap: break-word;
 						letter-spacing: 0.01em;
 						.verified-badge {
 							height: 50px;
@@ -82,9 +85,10 @@ $table-cell-padding: 10px;
 							object-fit: fill;
 							margin-right: 2rem;
 							cursor: pointer;
+							white-space: nowrap;
 						}
-						.record-btn:hover{
-							 transform: scale(1.3);
+						.record-btn:hover {
+							transform: scale(1.3);
 						}
 					}
 				}
@@ -98,7 +102,7 @@ $table-cell-padding: 10px;
 }
 
 .unverified-badge {
-    height: 20px !important;
-    width: 20px !important;
-    margin-left: 10px !important;
+	height: 20px !important;
+	width: 20px !important;
+	margin-left: 10px !important;
 }
