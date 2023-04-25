@@ -2,6 +2,7 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 import "./UserRecords.sol";
+import "./Transaction.sol";
 
 contract LandManagementSystem {
     struct Location {
@@ -27,24 +28,16 @@ contract LandManagementSystem {
     }
     mapping(uint256 => LandRecord) private landRecords;
     mapping(uint256 => LandRecord) private landRecordsMutation;
-
     mapping(uint256 => bool) private _mutationNumbers;
-
     uint256 public totalLands = 0;
-
+    uint256 private M = 10 ** 18;
     UserRecords public userRecords;
+    TransactionHistory public transaction;
 
-    constructor(address _contractUserRecords) {
+    constructor(address _contractUserRecords, address _contractTransaction) {
         userRecords = UserRecords(_contractUserRecords);
+        transaction = TransactionHistory(_contractTransaction);
     }
-
-    event LandForSale(uint256 indexed id, address indexed owner, uint256 price);
-    event LandSold(uint256 indexed id, address indexed buyer, uint256 price);
-
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
 
     modifier onlyOwner(uint256 _id) {
         require(
@@ -125,6 +118,12 @@ contract LandManagementSystem {
         totalLands++;
         _mutationNumbers[_mutationNumber] = true;
         userRecords.updateLandIds(msg.sender, totalLands - 1);
+        transaction.recordTransaction(msg.sender  , 
+            msg.sender,
+            "Land Record Added",
+            block.timestamp,
+            "You added a new land record"
+        );
     }
 
     function getLandRecord(
@@ -171,6 +170,13 @@ contract LandManagementSystem {
         );
         landRecords[_id].isVerified = true;
         landRecordsMutation[landRecords[_id].mutationNumber].isVerified = true;
+        transaction.recordTransaction(
+            msg.sender , 
+            landRecords[_id].owner,
+            "Land Verified",
+            block.timestamp,
+            "You verified this land"
+        );
     }
 
     function buyLand(uint256 mutationNumber) public payable {
@@ -184,7 +190,7 @@ contract LandManagementSystem {
             "Land is not for sale"
         );
         require(
-            msg.value == landRecordsMutation[mutationNumber].price,
+            (msg.value) == (landRecordsMutation[mutationNumber].price * M),
             "Incorrect amount sent"
         );
 
@@ -192,6 +198,16 @@ contract LandManagementSystem {
             landRecordsMutation[mutationNumber].owner,
             mutationNumber
         );
+
+        transaction.recordTransaction(
+            msg.sender ,
+            landRecordsMutation[mutationNumber].owner,
+            "BUY",
+            block.timestamp,
+            "You bought this land"
+        );
+        payable(landRecordsMutation[mutationNumber].owner).transfer(msg.value);
+
         landRecordsMutation[mutationNumber].owner = msg.sender;
         landRecordsMutation[mutationNumber].isForSale = false;
         landRecords[landRecordsMutation[mutationNumber].id].owner = msg.sender;
@@ -213,6 +229,14 @@ contract LandManagementSystem {
         landRecordsMutation[mutationNumber].price = _price;
         landRecords[landRecordsMutation[mutationNumber].id].isForSale = true;
         landRecords[landRecordsMutation[mutationNumber].id].price = _price;
+
+        transaction.recordTransaction(
+            msg.sender ,
+            msg.sender,
+            "sell",
+            block.timestamp,
+            "You made  this land avaiable for sale"
+        );
     }
 
     function getAllLandRecords() public view returns (LandRecord[] memory) {
@@ -227,9 +251,6 @@ contract LandManagementSystem {
         return rcs;
     }
 
-    // Get all unverified land records
-
-    // Get all land records for the current user
     function getLandRecordsForCurrentUser()
         public
         view
@@ -280,29 +301,6 @@ contract LandManagementSystem {
         return ur;
     }
 
-    function getVerifiedLandRecordsForCurrentUser(
-        address _user
-    ) public view returns (LandRecord[] memory) {
-        require(userRecords.isUserVerified(msg.sender), "User not verified");
-        uint256 userCount = 0;
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].owner == _user && landRecords[i].isVerified) {
-                userCount++;
-            }
-        }
-
-        LandRecord[] memory ur = new LandRecord[](userCount);
-        uint256 index = 0;
-        for (uint256 i = 0; i < totalLands; i++) {
-            if (landRecords[i].owner == _user) {
-                ur[index] = landRecords[i];
-                index++;
-            }
-        }
-
-        return ur;
-    }
-
     function transferOwnership(
         uint256 mutationNumber,
         address newOwner
@@ -321,5 +319,12 @@ contract LandManagementSystem {
         landRecordsMutation[mutationNumber].isForSale = false;
         landRecords[landRecordsMutation[mutationNumber].id].owner = newOwner;
         landRecords[landRecordsMutation[mutationNumber].id].isForSale = false;
+        transaction.recordTransaction(
+            msg.sender ,
+            landRecordsMutation[mutationNumber].owner,
+            "Transfer Land Record",
+            block.timestamp,
+            "You transfer this land"
+        );
     }
 }

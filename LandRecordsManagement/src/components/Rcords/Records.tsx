@@ -68,11 +68,7 @@ const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 								<tr key={ele[heading[0][1]]}>
 									<td> {ele[heading[0][1]]}</td>
 									<td>{ele[heading[1][1]]}</td>
-									{heading[2][1] !== "typeOf" ? (
-										<td>{ele[heading[2][1]]}</td>
-									) : (
-										<td>{ele[heading[2][1]]}</td>
-									)}
+									<td>{ele[heading[2][1]]}</td>
 									<td>
 										{heading[3][0] !== "Desp" ? (
 											<div className="status">

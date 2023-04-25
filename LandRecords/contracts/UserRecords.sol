@@ -2,6 +2,8 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import "./Transaction.sol";
+
 contract UserRecords {
     struct UserData {
         string name;
@@ -25,8 +27,10 @@ contract UserRecords {
     address[] private userRecords;
 
     address private admin;
+    TransactionHistory public transaction;
 
-    constructor() {
+    constructor(address _contractTransaction) {
+        transaction = TransactionHistory(_contractTransaction);
         admin = msg.sender;
         for (uint32 i = 0; i < roles.length; i++) {
             rolesMap[roles[i]] = i + 1;
@@ -69,6 +73,9 @@ contract UserRecords {
         AadharNumber[_aadharNumber] = true;
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
         userRecords.push(msg.sender);
+
+
+        transaction.recordTransaction(msg.sender  , msg.sender , "Profile Added" , block.timestamp , "You added your profile");
     }
 
     function getOwnProfile()
@@ -129,13 +136,20 @@ contract UserRecords {
             }
         }
         landIdsMap[userDataMap[user].aadharNumber] = userLandIds;
+        transaction.recordTransaction(msg.sender  , msg.sender , "Land Id Removed" , block.timestamp , "You removed your Land Id");
     }
 
     function getAadharNumber(address user) public view returns (uint256) {
         return userDataMap[user].aadharNumber;
     }
-    function getUsingAadharNumber(uint256 aadharNumber) public view returns (address) {
-        require(bytes(aadToUser[aadharNumber].name).length > 0 , "This aadhar is not registered with us");
+
+    function getUsingAadharNumber(
+        uint256 aadharNumber
+    ) public view returns (address) {
+        require(
+            bytes(aadToUser[aadharNumber].name).length > 0,
+            "This aadhar is not registered with us"
+        );
         return aadToUser[aadharNumber].my;
     }
 
@@ -154,6 +168,8 @@ contract UserRecords {
         );
         userDataMap[_user].isVerified = true;
         aadToUser[userDataMap[_user].aadharNumber].isVerified = true;
+
+        transaction.recordTransaction(msg.sender , _user , "User Verified" , block.timestamp , "You verified the user");
     }
 
     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {

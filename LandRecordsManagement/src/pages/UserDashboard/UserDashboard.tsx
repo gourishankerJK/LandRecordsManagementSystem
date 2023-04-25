@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import LoginContext from "../../contexts/LoginContext";
-import { Verified } from "../../assets";
 import "./style.scss";
 import Records from "../../components/Rcords/Records";
-import TransectionHistory from "../../components/TransectionHistory/TransectionHistory";
 import Input from "../../components/common/Input";
 import {
-	getAllLands,
 	getLandRecordsExceptForCurrentUser,
-	getVerifiedLandRecordsForCurrentUser,
 	transferOwnerShip,
 } from "../../utils/lands";
 import { getMyLandRecords } from "../../utils/lands";
@@ -59,7 +55,6 @@ const UserDashboard = () => {
 	const [allLands, setAllLands] = useState([]);
 	const [currentUserVerifiedLand, setCurrentUserVerifiedLand] = useState([]);
 	const [transactionData, setTransactionData] = useState([]);
-
 
 	const handleSubmitT = (values) => {
 		(async () => {
