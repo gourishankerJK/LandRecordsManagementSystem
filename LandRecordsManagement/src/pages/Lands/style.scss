@@ -1,0 +1,18 @@
+@import "../../App.scss";
+
+.verify-land {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.disabled {
+	opacity: 0.2;
+}
+.btn-verify-reject {
+	color: #333;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+}

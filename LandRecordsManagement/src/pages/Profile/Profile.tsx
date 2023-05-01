@@ -175,7 +175,7 @@ const Profile = () => {
 					<img src={profilePhoto} alt="/" />
 					<h1>{userProfile.name}</h1>
 					<div className="icons">
-						{userProfile.isVerified ? (
+						{userProfile.isVerified === '1' ? (
 							<img className="verified-badge" src={Verified} />
 						) : (
 							<img className="unverfied-badge" src={Unverified} />

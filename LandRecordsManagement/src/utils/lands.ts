@@ -89,9 +89,20 @@ export const getLandRecordsExceptForCurrentUser = wrapper(
 );
 
 
+export const updateDocument = wrapper(async (contract , accounts , cid, mutationNumber)=>{
+		await contract.methods.updateDocument(cid,mutationNumber).call({from : accounts[0]});
+		await contract.methods.updateDocument(cid,mutationNumber).send({from : accounts[0]});
+})
 export const getVerifiedLandRecordsForCurrentUser = wrapper(async (contract , accounts)=>{
 	  return await contract.methods.getVerifiedLandRecordsForCurrentUser(accounts[0]).call({from : accounts[0]});
 })
+
+export const rejectLandRecord = wrapper(async (contract , accounts , mutationNumber)=>{
+	await contract.methods.rejectLandRecord(mutationNumber).call({from : accounts[0]});
+	await contract.methods.rejectLandRecord(mutationNumber).send({from : accounts[0]});
+	toast.success("Record Rejected");
+})
+
 export const getMyLandRecords = wrapper(_getMyLandRecords);
 export const getAllLands = wrapper(_getAllLands);
 export const addLandRecord = wrapper(_addLandRecord);

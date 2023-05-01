@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./style.scss";
-import GovRecords from "../../components/Rcords/GovRecords";
+import GovRecords from "../../components/Records/GovRecords";
 
 import LoginContext from "../../contexts/LoginContext";
 import { getAllUsers } from "../../utils/admin";
@@ -8,7 +8,7 @@ import { Loader } from "../../components";
 import { getAllLands } from "../../utils/lands";
 import { Verified } from "../../assets";
 import { getTransactionHistory } from "../../utils/transactions";
-import Records from "../../components/Rcords/Records";
+import Records from "../../components/Records/Records";
 
 export interface UserRecord {
 	name: string;
@@ -74,7 +74,7 @@ const GovDashboard = () => {
 			const { errors: transErrors, result: transaction } =
 				await getTransactionHistory(transContract, accounts);
 			if (!transErrors) {
-				let temp = transaction.filter((t) => parseInt(t.to , 16) !== 0);
+				let temp = transaction.filter((t) => parseInt(t.to, 16) !== 0);
 				setTransactionData(temp);
 			}
 			if (!uErros) setUserRecords(userRecords);

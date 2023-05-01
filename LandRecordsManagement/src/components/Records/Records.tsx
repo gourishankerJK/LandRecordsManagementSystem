@@ -2,7 +2,7 @@ import { dataLength } from "ethers";
 import React, { FC } from "react";
 import { DetailsIcon, Unverified, Verified } from "../../assets";
 import "./style.scss";
-import LandModal from "../LandModel/LandModal";
+import LandModal from "../Land/LandModal";
 
 interface recordsProps {
 	title: string;
@@ -38,7 +38,6 @@ const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 	}
 
 	function afterOpenModal() {
-		// references are now sync'd and can be accessed.
 		subtitle.style.color = "#f00";
 	}
 
@@ -72,7 +71,7 @@ const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 									<td>
 										{heading[3][0] !== "Desp" ? (
 											<div className="status">
-												{ele[heading[3][1]] ? (
+												{ele[heading[3][1]] ==='1' ? (
 													<img src={Verified} alt="" />
 												) : (
 													<img
@@ -115,7 +114,7 @@ const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 
 			<LandModal
 				land={selectedland}
-				title={"Land Deatils"}
+				title={"Land Details"}
 				afterOpenModal={afterOpenModal}
 				closeModal={closeModal}
 				modalIsOpen={modalIsOpen}

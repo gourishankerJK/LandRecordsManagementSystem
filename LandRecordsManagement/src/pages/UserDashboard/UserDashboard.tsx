@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import LoginContext from "../../contexts/LoginContext";
 import "./style.scss";
-import Records from "../../components/Rcords/Records";
+import Records from "../../components/Records/Records";
 import Input from "../../components/common/Input";
 import {
 	getLandRecordsExceptForCurrentUser,

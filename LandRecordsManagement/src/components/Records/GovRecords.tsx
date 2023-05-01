@@ -1,13 +1,10 @@
-import { dataLength } from "ethers";
 import React, { FC, useState } from "react";
 import { DetailsIcon, Verified } from "../../assets";
-import Popup from "../../pages/GovOfficialDashboard/Popup";
-import LandDetails from "../../pages/LandDetails/LandDetails";
-import LandDetail from "../LandDetail/LandDetail";
 import LoginModal from "../LoginModal/LoginModal";
-import UserDetail from "../UserDetail/UserDetail";
+import UserDetail from "../../pages/UserDetails/UserDetail";
 import "./style.scss";
 import { Unverified } from "../../assets";
+import Lands from "../../pages/Lands/Lands";
 
 interface recordsProps {
 	title: string;
@@ -66,7 +63,7 @@ const GovRecords: FC<recordsProps> = ({
 									<td>{ele[heading[0][1]]}</td>
 									<td>{ele[heading[1][1]]}</td>
 									<td className="status">
-										{ele[heading[2][1]] ? (
+										{ele[heading[2][1]] === "1" ? (
 											<img className="verified-badge" src={Verified} alt="" />
 										) : (
 											<img
@@ -100,7 +97,7 @@ const GovRecords: FC<recordsProps> = ({
 															setUpdate={setUpdate}
 														/>
 													) : (
-														<LandDetail
+														<Lands
 															content={item.find(
 																(e) => e.mutationNumber === popupId
 															)}

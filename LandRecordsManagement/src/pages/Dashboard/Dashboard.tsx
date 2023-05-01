@@ -11,7 +11,7 @@ import {
 	SettingIcon,
 } from "../../assets";
 import { AddRecord, Profile } from "../index";
-import LandDetails from "../LandDetails/LandDetails";
+import LandDetails from "../MyLands/MyLands";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import DashboardHeader from "../common/DashBoardHeader";
 import LoginContext from "../../contexts/LoginContext";

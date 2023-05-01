@@ -15,8 +15,9 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     aadharNumber: '',
     profilePhoto: '',
     officialDocument: '',
-    isVerified: false,
-    landIds : new Array<any>()
+    isVerified: "",
+    landIds : new Array<any>(),
+    role : "",
   })
 
   const [profilePhoto, setProfilePhoto] = useState(DefaultIcon)
