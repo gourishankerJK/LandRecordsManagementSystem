@@ -85,15 +85,17 @@ const UserDashboard = () => {
 			if (!transErrors) {
 				let temp = transaction.filter((t) => parseInt(t.to) !== 0);
 				setTransactionData(temp);
-				console.log(transaction);
 			}
 			if (!myLandError) {
 				let myVerifiedLands = myLands.filter((land) => land.isVerified);
 				setCurrentUserVerifiedLand(myVerifiedLands);
 			}
+			console.log("allLands", allLands , "Lands" , lands);
 			if (!landError) setAllLands(lands);
 		})();
 	}, [accounts, load]);
+
+
 
 	return (
 		<div id="user-dashboard">

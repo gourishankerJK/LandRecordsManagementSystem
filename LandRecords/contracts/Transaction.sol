@@ -18,15 +18,15 @@ contract TransactionHistory{
         Transaction memory newTransaction =  Transaction(_from , _to, _typeOf, _date, _description);
         uint256 count = transactionCount[_from];
         if (count < 10) {
-            transactionHistory[_from][count] = newTransaction;
-            transactionCount[_from] = count + 1;
+            transactionHistory[tx.origin][count] = newTransaction;
+            transactionCount[tx.origin] = count + 1;
         } else {
-            transactionHistory[_from][count % 10] = newTransaction;
-            transactionCount[_from] = count + 1;
+            transactionHistory[tx.origin][count % 10] = newTransaction;
+            transactionCount[tx.origin] = count + 1;
         }
     }
 
     function getTransactionHistory() public view returns (Transaction[10] memory) {
-        return transactionHistory[msg.sender];
+        return transactionHistory[tx.origin];
     }
 }

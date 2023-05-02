@@ -36,6 +36,7 @@ const _getAllLands = async (contract: any, accounts: any) => {
 	const data = await contract.methods
 		.getAllLandRecords()
 		.call({ from: accounts[0] });
+	console.log('data', data)
 	return data;
 };
 

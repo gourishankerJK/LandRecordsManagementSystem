@@ -12,7 +12,8 @@ interface Props {
 	setUpdate: any;
 }
 
-const LandDetail: FC<Props> = ({ content, update, setUpdate }) => {
+const Lands: FC<Props> = ({ content, update, setUpdate }) => {
+	console.log('content', content)
 	const [officialDocUrl, setOfficialDocUrl] = useState("");
 	const [check, setCheck] = useState(false);
 	const [selectedLand, setSelectedLand] = useState(null);
@@ -111,4 +112,4 @@ const LandDetail: FC<Props> = ({ content, update, setUpdate }) => {
 	);
 };
 
-export default LandDetail;
+export default Lands;

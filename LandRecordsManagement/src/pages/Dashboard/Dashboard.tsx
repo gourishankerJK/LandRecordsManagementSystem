@@ -42,7 +42,9 @@ const Dashboard = () => {
 			? "admin"
 			: userProfile.role && userProfile.role.includes("2")
 			? "gov"
-			: "user";
+			: userProfile.role && userProfile.role.includes("1")
+			? "user"
+			: "profile";
 
 	return (
 		<div id="dashboard">
@@ -107,10 +109,21 @@ const Dashboard = () => {
 			<div className="main-page">
 				<DashboardHeader value={userProfile}></DashboardHeader>
 				<Routes>
-					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="profile" element={<Profile />} />
+					<Route path="addrecord" element={<AddRecord />} />
 					<Route path="land-details" element={<LandDetails />} />
-					<Route path="user" element={<UserDashboard />} />
+					<Route
+						path="user"
+						element={
+							<ProtectedRoute
+								redirectPath="/dashboard/profile"
+								isAuthenticated={() =>
+									userProfile.role && userProfile.role.includes("1")
+								}
+								children={<UserDashboard />}
+							></ProtectedRoute>
+						}
+					/>
 					<Route
 						path="admin"
 						element={
@@ -123,6 +136,7 @@ const Dashboard = () => {
 							></ProtectedRoute>
 						}
 					/>
+
 					<Route
 						path="gov"
 						element={

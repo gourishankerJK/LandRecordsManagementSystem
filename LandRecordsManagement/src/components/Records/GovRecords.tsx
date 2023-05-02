@@ -41,7 +41,7 @@ const GovRecords: FC<recordsProps> = ({
 		setIsOpen(false);
 		setPopupId(0);
 	}
-
+    console.log('itemLand', item)
 	return (
 		<div id="records">
 			<h3 className="record-heading">{title}</h3>

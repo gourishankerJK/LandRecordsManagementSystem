@@ -11,7 +11,7 @@ contract UserRecords {
         uint256 aadharNumber;
         string profilePhoto;
         string officialDocument;
-        bool isVerified;
+        uint32 isVerified;
         uint32 role;
         address my;
     }
@@ -48,7 +48,7 @@ contract UserRecords {
     }
 
     function isUserVerified(address user) public view returns (bool) {
-        return userDataMap[user].isVerified;
+        return userDataMap[user].isVerified == 1;
     }
 
     function addUser(
@@ -66,7 +66,7 @@ contract UserRecords {
             aadharNumber: _aadharNumber,
             profilePhoto: _profilePhoto,
             officialDocument: _officialDocument,
-            isVerified: false,
+            isVerified: 0,
             role: (msg.sender == admin) ? 13 : 1,
             my: msg.sender
         });
@@ -74,8 +74,13 @@ contract UserRecords {
         aadToUser[_aadharNumber] = userDataMap[msg.sender];
         userRecords.push(msg.sender);
 
-
-        transaction.recordTransaction(msg.sender  , msg.sender , "Profile Added" , block.timestamp , "You added your profile");
+        transaction.recordTransaction(
+            msg.sender,
+            msg.sender,
+            "Profile Added",
+            block.timestamp,
+            "You added your profile"
+        );
     }
 
     function getOwnProfile()
@@ -87,7 +92,7 @@ contract UserRecords {
             uint256 aadharNumber,
             string memory profilePhoto,
             string memory officialDocument,
-            bool isVerified,
+            uint32 isVerified,
             uint256 role,
             address my,
             uint256[] memory landIds
@@ -136,7 +141,13 @@ contract UserRecords {
             }
         }
         landIdsMap[userDataMap[user].aadharNumber] = userLandIds;
-        transaction.recordTransaction(msg.sender  , msg.sender , "Land Id Removed" , block.timestamp , "You removed your Land Id");
+        transaction.recordTransaction(
+            msg.sender,
+            msg.sender,
+            "Land Id Removed",
+            block.timestamp,
+            "You removed your Land Id"
+        );
     }
 
     function getAadharNumber(address user) public view returns (uint256) {
@@ -153,12 +164,14 @@ contract UserRecords {
         return aadToUser[aadharNumber].my;
     }
 
-    function updateLandIds(address user, uint256 id) public {
-        landIdsMap[userDataMap[user].aadharNumber].push(id);
+    function updateLandIds(address user, uint256 _mutationNumber) public {
+        landIdsMap[userDataMap[user].aadharNumber].push(_mutationNumber);
     }
 
-    function userLandVerified(address _user) public view returns (bool) {
-        return userDataMap[_user].isVerified;
+    function getMutationNumber(
+        address user
+    ) public view returns (uint256[] memory) {
+        return landIdsMap[userDataMap[user].aadharNumber];
     }
 
     function verifyUser(address _user) public {
@@ -166,10 +179,37 @@ contract UserRecords {
             isCurrentGovernmentOfficial(),
             "Only goverment officals can verify the user"
         );
-        userDataMap[_user].isVerified = true;
-        aadToUser[userDataMap[_user].aadharNumber].isVerified = true;
+         require(
+             _user != tx.origin,
+            "You can't verify yourself"
+        );
+        userDataMap[_user].isVerified = 1;
+        aadToUser[userDataMap[_user].aadharNumber].isVerified = 1;
 
-        transaction.recordTransaction(msg.sender , _user , "User Verified" , block.timestamp , "You verified the user");
+        transaction.recordTransaction(
+            msg.sender,
+            _user,
+            "User Verified",
+            block.timestamp,
+            "You verified the user"
+        );
+    }
+
+    function rejectUser(address _user) public {
+        require(
+            isCurrentGovernmentOfficial(),
+            "Only goverment officals can reject/verfiy the user"
+        );
+        userDataMap[_user].isVerified = 1;
+        aadToUser[userDataMap[_user].aadharNumber].isVerified = 1;
+
+        transaction.recordTransaction(
+            msg.sender,
+            _user,
+            "User Verified",
+            block.timestamp,
+            "You verified the user"
+        );
     }
 
     function addGovernmentOfficial(address _officialAddress) public onlyAdmin {

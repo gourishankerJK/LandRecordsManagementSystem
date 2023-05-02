@@ -5,7 +5,7 @@ import GovRecords from "../../components/Records/GovRecords";
 import LoginContext from "../../contexts/LoginContext";
 import { getAllUsers } from "../../utils/admin";
 import { Loader } from "../../components";
-import { getAllLands } from "../../utils/lands";
+import { getLandRecordsExceptForCurrentUser } from "../../utils/lands";
 import { Verified } from "../../assets";
 import { getTransactionHistory } from "../../utils/transactions";
 import Records from "../../components/Records/Records";
@@ -67,7 +67,7 @@ const GovDashboard = () => {
 				userContract,
 				accounts
 			);
-			const { errors: lErrors, result: landRecords } = await getAllLands(
+			const { errors: lErrors, result: landRecords } = await getLandRecordsExceptForCurrentUser(
 				landContract,
 				accounts
 			);

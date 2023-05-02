@@ -64,7 +64,7 @@ const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {
 					<tbody>
 						{item?.map((ele) => {
 							return (
-								<tr key={ele[heading[0][1]]}>
+								<tr key={Date.now() * Math.random()*10}>
 									<td> {ele[heading[0][1]]}</td>
 									<td>{ele[heading[1][1]]}</td>
 									<td>{ele[heading[2][1]]}</td>

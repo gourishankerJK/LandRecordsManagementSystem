@@ -8,8 +8,7 @@ module.exports = {
 			host: "127.0.0.1",
 			database: {
 				dbPath: "file:./ganache_db",
-			  }
-			
+			},
 		},
 	},
 	mocha: {},
@@ -18,7 +17,7 @@ module.exports = {
 			version: "0.8.18",
 			optimizer: {
 				enabled: true,
-				runs: 10,
+				runs: 500,
 			},
 		},
 	},
