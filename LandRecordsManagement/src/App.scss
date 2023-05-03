@@ -1,7 +1,7 @@
-$base_color: #FF8533;
+$base_color: #ff8533;
 $text_color: rgb(94, 93, 93);
 $heading_color: black;
-$dashboard_shadow:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
+$dashboard_shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 // Medial Quries
 $xl: 1270px; // 4k and hi-res desktop
 $lg: 992px; // 1080 and hi-res laptops
@@ -10,33 +10,43 @@ $sm: 576px; // mobile and low-res tablets
 
 /** Responsive Media Query Mixin **/
 @mixin responsive($query) {
-  @media (max-width: $query) {
-    @content;
-  }
+	@media (max-width: $query) {
+		@content;
+	}
 }
 @mixin content($val) {
-  $zidx : $val;
+	$zidx: $val;
 }
 
-.btn{
-    border: none;
-    background: none; 
-    padding: .5rem 1rem;
-    
+.btn {
+	border: none;
+	background: none;
+	padding: 0.5rem 1rem;
 }
-.submit{
-  margin: 1rem 0;
-   background: $base_color;
-   color: #fff;
-   padding: 10px 10px;
+.submit {
+	background: $base_color;
+	color: #fff;
+	font-weight: 400;
+	margin-top: 1rem;
+	border: none;
+	padding: 0.5rem 1.5rem;
+	letter-spacing: 0.03em;
+	border-radius: 5px;
+	font-size: 18px;
+	cursor: pointer;
 }
-.section-heading{
-    font-size: 35px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    text-align: center;
-    margin: 1rem 0;
-    text-decoration: underline;
-    color: #FF8533;
+.submit:hover {
+	opacity: 0.6;
 }
-
+.submiting {
+	opacity: 0.2;
+}
+.section-heading {
+	font-size: 35px;
+	font-weight: 500;
+	letter-spacing: 0.03em;
+	text-align: center;
+	margin: 1rem 0;
+	text-decoration: underline;
+	color: #ff8533;
+}

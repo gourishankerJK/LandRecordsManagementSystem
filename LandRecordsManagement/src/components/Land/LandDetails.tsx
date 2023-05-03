@@ -25,7 +25,7 @@ const LandDetails: React.FC<Props> = ({ land , children = "" }) => {
 				<LandItem
 					label="Verification Status:"
 					value={land.isVerified === '1' ? "Verified" : land.isVerified === '0' ?"Pending" : 'Rejected'}
-					className={land.isVerified === 1 ? "verified" : "unverified"}
+					className={land.isVerified === '1' ? "verified" : "unverified"}
 				/>
 				{children}
 			</div>

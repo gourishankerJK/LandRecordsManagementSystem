@@ -8,6 +8,7 @@ $base-color: #ff8533;
 }
 
 .land-details-card {
+	display: grid;
 	background-color: #fff;
 	border: 1px solid $base-color;
 	border-radius: 8px;
@@ -101,7 +102,6 @@ $base-color: #ff8533;
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-	justify-content: center;
 }
 
 .land-message {
@@ -109,6 +109,6 @@ $base-color: #ff8533;
 	padding: 1rem;
 }
 
-.label-input {
+.label-input  {
 	color: green;
 }

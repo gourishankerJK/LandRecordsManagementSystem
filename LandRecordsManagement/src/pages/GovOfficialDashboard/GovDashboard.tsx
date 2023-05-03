@@ -74,7 +74,7 @@ const GovDashboard = () => {
 			const { errors: transErrors, result: transaction } =
 				await getTransactionHistory(transContract, accounts);
 			if (!transErrors) {
-				let temp = transaction.filter((t) => parseInt(t.to, 16) !== 0);
+				let temp = transaction.filter((t : any) => parseInt(t.to, 16) !== 0);
 				setTransactionData(temp);
 			}
 			if (!uErros) setUserRecords(userRecords);

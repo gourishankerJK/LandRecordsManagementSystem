@@ -10,6 +10,8 @@ interface recordsProps {
 	item: Array<any>;
 	load?: any;
 	setLoad?: any;
+	update?:any;
+	setUpdate?:any;
 }
 
 const Records: FC<recordsProps> = ({ title, heading, item, load, setLoad }) => {

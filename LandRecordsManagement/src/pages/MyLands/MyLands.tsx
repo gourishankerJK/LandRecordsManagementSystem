@@ -91,7 +91,7 @@ const MyLands = () => {
 						style={{ color: "green", marginTop: "10px" }}
 						label=""
 						className="land-message"
-						value="***Already Available for Sale :)"
+						value="***Already Listed for Sale. :)"
 					/>
 				);
 			}
@@ -156,7 +156,7 @@ const MyLands = () => {
 		return <NotFound message={"You haven't added any Land"} />;
 	return (
 		<div className="land-details-container">
-			{lands.map((land, index) => (
+			{lands.map((land) => (
 				<LandDetails land={land} children={getChildren(land)} />
 			))}
 			{selectedLand && (
